@@ -24,12 +24,14 @@ photos" and "Include location info in exported photos" are both selected,
 everything works beautifully. 
 
 Aperture Places view
+
 ![Aperture Places][aperture]
 
 Flickr Map view
+
 ![Flickr Map][flickr]
 
-[aperture]: /images/aperture.png
-[flickr]: /images/flickr.png
-[advanced]: /images/advanced.jpg
-[export]: /images/export.jpg
+[aperture]: ./aperture.png
+[flickr]: ./flickr.png
+[advanced]: ./advanced.jpg
+[export]: ./export.jpg
