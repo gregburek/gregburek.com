@@ -78,6 +78,10 @@ page "/feed.xml", layout: false
 #   end
 # end
 
+activate :syntax, :line_numbers => true
+set :markdown_engine, :redcarpet
+set :markdown, :fenced_code_blocks => true, :smartypants => true
+
 activate :directory_indexes
 
 set :relative_links, true
