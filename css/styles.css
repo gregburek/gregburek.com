@@ -2033,11 +2033,7 @@
 .highlight {
   background-color: #f8f8f8; }
 
-/*
- * Colors
- * Scheme comes from: http://colorschemedesigner.com/#0041Tojd352Le
- */
-/* line 32, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 20, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 body {
   background-color: #FFFEFC;
   color: #403e3f;
@@ -2045,34 +2041,33 @@ body {
   font-size: 18px;
   line-height: 1.5em; }
 
-/* line 40, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 28, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 h1, h2, h3, h4 {
   line-height: 1.2em; }
 
-/* line 44, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 32, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 h2, h3, h4 {
-  font-weight: 600; }
+  font-weight: 600;
+  color: #403e3f; }
 
-/* line 48, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 37, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 h1 {
-  color: #403e3f;
   font-size: 2.5em;
   font-weight: 700; }
 
-/* line 54, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 42, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 h2 {
-  color: #403e3f;
   font-size: 1.6em; }
 
-/* line 59, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 46, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 h3 {
   font-size: 1.2em; }
 
-/* line 63, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 50, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 p {
   margin: 1.2em 0; }
 
-/* line 67, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 54, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 a {
   color: #b2174f;
   text-decoration: none;
@@ -2085,136 +2080,124 @@ a {
   -moz-transition-property: color;
   -o-transition-property: color;
   transition-property: color; }
-  /* line 75, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 62, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   a:hover {
     color: #b2174f;
     text-decoration: underline; }
 
-/* line 81, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 68, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 img {
   /* make sure images don't get too big on mobile */
   max-width: 100%; }
 
-/* line 86, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 73, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 ul {
   list-style: none;
   padding: 0;
   margin: 0; }
 
-/* line 92, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 79, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 blockquote {
   margin: 1em 20px;
   padding: 10px 20px;
   border-left: solid 10px #ff3366;
   background: #ff99b3; }
 
-/* line 99, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 86, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 section {
   margin-bottom: 2em; }
 
-/* line 103, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 90, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 *:target {
   background: #ff99b3; }
 
-/* line 107, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 94, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .container {
   margin: 0 auto;
   max-width: 760px;
   padding: 0 20px; }
 
-/* line 113, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 100, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 header {
   overflow: hidden;
   *zoom: 1;
   background-color: #ff3366;
-  margin-bottom: 40px; }
-  /* line 119, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  margin-bottom: 30px; }
+  /* line 106, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   header a {
     color: white; }
-    /* line 122, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+    /* line 109, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
     header a:hover {
       color: #403e3f;
       text-decoration: none; }
-  /* line 128, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 115, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   header h1 {
     background: url("/images/logo.png") no-repeat;
     background-size: 100px 100px;
-    font-size: 55px;
-    height: 100px;
-    line-height: 1.4em;
+    font-size: 60px;
+    height: 110px;
+    line-height: 1.6em;
     margin: 0 auto;
-    padding-left: 110px;
-    width: 360px; }
+    padding-left: 110px; }
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-      /* line 128, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+      /* line 115, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
       header h1 {
         background-image: url("/images/logo-2x.png"); } }
-    /* line 142, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+    /* line 128, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
     header h1 a:hover {
       color: white; }
-  /* line 147, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-  header nav {
-    margin: -35px auto 0 auto;
-    padding-left: 110px;
-    width: 360px; }
-  /* line 153, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 133, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   header .footer-only {
     display: none; }
 
 @media screen and (max-width: 480px) {
-  /* line 160, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 140, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   header h1 {
-    background-size: 69px;
+    background-size: 55px;
     font-size: 40px;
-    height: 55px;
-    line-height: 2em;
-    padding-left: 93px;
+    height: 65px;
+    line-height: 1.4em;
+    padding-left: 65px;
     width: 100%; }
-  /* line 169, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 149, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   header nav {
     margin-top: 0;
     padding-left: 0;
     text-align: center;
     width: auto; }
 
-  /* line 178, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 158, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   header .container, footer .container {
     padding: 0; } }
-/* line 185, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 165, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 nav ul {
   margin: 0 0 0 -8px;
   padding: 0; }
-/* line 190, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 170, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 nav li {
-  display: inline-block; }
-  /* line 193, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline; }
+  /* line 173, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   nav li a {
     margin: 0 5px;
     padding: 10px 8px; }
-/* line 199, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 179, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 nav a {
   display: block; }
 
 @media screen and (max-width: 480px) {
-  /* line 207, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 187, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   nav li a {
     margin: 0 4px;
     padding: 10px 4px; } }
-/* line 216, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-.social li {
-  line-height: 1.2em;
-  margin-bottom: 0.8em; }
-/* line 221, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-.social a {
-  display: inline-block; }
-  /* line 224, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-  .social a:hover {
-    text-decoration: none; }
-
-/* line 230, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 195, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .social-nav {
   font-size: 30px; }
-  /* line 233, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 198, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   .social-nav li {
     margin-left: 15px;
     display: -moz-inline-stack;
@@ -2224,48 +2207,48 @@ nav a {
     zoom: 1;
     *display: inline; }
 
-/* line 240, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 205, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 footer {
   background: #ff3366;
   clear: both;
   margin-top: 50px;
   overflow: hidden;
   *zoom: 1; }
-  /* line 247, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 212, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   footer ul {
     float: left;
     margin: 0;
     padding: 0.5em 0; }
-  /* line 253, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 218, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   footer nav ul {
     float: right;
     font-size: 16px; }
-    @media screen and (max-width: 650px) {
-      /* line 253, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+    @media screen and (max-width: 480px) {
+      /* line 218, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
       footer nav ul {
         clear: left;
         float: left;
         padding-top: 0; } }
-  /* line 264, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 229, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   footer a {
     color: white; }
-    /* line 267, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+    /* line 232, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
     footer a:hover {
       color: #403e3f; }
 
-/* line 273, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 238, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .pagination {
   margin-right: 1em; }
 
 /* syntax highlighting */
-/* line 278, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 243, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .highlight, code {
   background-color: whitesmoke;
   border: solid 1px #d4d4d4;
   font-family: fira-mono;
   font-size: 0.9em; }
 
-/* line 284, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 249, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .highlight {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -2274,7 +2257,7 @@ footer {
   border-radius: 10px;
   padding: 5px 10px; }
 
-/* line 288, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 253, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 code {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -2284,38 +2267,34 @@ code {
   padding: 0 5px; }
 
 /* media specific styles */
-/* line 294, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 259, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .youtube {
   height: 315px;
   width: 560px; }
   @media screen and (max-width: 600px) {
-    /* line 294, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+    /* line 259, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
     .youtube {
       height: 150px;
       width: 200px; } }
 
 /* page specific styles */
-/* line 307, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-.index section h3 {
-  font-size: 1.1em;
-  margin: 0; }
-/* line 312, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 272, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .index section li {
   margin-bottom: 1.5em; }
-/* line 316, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 276, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .index section a {
   color: #403e3f;
   font-weight: normal; }
-  /* line 320, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 280, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   .index section a:hover {
     color: #b2174f; }
 
-/* line 327, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 287, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .article-date {
   float: left;
   margin-right: 1em; }
 
-/* line 332, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 292, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .article-details {
   color: #877F7F;
   font-size: 0.9em;
@@ -2323,109 +2302,73 @@ code {
   overflow: hidden;
   *zoom: 1; }
 
-/* line 341, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 301, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 #writing-list h2 {
   font-size: 1.3em;
   font-weight: normal;
   margin: 0; }
-  /* line 346, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 306, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   #writing-list h2 a {
     color: #403e3f; }
-    /* line 349, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+    /* line 309, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
     #writing-list h2 a:hover {
       color: #b2174f; }
-/* line 355, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 315, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 #writing-list li {
   margin-bottom: 1.5em; }
-/* line 359, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 319, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 #writing-list .tags {
   margin: 0; }
 
-/* line 365, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 325, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .writing h1 {
   font-size: 2em;
   margin-bottom: 0.1em; }
-/* line 370, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 330, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .writing ul {
   list-style: disc;
   padding: 0 0 0 30px; }
 
-/* line 377, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-.events h3, .events h4 {
-  margin: 0.2em 0; }
-/* line 381, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-.events li {
-  margin-bottom: 1.5em; }
-
 /*
  * Writing helpers
  */
-/* line 389, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 339, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .internal-link {
   color: #85113b;
   opacity: 0.4; }
-  /* line 393, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 343, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   .internal-link:hover {
     opacity: 1; }
 
-/* line 398, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 348, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .screenshot {
   border: solid 1px #d4d4d4;
   border-radius: 10px; }
 
-/* line 403, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+/* line 353, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
 .slide {
   overflow: hidden;
   *zoom: 1;
   margin-bottom: 50px; }
-  /* line 407, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 357, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   .slide img {
     border: solid 1px #d4d4d4;
     float: left;
     margin-right: 2%;
     width: 45%; }
     @media screen and (max-width: 750px) {
-      /* line 407, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+      /* line 357, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
       .slide img {
         width: 95%; } }
-  /* line 418, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 368, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   .slide div {
     float: left;
     padding-top: 10px;
     width: 45%; }
     @media screen and (max-width: 750px) {
-      /* line 418, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+      /* line 368, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
       .slide div {
         width: 95%; } }
-  /* line 428, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
+  /* line 378, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
   .slide p {
     margin: 0 0 0.7em 0; }
-
-/* line 433, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-.solution {
-  background: #ff99b3;
-  border: solid 1px #ff3366;
-  border-radius: 10px;
-  overflow: hidden; }
-  /* line 439, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-  .solution p {
-    margin: 1em 0; }
-  /* line 443, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-  .solution a {
-    background: #ff668c;
-    color: black;
-    cursor: pointer;
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    -webkit-transition-property: background;
-    -moz-transition-property: background;
-    -o-transition-property: background;
-    transition-property: background; }
-    /* line 453, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-    .solution a:hover {
-      background: #ff4d79; }
-
-/* line 458, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
-.solution > div {
-  padding: 0px 10px 10px; }
