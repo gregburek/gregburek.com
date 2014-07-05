@@ -13,16 +13,16 @@ $padding: 20px;
  * Scheme comes from: http://colorschemedesigner.com/#0041Tojd352Le
  */
 
-$text-color: #000;
+$text-color: #403E3F;
 $title-color: #FFF;
-$header-color: #FC4E70;
-$alt-header-color1: #324C88;
-$alt-header-color2: #A13939;
-$alt-header-color3: #349234;
-$footer-color: #FFFEFC;
-$link-color: #1A8E8E;
-$link-active-color: #ED2C2C;
-$visited-color: #0D3B3B;
+$header-color: #FF0860;
+$alt-header-color1: #403E3F;
+$alt-header-color2: #403E3F;
+$alt-header-color3: #403E3F;
+$footer-color: #FF0860;
+$link-color: #B2174F;
+$link-active-color: #B2174F;
+$visited-color: #B2174F;
 $code-bg-color: lighten(#E8E8E8, 5%);
 $code-border: #D4D4D4;
 
@@ -161,7 +161,7 @@ header {
     h1 {
       background-size: 70px;
       font-size: 40px;
-      height: 85px;
+      height: 55px;
       line-height: 2em;
       padding-left: 80px;
       width: 100%;
@@ -263,7 +263,7 @@ footer {
   }
 
   a {
-    color: $link-color;
+    color: $title-color;
 
     &:hover {
       color: $alt-header-color1;
@@ -273,16 +273,6 @@ footer {
 
 .pagination {
   margin-right: 1em;
-}
-
-.tags {
-  a {
-     color: desaturate($link-color, 40%);
-
-     &:hover {
-      color: desaturate($link-active-color, 40%);
-     }
-  }
 }
 
 /* syntax highlighting */
@@ -309,6 +299,29 @@ code {
   @media screen and (max-width: 600px) {
     height: 150px;
     width: 200px;
+  }
+}
+
+/* page specific styles */
+.index {
+  section {
+    h3 {
+      font-size: 1.1em;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 1.5em;
+    }
+
+    a {
+      color: $text-color;
+      font-weight: normal;
+
+      &:hover {
+        color: $link-active-color;
+      }
+    }
   }
 }
 
