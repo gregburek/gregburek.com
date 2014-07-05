@@ -21,6 +21,7 @@ embedded ruby environment, veewee is not able to find the vagrant gem to add
 to, making it a little harder to use for ruby newbies. 
 
 There is a way around this, though. If you were to run:
+
 ```
 sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
 ```

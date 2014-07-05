@@ -1,0 +1,16 @@
+---
+title: Writing - Tags
+---
+
+<section id="writing-list">
+  <h1>Writing - Tags</h1>
+  <ul>
+    <% blog.tags.sort.each do |name, resource| %>
+      <li>
+        <h2>
+        <%= link_to "#{name} (#{resource.size})", tag_path(name) %>
+        </h2>
+      </li>
+    <% end %>
+  </ul>
+</section>

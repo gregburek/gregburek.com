@@ -1,0 +1,458 @@
+@import "compass";
+@import "font-awesome/font-awesome";
+@import "rouge";
+@charset "UTF-8";
+
+$logo-img: 'logo.png';
+$logo-img-2x: 'logo-2x.png';
+$max-width: 760px;
+$padding: 20px;
+
+/*
+ * Colors
+ * Scheme comes from: http://colorschemedesigner.com/#0041Tojd352Le
+ */
+
+$text-color: #000;
+$title-color: #FFF;
+$header-color: #FC4E70;
+$alt-header-color1: #324C88;
+$alt-header-color2: #A13939;
+$alt-header-color3: #349234;
+$footer-color: #FFFEFC;
+$link-color: #1A8E8E;
+$link-active-color: #ED2C2C;
+$visited-color: #0D3B3B;
+$code-bg-color: lighten(#E8E8E8, 5%);
+$code-border: #D4D4D4;
+
+$header-width: 360px;
+
+
+
+body {
+  background-color: #FFFEFC;
+  color: $text-color;
+  font-family: proxima-nova;
+  font-size: 18px;
+  line-height: 1.5em;
+}
+
+h1,h2,h3,h4 {
+  line-height: 1.2em;
+}
+
+h2, h3, h4 {
+  font-weight: 600;
+}
+
+h1 {
+  color: $alt-header-color1;
+  font-size: 2.5em;
+  font-weight: 700;
+}
+
+h2 {
+  color: $alt-header-color2;
+  font-size: 1.6em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+p {
+  margin: 1.2em 0;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+  word-wrap: break-word;
+
+  @include transition-duration(0.5s);
+  @include transition-property(color);
+
+  &:hover {
+    color: $link-active-color;
+    text-decoration: underline;
+  }
+}
+
+img {
+  /* make sure images don't get too big on mobile */
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+blockquote {
+  margin: 1em 20px;
+  padding: 10px 20px;
+  border-left: solid 10px $header-color;
+  background: lighten($header-color, 20%);
+}
+
+section {
+  margin-bottom: 2em;
+}
+
+*:target {
+  background: lighten($header-color, 20%);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: $max-width;
+  padding: 0 $padding;
+}
+
+header {
+  @include clearfix;
+
+  background-color: $header-color;
+  margin-bottom: 40px;
+
+  a {
+    color: $title-color;
+
+    &:hover {
+      color: $alt-header-color2;
+      text-decoration: none;
+    }
+  }
+
+  h1 {
+    background: image-url($logo-img) no-repeat;
+    background-size: image-width($logo-img) image-height($logo-img);
+    font-size: 55px;
+    height: image-height($logo-img);
+    line-height: 1.4em;
+    margin: 0 auto;
+    padding-left: image-width($logo-img) + 10px;
+    width: $header-width;
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      background-image: image-url($logo-img-2x);
+    }
+
+    a:hover {
+      color: $title-color;
+    }
+  }
+
+  nav {
+    margin: -35px auto 0 auto;
+    padding-left: image-width($logo-img) + 10px;
+    width: $header-width;
+  }
+
+  .footer-only {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  header {
+    h1 {
+      background-size: 70px;
+      font-size: 40px;
+      height: 85px;
+      line-height: 2em;
+      padding-left: 80px;
+      width: 100%;
+    }
+
+    nav {
+      margin-top: 0;
+      padding-left: 0;
+      text-align: center;
+      width: auto;
+    }
+  }
+
+  header, footer {
+    .container {
+      padding: 0;
+    }
+  }
+}
+
+nav {
+  ul {
+    margin: 0 0 0 -8px;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+
+    a {
+      margin: 0 5px;
+      padding: 10px 8px;
+    }
+  }
+
+  a {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  nav {
+    li {
+      a {
+        margin: 0 4px;
+        padding: 10px 4px;
+      }
+    }
+  }
+}
+
+.social {
+  li {
+    line-height: 1.2em;
+    margin-bottom: 0.8em;
+  }
+
+  a {
+    display: inline-block;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.social-nav {
+  font-size: 30px;
+
+  li {
+    margin-left: 15px;
+
+    @include inline-block;
+  }
+}
+
+footer {
+  background: $footer-color;
+  clear: both;
+  margin-top: 50px;
+
+  @include clearfix;
+
+  ul {
+    float: left;
+    margin: 0;
+    padding: 0.5em 0;
+  }
+
+  nav ul {
+    float: right;
+    font-size: 16px;
+
+    @media screen and (max-width: 650px) {
+      clear: left;
+      float: left;
+      padding-top: 0;
+    }
+  }
+
+  a {
+    color: $link-color;
+
+    &:hover {
+      color: $alt-header-color1;
+    }
+  }
+}
+
+.pagination {
+  margin-right: 1em;
+}
+
+.tags {
+  a {
+     color: desaturate($link-color, 40%);
+
+     &:hover {
+      color: desaturate($link-active-color, 40%);
+     }
+  }
+}
+
+/* syntax highlighting */
+.highlight, code {
+  background-color: $code-bg-color;
+  border: solid 1px $code-border;
+  font-family: source-code-pro;
+  font-size: 0.9em;
+}
+.highlight {
+  @include border-radius(10px);
+  padding: 5px 10px;
+}
+code {
+  @include border-radius(5px);
+  padding: 0 5px;
+}
+
+/* media specific styles */
+.youtube {
+  height: 315px;
+  width: 560px;
+
+  @media screen and (max-width: 600px) {
+    height: 150px;
+    width: 200px;
+  }
+}
+
+.article-date {
+  float: left;
+  margin-right: 1em;
+}
+
+.article-details {
+  color: #877F7F;
+  font-size: 0.9em;
+  line-height: 1.3em;
+
+  @include clearfix;
+}
+
+#writing-list {
+  h2 {
+    font-size: 1.3em;
+    font-weight: normal;
+    margin: 0;
+
+    a {
+      color: $alt-header-color2;
+
+      &:hover {
+        color: $link-active-color;
+      }
+    }
+  }
+
+  li {
+    margin-bottom: 1.5em;
+  }
+
+  .tags {
+    margin: 0;
+  }
+}
+
+.writing {
+  h1 {
+    font-size: 2em;
+    margin-bottom: 0.1em;
+  }
+
+  ul {
+    list-style: disc;
+    padding: 0 0 0 30px;
+  }
+}
+
+.events {
+  h3, h4 {
+    margin: 0.2em 0;
+  }
+
+  li {
+    margin-bottom: 1.5em;
+  }
+}
+
+#headshot {
+  border: solid 1px $alt-header-color2;
+  padding: 5px;
+
+  &:hover {
+    border: solid 1px $link-active-color;
+  }
+}
+
+
+/*
+ * Writing helpers
+ */
+.internal-link {
+  color: darken($link-color, 10%);
+  opacity: 0.4;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.screenshot {
+  border: solid 1px $code-border;
+  border-radius: 10px;
+}
+
+.slide {
+  @include clearfix;
+  margin-bottom: 50px;
+
+  img {
+    border: solid 1px $code-border;
+    float: left;
+    margin-right: 2%;
+    width: 45%;
+
+    @media screen and (max-width: 750px) {
+      width: 95%;
+    }
+  }
+
+  div {
+    float: left;
+    padding-top: 10px;
+    width: 45%;
+
+    @media screen and (max-width: 750px) {
+      width: 95%;
+    }
+  }
+
+  p {
+    margin: 0 0 0.7em 0;
+  }
+}
+
+.solution {
+  background: lighten($header-color, 20%);
+  border: solid 1px $header-color;
+  border-radius: 10px;
+  overflow: hidden;
+
+  p {
+    margin: 1em 0;
+  }
+
+  a {
+    background: lighten($header-color, 10%);
+    color: black;
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+
+    @include transition-property(background);
+
+    &:hover {
+      background: lighten($header-color, 5%);
+    }
+  }
+}
+.solution > div {
+  padding: 0px 10px 10px;
+}
