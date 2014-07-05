@@ -31,7 +31,7 @@ Flickr Map view
 
 ![Flickr Map][flickr]
 
-[aperture]: ./aperture.png
-[flickr]: ./flickr.png
-[advanced]: ./advanced.jpg
-[export]: ./export.jpg
+[aperture]: 2011-11-11-export-aperture-to-flickr-with-GPS/aperture.png
+[flickr]: 2011-11-11-export-aperture-to-flickr-with-GPS/flickr.png
+[advanced]: 2011-11-11-export-aperture-to-flickr-with-GPS/advanced.jpg
+[export]: 2011-11-11-export-aperture-to-flickr-with-GPS/export.jpg
