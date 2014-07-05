@@ -1,8 +1,7 @@
 ---
 title: "Using veewee 0.2 with Vagrant omnibus"
 date: 2012-08-12 15:20
-comments: true
-categories: [vagrant, veewee, virtualization, testing]
+tags: [vagrant, veewee, virtualization, testing]
 ---
 
 I'm a huge fan of [Vagrant](http://vagrantup.com "Vagrant - Virtualized
