@@ -9,17 +9,23 @@ First, I [hardened SSH][1] on the mini and setup my laptop to log in without a
 password, but I didn't go through the SSHFS stuff, as I like AFP better (for
 the moment).  Now, I can access my Mini by running:
 
-        LAPTOP$ ssh -f -N -p PORT USER@OUTSIDEIP -L 1202:localhost:5900 -L 1203:localhost:548
+``` shell
+LAPTOP$ ssh -f -N -p PORT USER@OUTSIDEIP -L 1202:localhost:5900 -L 1203:localhost:548
+````
 
 Where PORT is the random port I choose when [hardening SSH][1], USER is the
 username on my mini and OUTSIDEIP is the external IP of my cable modem.  Then,
 I can exit from Terminal on my laptop, press command-K and run:
 
-        afp://localhost:1203
+``` shell
+afp://localhost:1203
+````
 
 and get the list of shared folders.  Or I can run:
 
-        vnc://localhost:1202 
+``` shell
+vnc://localhost:1202
+````
 
 and get Screen Sharing with the Mini behind all those firewalls.  
 
@@ -30,11 +36,15 @@ internet connection.
 
 If I would like to end the SSH tunnel, I run:
 
-        ps auxww | grep -i ssh
+``` shell
+ps auxww | grep -i ssh
+````
 
 After finding the ID of the process I do: 
 
-        kill -9 SSH_PID
+``` shell
+kill -9 SSH_PID
+````
 
 with the SSH ID.  
 

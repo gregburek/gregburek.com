@@ -22,7 +22,7 @@ to, making it a little harder to use for ruby newbies.
 
 There is a way around this, though. If you were to run:
 
-```
+``` shell
 sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
 ```
 veewee is installed to the vagrant embedded environment and `vagrant basebox`

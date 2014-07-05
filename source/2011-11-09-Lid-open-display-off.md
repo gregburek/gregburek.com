@@ -19,9 +19,17 @@ That's it. No magnets required.
 It takes a little bit more for this to work under OS X 10.7 Lion,
 though. Entering the following command in terminal seems to do the
 trick:
-        sudo nvram boot-args="iog=0x0" 
+
+``` shell
+sudo nvram boot-args="iog=0x0"
+````
+
 Undoing this is as simple as typing the following, also in terminal:
-        sudo nvram -d boot-args 
+
+``` shell
+sudo nvram -d boot-args 
+````
+
 You can also zap the PRAM (press Cmd+Opt+p+r at power up) to restore it
 to the new Lion behaviour. 
 

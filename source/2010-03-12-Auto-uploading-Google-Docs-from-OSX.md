@@ -33,13 +33,15 @@ somewhere.  I used /Users/USERNAME/Library/Scripts/GoogleDocs/
 2. Open Script Editor.app and it should pop up with an Untitled and blank
 script window.  Copy this into the window:
 
-		on adding folder items to this_folder after receiving added_items
-			repeat with aFile in added_items
-				do shell script "java -jar /SOMEWHERE/google-docs-upload-1.3.2.jar ¬ 
-					aFile -rf Downloads --skip-all -u YOURUSERNAME -p ¬ 
-					YOURPASSWORD >> /SOMEWHERE/GDocs-upload-log.txt"
-			end repeat
-		end adding folder items to
+``` applescript
+on adding folder items to this_folder after receiving added_items
+  repeat with aFile in added_items
+    do shell script "java -jar /SOMEWHERE/google-docs-upload-1.3.2.jar
+      aFile -rf Downloads --skip-all -u YOURUSERNAME -p
+      YOURPASSWORD >> /SOMEWHERE/GDocs-upload-log.txt"
+  end repeat
+end adding folder items to
+````
 
 
 3. Replace SOMEWHERE with the path to google-docs-upload, USERNAME with your

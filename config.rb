@@ -41,7 +41,7 @@ end
 
 page "feed.xml", :layout => false
 
-activate :syntax
+activate :syntax, wrap: true
 
 activate :directory_indexes
 
