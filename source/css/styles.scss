@@ -8,26 +8,14 @@ $logo-img-2x: 'logo-2x.png';
 $max-width: 760px;
 $padding: 20px;
 
-/*
- * Colors
- * Scheme comes from: http://colorschemedesigner.com/#0041Tojd352Le
- */
-
 $text-color: #403E3F;
 $title-color: #FFF;
 $header-color: #FF3366;
-$alt-header-color1: #403E3F;
-$alt-header-color2: #403E3F;
-$alt-header-color3: #403E3F;
+$alt-header-color: #403E3F;
 $link-color: #B2174F;
-$link-active-color: #B2174F;
 $visited-color: #B2174F;
 $code-bg-color: lighten(#E8E8E8, 5%);
 $code-border: #D4D4D4;
-
-$header-width: 360px;
-
-
 
 body {
   background-color: #FFFEFC;
@@ -43,16 +31,15 @@ h1,h2,h3,h4 {
 
 h2, h3, h4 {
   font-weight: 600;
+  color: $alt-header-color;
 }
 
 h1 {
-  color: $alt-header-color1;
   font-size: 2.5em;
   font-weight: 700;
 }
 
 h2 {
-  color: $alt-header-color2;
   font-size: 1.6em;
 }
 
@@ -73,7 +60,7 @@ a {
   @include transition-property(color);
 
   &:hover {
-    color: $link-active-color;
+    color: $link-color;
     text-decoration: underline;
   }
 }
@@ -114,13 +101,13 @@ header {
   @include clearfix;
 
   background-color: $header-color;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 
   a {
     color: $title-color;
 
     &:hover {
-      color: $alt-header-color2;
+      color: $alt-header-color;
       text-decoration: none;
     }
   }
@@ -128,12 +115,11 @@ header {
   h1 {
     background: image-url($logo-img) no-repeat;
     background-size: image-width($logo-img) image-height($logo-img);
-    font-size: 55px;
-    height: image-height($logo-img);
-    line-height: 1.4em;
+    font-size: 60px;
+    height: image-height($logo-img) + 10px;
+    line-height: 1.6em;
     margin: 0 auto;
     padding-left: image-width($logo-img) + 10px;
-    width: $header-width;
 
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
       background-image: image-url($logo-img-2x);
@@ -144,12 +130,6 @@ header {
     }
   }
 
-  nav {
-    margin: -35px auto 0 auto;
-    padding-left: image-width($logo-img) + 10px;
-    width: $header-width;
-  }
-
   .footer-only {
     display: none;
   }
@@ -158,11 +138,11 @@ header {
 @media screen and (max-width: 480px) {
   header {
     h1 {
-      background-size: 69px;
+      background-size: 55px;
       font-size: 40px;
-      height: 55px;
-      line-height: 2em;
-      padding-left: 93px;
+      height: 65px;
+      line-height: 1.4em;
+      padding-left: 65px;
       width: 100%;
     }
 
@@ -188,7 +168,7 @@ nav {
   }
 
   li {
-    display: inline-block;
+    @include inline-block;
 
     a {
       margin: 0 5px;
@@ -208,21 +188,6 @@ nav {
         margin: 0 4px;
         padding: 10px 4px;
       }
-    }
-  }
-}
-
-.social {
-  li {
-    line-height: 1.2em;
-    margin-bottom: 0.8em;
-  }
-
-  a {
-    display: inline-block;
-
-    &:hover {
-      text-decoration: none;
     }
   }
 }
@@ -254,7 +219,7 @@ footer {
     float: right;
     font-size: 16px;
 
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 480px) {
       clear: left;
       float: left;
       padding-top: 0;
@@ -265,7 +230,7 @@ footer {
     color: $title-color;
 
     &:hover {
-      color: $alt-header-color1;
+      color: $alt-header-color;
     }
   }
 }
@@ -304,11 +269,6 @@ code {
 /* page specific styles */
 .index {
   section {
-    h3 {
-      font-size: 1.1em;
-      margin: 0;
-    }
-
     li {
       margin-bottom: 1.5em;
     }
@@ -318,7 +278,7 @@ code {
       font-weight: normal;
 
       &:hover {
-        color: $link-active-color;
+        color: $link-color;
       }
     }
   }
@@ -344,10 +304,10 @@ code {
     margin: 0;
 
     a {
-      color: $alt-header-color2;
+      color: $alt-header-color;
 
       &:hover {
-        color: $link-active-color;
+        color: $link-color;
       }
     }
   }
@@ -370,16 +330,6 @@ code {
   ul {
     list-style: disc;
     padding: 0 0 0 30px;
-  }
-}
-
-.events {
-  h3, h4 {
-    margin: 0.2em 0;
-  }
-
-  li {
-    margin-bottom: 1.5em;
   }
 }
 
@@ -428,33 +378,4 @@ code {
   p {
     margin: 0 0 0.7em 0;
   }
-}
-
-.solution {
-  background: lighten($header-color, 20%);
-  border: solid 1px $header-color;
-  border-radius: 10px;
-  overflow: hidden;
-
-  p {
-    margin: 1em 0;
-  }
-
-  a {
-    background: lighten($header-color, 10%);
-    color: black;
-    cursor: pointer;
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-
-    @include transition-property(background);
-
-    &:hover {
-      background: lighten($header-color, 5%);
-    }
-  }
-}
-.solution > div {
-  padding: 0px 10px 10px;
 }
