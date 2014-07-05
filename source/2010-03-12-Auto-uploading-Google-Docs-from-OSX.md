@@ -38,7 +38,7 @@ somewhere. I used /Users/USERNAME/Library/Scripts/GoogleDocs/
 2. Open Script Editor.app and it should pop up with an Untitled and blank
 script window. Copy this into the window:
 
-``` applescript
+```applescript
 on adding folder items to this_folder after receiving added_items
   repeat with aFile in added_items
     do shell script "java -jar /SOMEWHERE/google-docs-upload-1.3.2.jar
