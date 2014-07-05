@@ -15,11 +15,10 @@ $padding: 20px;
 
 $text-color: #403E3F;
 $title-color: #FFF;
-$header-color: #FF0860;
+$header-color: #FF3366;
 $alt-header-color1: #403E3F;
 $alt-header-color2: #403E3F;
 $alt-header-color3: #403E3F;
-$footer-color: #FF0860;
 $link-color: #B2174F;
 $link-active-color: #B2174F;
 $visited-color: #B2174F;
@@ -159,11 +158,11 @@ header {
 @media screen and (max-width: 480px) {
   header {
     h1 {
-      background-size: 70px;
+      background-size: 69px;
       font-size: 40px;
       height: 55px;
       line-height: 2em;
-      padding-left: 80px;
+      padding-left: 93px;
       width: 100%;
     }
 
@@ -239,7 +238,7 @@ nav {
 }
 
 footer {
-  background: $footer-color;
+  background: $header-color;
   clear: both;
   margin-top: 50px;
 
@@ -383,16 +382,6 @@ code {
     margin-bottom: 1.5em;
   }
 }
-
-#headshot {
-  border: solid 1px $alt-header-color2;
-  padding: 5px;
-
-  &:hover {
-    border: solid 1px $link-active-color;
-  }
-}
-
 
 /*
  * Writing helpers
