@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Greg Burek</title>
+  <subtitle>Greg writes things</subtitle>
+  <id>http://blog.gregburek.com/</id>
+  <link href="http://blog.gregburek.com/"/>
+  <link href="http://blog.gregburek.com/feed.xml" rel="self"/>
+  <updated>2012-08-21T21:00:00-07:00</updated>
+  <author>
+    <name>Greg Burek</name>
+  </author>
+  <entry>
+    <title>Debugging a chef cookbook in vagrant with shef</title>
+    <link rel="alternate" href="/2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/"/>
+    <id>/2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/</id>
+    <published>2012-08-21T21:00:00-07:00</published>
+    <updated>2012-08-21T21:00:00-07:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;Sometimes &lt;a title="Vagrant - Virtualized development for
+the masses" href="http://vagrantup.com"&gt;Vagrant&lt;/a&gt;&amp;rsquo;s provisioning error messages can be a little cryptic. When
+troubleshooting a failing chef-solo run, tweaking a &lt;code&gt;run_list&lt;/code&gt; or debugging a
+new recipe, I&amp;rsquo;ve found it very handy to log into the partially provisioned VM
+with &lt;code&gt;vagrant ssh&lt;/code&gt; and then run: &lt;a title="Vagrant -
+Virtualized development for the masses" href="http://vagrantup.com"&gt;Vagrant&lt;/a&gt; is a great tool for developing and
+testing new chef cookbooks. After bringing up a new vm, and editing a
+cookbook,&lt;code&gt;vagrant provision&lt;/code&gt; runs the chef-solo provisioner and tests things
+out. However, when things fail, vagrant&amp;rsquo;s provisioning error messages can be a
+little cryptic. &lt;a title="Shef - Chef -
+Opscode Open Source Wiki" href="http://wiki.opscode.com/display/chef/Shef"&gt;Shef&lt;/a&gt; is a good tool for running cookbooks in isolation,
+but it needs some help to find all the configuration and attributes that
+vagrant provides. If my &lt;code&gt;new_and_broken&lt;/code&gt; cookbook is failing on a Ubuntu 12.04
+VM, all I need to do is run:&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
+    (output snip)
+chef &amp;gt; recipe
+chef:recipe &amp;gt; include_recipe 'new_and_broken'
+    (huge output snip)
+chef:recipe &amp;gt; run_chef
+    (where the error happens)
+&lt;/pre&gt;
+
+&lt;p&gt;This loads shef in solo mode, with vagrant generated configuration and JSON
+attributes files, enters into recipe mode, loads my new and broken cookbook and
+runs it. The resulting error messages are usually more helpful than &lt;code&gt;vagrant
+provision&lt;/code&gt; and I can get back to work. &lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Using veewee 0.2 with Vagrant omnibus</title>
+    <link rel="alternate" href="/2012/08/12/using-veewee-0-dot-2-with-vagrant-omnibus/"/>
+    <id>/2012/08/12/using-veewee-0-dot-2-with-vagrant-omnibus/</id>
+    <published>2012-08-12T15:20:00-07:00</published>
+    <updated>2012-08-12T15:20:00-07:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;I&amp;rsquo;m a huge fan of &lt;a title="Vagrant - Virtualized
+development for the masses" href="http://vagrantup.com"&gt;Vagrant&lt;/a&gt;&amp;rsquo;s recent omnibus style installer. It makes it so
+much easier to recommend to others as they can be up and running with Vagrant
+extremely quickly, instead of wondering why their distro packaged ruby
+installation isn&amp;rsquo;t working. However, because Vagrant is using an embedded ruby
+installation, other gems which add to vagrant are unable to find it. &lt;/p&gt;
+
+&lt;p&gt;One such tool is &lt;a title="Veewee on
+Github" href="http://github.com/jedi4ever/veewee/"&gt;veewee&lt;/a&gt;, which makes it dead simple to automatically build VMs from
+kickstarter files and basic scripts. Version 0.2 also adds a great subcommand
+to Vagrant called &amp;lsquo;basebox&amp;rsquo; which lets you use veewee to build baseboxes that
+Vagrant may then use to launch new VMs. But with Vagrant being run from its own
+embedded ruby environment, veewee is not able to find the vagrant gem to add
+to, making it a little harder to use for ruby newbies. &lt;/p&gt;
+
+&lt;p&gt;There is a way around this, though. If you were to run:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
+&lt;/pre&gt;
+
+&lt;p&gt;veewee is installed to the vagrant embedded environment and &lt;code&gt;vagrant basebox&lt;/code&gt;
+is available and functions as expected. I&amp;rsquo;ve done this on my OSX 10.8 box that
+uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. &lt;/p&gt;
+
+&lt;p&gt;Let me know if this does or doesn&amp;rsquo;t work for you.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Rate Limiting Function Calls in Python with a Decorator</title>
+    <link rel="alternate" href="/2011/12/05/Rate-limiting-with-decorators/"/>
+    <id>/2011/12/05/Rate-limiting-with-decorators/</id>
+    <published>2011-12-05T00:00:00-08:00</published>
+    <updated>2011-12-05T00:00:00-08:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;source: &lt;a href="http://stackoverflow.com/a/667706/586172"&gt;Stack Overflow &amp;ldquo;What&amp;rsquo;s a good rate limiting algorithm?&amp;rdquo;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I making this into a post because I have found it so handy. Some web
+APIs have rate limits on requests per minute or you may want to play nice
+and not overwhelm the service. In Python, you can use this decorator to
+rate limit a function that may handle the API access: &lt;/p&gt;
+&lt;pre class="highlight python"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;RateLimited&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;maxPerSecond&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;minInterval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;maxPerSecond&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;decorate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;lastTimeCalled&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;0.0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;rateLimitedFunction&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+            &lt;span class="n"&gt;elapsed&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;lastTimeCalled&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="n"&gt;leftToWait&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;minInterval&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;elapsed&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;leftToWait&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sleep&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;leftToWait&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;ret&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;lastTimeCalled&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;time&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;clock&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+            &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;ret&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;rateLimitedFunction&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;decorate&lt;/span&gt;
+
+&lt;span class="nd"&gt;@RateLimited&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# 2 per second at most&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;PrintNumber&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;num&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;num&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;"__main__"&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;"This should print 1,2,3... at about 2 per second."&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;PrintNumber&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;This answer is simpler than setting up a queue system and is blocking,
+which can be good for sequential jobs. &lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Exporting from Aperture 3.2 to Flickr with location information metadata</title>
+    <link rel="alternate" href="/2011/11/11/export-aperture-to-flickr-with-GPS/"/>
+    <id>/2011/11/11/export-aperture-to-flickr-with-GPS/</id>
+    <published>2011-11-11T00:00:00-08:00</published>
+    <updated>2011-11-11T00:00:00-08:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;Over the month of October, I took an incredible trip to Singapore and Japan.
+That trip deserves its own post, but until then,
+&lt;a title="Singapore 2011 on Flickr" href="http://www.flickr.com/photos/gregburek/sets/72157628032336264/"&gt;these&lt;/a&gt;
+&lt;a title="Japan
+2011 on Flickr" href="http://www.flickr.com/photos/gregburek/sets/72157627963313507/"&gt;photos&lt;/a&gt; will have to suffice. &lt;/p&gt;
+
+&lt;p&gt;However, I ran into a little snag while editing and publishing everything. The
+problem was that each photo&amp;rsquo;s GPS/location data wasn&amp;rsquo;t making the jump to
+Flickr from Aperture. The solution was these two check boxes that needed to be
+selected in order for the location info to be correctly exported: one in
+Advanced Options and another in Export Preferences.&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Aperture Advanced Options" src="images/advanced.jpg" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Aperture Export Preferences" src="images/export.jpg" /&gt;&lt;/p&gt;
+
+&lt;p&gt;So in the end, if you make sure &amp;ldquo;Include location information for published
+photos&amp;rdquo; and &amp;ldquo;Include location info in exported photos&amp;rdquo; are both selected,
+everything works beautifully. &lt;/p&gt;
+
+&lt;p&gt;Aperture Places view&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Aperture Places" src="images/aperture.png" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Flickr Map view&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="Flickr Map" src="images/flickr.png" /&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Lid Open, Display Off</title>
+    <link rel="alternate" href="/2011/11/09/Lid-open-display-off/"/>
+    <id>/2011/11/09/Lid-open-display-off/</id>
+    <published>2011-11-09T00:00:00-08:00</published>
+    <updated>2011-11-09T00:00:00-08:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;It has been more than a year since my &lt;a href="http://blog.gregburek.com/2010/10/21/macbook-lcd-trick.html"&gt;last
+post&lt;/a&gt; and that
+computer has been retired. However, I still find it useful to run my new
+MacBook Air attached to an external monitor and with its internal display
+disabled. A few days ago, I found a better and more permanent solution than a
+flimsy magnet: &lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Attach the closed MacBook to an external display&lt;/li&gt;
+&lt;li&gt;Wake the MacBook with an external input device, like usb or bluetooth
+keyboard. &lt;/li&gt;
+&lt;li&gt;Open the lid of the MacBook and the internal display will remain off&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;That&amp;rsquo;s it. No magnets required. &lt;/p&gt;
+
+&lt;p&gt;It takes a little bit more for this to work under OS X 10.7 Lion,
+though. Entering the following command in terminal seems to do the
+trick:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;sudo nvram boot-args&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"iog=0x0"&lt;/span&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;Undoing this is as simple as typing the following, also in terminal:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;sudo nvram -d boot-args 
+&lt;/pre&gt;
+
+&lt;p&gt;You can also zap the PRAM (press Cmd+Opt+p+r at power up) to restore it
+to the new Lion behaviour. &lt;/p&gt;
+
+&lt;p&gt;This works great and I&amp;rsquo;ve been using it to improve my laptop&amp;rsquo;s ventilation and
+wireless reception.&lt;/p&gt;
+
+&lt;p&gt;I first saw this documented here: &lt;a href="http://hints.macworld.com/article.php?story=20110901113922148"&gt;Mac OS X Hints - 10.7: Disable internal
+laptop display when external display is
+attached&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Trick a Macbook into thinking it is closed</title>
+    <link rel="alternate" href="/2010/10/21/macbook-lcd-trick/"/>
+    <id>/2010/10/21/macbook-lcd-trick/</id>
+    <published>2010-10-21T00:00:00-07:00</published>
+    <updated>2010-10-21T00:00:00-07:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;em&gt;UPDATED Nov 2011&lt;/em&gt;: I found a better way to do this that is posted
+&lt;a href="/2011/11/09/Lid-open-display-off.html"&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Up until now, I have run my laptop at work with the lid closed and everything
+on an external monitor on my desk.  However, I was starting to get really
+concerned about the heat (60C idle and 95C under load) and how the little fan
+was struggling to keep up.  &lt;/p&gt;
+
+&lt;p&gt;So, I started looking around for tips about how to leave the lid open, but
+trick my MacBook into thinking the lid was closed and leave the LCD off.  I
+found a few &lt;a title="Using MacBook Open, with External Monitor, MB LCD Off?" href="http://discussions.apple.com/message.jspa?messageID=9390796"&gt;good&lt;/a&gt;
+&lt;a title="Trick a
+MacBook's Lid" href="http://forums.macrumors.com/archive/index.php//t-625443.html"&gt;tips&lt;/a&gt;, but I still had to hunt with a magnet for that magical switch
+point. Well, I found it and the picture is below.  Things look pretty frosty so
+far, let&amp;rsquo;s hope this extends the life of my 3 year old laptop a bit more.  &lt;/p&gt;
+
+&lt;p&gt;&lt;a title="Macbook with lid trick magnet attached by greg.burek, on Flickr" href="http://www.flickr.com/photos/gregburek/5103718702/"&gt;&lt;img alt="MacBook with lid-closed magnet
+applied" src="http://farm5.static.flickr.com/4111/5103718702_6c0ef9e619.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
+</feed>
