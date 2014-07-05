@@ -7,7 +7,7 @@ That trip deserves its own post, but until then,
 [these](http://www.flickr.com/photos/gregburek/sets/72157628032336264/
 "Singapore 2011 on Flickr")
 [photos](http://www.flickr.com/photos/gregburek/sets/72157627963313507/ "Japan
-2011 on Flickr") will have to suffice. 
+2011 on Flickr") will have to suffice.
 
 However, I ran into a little snag while editing and publishing everything. The
 problem was that each photo's GPS/location data wasn't making the jump to
@@ -21,7 +21,7 @@ Advanced Options and another in Export Preferences.
 
 So in the end, if you make sure "Include location information for published
 photos" and "Include location info in exported photos" are both selected,
-everything works beautifully. 
+everything works beautifully.
 
 Aperture Places view
 
