@@ -2127,7 +2127,7 @@ textarea {
 body {
   background-color: #FFFEFC;
   color: #403e3f;
-  font-family: proxima-nova;
+  font-family: ff-tisa-sans-web-pro;
   font-size: 18px;
   line-height: 1.5em; }
 
@@ -2348,7 +2348,7 @@ footer {
 .highlight, code {
   background-color: whitesmoke;
   border: solid 1px #d4d4d4;
-  font-family: source-code-pro;
+  font-family: anonymous-pro;
   font-size: 0.9em; }
 
 /* line 284, /Users/gregburek/code/gregburek.com/source/css/styles.scss */
