@@ -8,12 +8,12 @@ title: About
     <%= partial "partials/bio" %>
   </section>
   <section>
-    <h2>Contact me</h2>
-    <p>You can contact me via <a href="mailto:greg@gregburek.com">my email</a>
-      for general inquiries.
-  </section>
-  <section>
     <ul class="social fa-ul">
+      <li>
+      <a href="mailto:greg@gregburek.com">
+        <i class="fa-li fa fa-envelope"></i>Email
+      </a>
+      </li>
       <li>
         <a href="https://twitter.com/gregburek">
           <i class="fa-li fa fa-twitter"></i>Twitter
@@ -21,7 +21,7 @@ title: About
       </li>
       <li>
         <a href="https://github.com/gregburek">
-          <i class="fa-li fa fa-github-alt"></i>GitHub
+          <i class="fa-li fa fa-github"></i>GitHub
         </a>
       </li>
       <li>
@@ -31,13 +31,16 @@ title: About
       </li>
       <li>
         <a href="http://www.linkedin.com/in/gregburek">
-          <i class="fa-li fa fa-linkedin-square"></i>LinkedIn
+          <i class="fa-li fa fa-linkedin"></i>LinkedIn
         </a>
       </li>
       <li>
         <a href="http://www.flickr.com/photos/gregburek/">
           <i class="fa-li fa fa-flickr"></i>Flickr
         </a>
+      </li>
+      <li>
+        <%= link_to "<i class=\"fa-li fa fa-rss\"></i>rss feed", "/blog/feed.xml" %>
       </li>
     </ul>
   </section>
@@ -50,12 +53,9 @@ title: About
       <a href="http://fontawesome.io">Font Awesome by Dave Gandy</a>.
       <a href="http://juliepagano.com/blog/2013/11/10/site-redesign-using-middleman/">Julie Pagano</a>
     </p>
-    <p>If you find any issues with the site, please file an
+    <p>File an
       <%= link_to "issue", "https://github.com/gregburek/gregburek.com/issues" %> or
       <%= link_to "pull request", "https://github.com/gregburek/gregburek.com/pulls" %>
-    </p>
-    <p>
-      <%= link_to "<i class=\"fa fa-rss\"></i> rss feed", "/blog/feed.xml" %>
     </p>
   </section>
 </article>

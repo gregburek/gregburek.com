@@ -192,6 +192,21 @@ nav {
   }
 }
 
+.social {
+  li {
+    line-height: 1.2em;
+    margin-bottom: 0.8em;
+  }
+
+  a {
+    display: inline-block;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
 .social-nav {
   font-size: 30px;
 
