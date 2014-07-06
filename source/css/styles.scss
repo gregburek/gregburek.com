@@ -233,12 +233,6 @@ footer {
   nav ul {
     float: right;
     font-size: 16px;
-
-    @media screen and (max-width: 480px) {
-      clear: left;
-      float: left;
-      padding-top: 0;
-    }
   }
 
   a {
