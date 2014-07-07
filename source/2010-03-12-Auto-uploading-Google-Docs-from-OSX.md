@@ -3,7 +3,7 @@ title: Automatically upload new files to Google Documents from OSX
 date: 2010-03-12
 ---
 
-#The Problem
+##The Problem
 
 I get many, many, many presentations, spreadsheets and PDFs sent
 to me over email. I usually View them through Google Docs or Download them and
@@ -15,7 +15,7 @@ computer, usually located in our [cleanroom](http://www.nanotech.ucsb.edu/).
 those fab computers are locked down hard and I can't edit things in the iPhone
 app.
 
-#The Caveat
+##The Caveat
 
 Since I use Gmail for everything, I could just view the file
 through the web interface on my iPhone or another computer and import things to
@@ -30,7 +30,7 @@ scriptable readouts of passwords globally enabled.
 
 So, for the record, this is my hacked together solution.
 
-#The Solution
+##The Solution
 
 1. Download [google-docs-upload](http://code.google.com/p/google-docs-upload/) and put it
 somewhere. I used /Users/USERNAME/Library/Scripts/GoogleDocs/
