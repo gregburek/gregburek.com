@@ -2,10 +2,10 @@
 pageable: true
 per_page: 12
 ---
-<% content_for(:title, "Writing - Tagged '#{tagname}'") %>
+<% content_for(:title, "Tagged '#{tagname}'") %>
 
-<section id="writing-list">
-  <h1>Writing tagged '<%= tagname %>'</h1>
+<section>
+  <h1>Tagged '<%= tagname %>'</h1>
 
   <% page_articles.each_with_index do |article, i| %>
     <ul>
@@ -40,8 +40,4 @@ per_page: 12
     <% end %>
     </p>
   <% end %>
-
-  <div>
-    Browse by tags <%= link_to "here", "/tags/" %>.
-  </div>
 </section>
