@@ -55,6 +55,63 @@
   <ul>
       <li>
      <article class="writing">
+       <h1><a href="2014/07/06/moving-site-to-middleman/">Moving site to Middleman</a></h1>
+       <div class="article-details">
+         <div class="article-date">
+           <i class="fa fa-paper-plane-o"></i>
+           July 06, 2014
+           <div class="tags">
+             tags:
+             <a href="/tags/design/">design</a>,
+             <a href="/tags/meta/">meta</a>,
+             <a href="/tags/writing/">writing</a>
+           </div>
+         </div>
+       </div>
+       <p>This is me attempting to resurrect my blog after several years of silence. This
+has also given me a chance to redesign things and adopt another static sight
+generator.</p>
+
+<p>Octopress served me well, but I felt like it was difficult to grasp the
+fundamentals and hard to pick up after a while away. I went looking for new site
+framework and found <a href="http://middlemanapp.com/">Middleman</a>. I liked that it was
+written in Ruby and I really liked the tutorials I found for it.</p>
+
+<p>In particular, Julie Pagano&rsquo;s fantastic
+<a href="http://juliepagano.com/blog/2013/11/10/site-redesign-using-middleman/">tutorial</a>
+was invaluable in getting me past a bunch of unexpected things.</p>
+
+<p>The plugins I am using are:</p>
+
+<ul>
+<li><a href="https://github.com/middleman/middleman-blog">middleman-blog</a> for support of
+the article format</li>
+<li><a href="https://github.com/neo/middleman-gh-pages">middleman-gh-pages</a> for an easy
+GitHub pages integrated workflow</li>
+<li><a href="https://github.com/middleman/middleman-blog">middleman-syntax</a> for syntax
+highlighting of code snippets</li>
+</ul>
+
+<p>Starting from a blank Gemfile, unfortunately, seemed to not give properly
+rendered code syntax blocks.</p>
+
+<p>An unmerged <a href="https://github.com/middleman/middleman-syntax/pull/42">PR</a> appears
+to address the problem, but I found that using Julie Pagano&rsquo;s
+<a href="https://github.com/juliepagano/juliepagano.com/blob/master/Gemfile.lock">Gemfile.lock</a>
+also worked very well. I am very grateful that it was available.</p>
+
+<p>The rest of the work was about adapting my strange icon color scheme into
+something that doesn&rsquo;t repulse and offend. Mixed results, I would say.</p>
+
+<p>Now that this is set up, I have high hopes to use this new system to write more
+about technology and my experiences with it.</p>
+
+<p>The code for this site now resides on <a href="https://github.com/gregburek/gregburek.com">GitHub</a></p>
+
+     </article>
+     </li>
+      <li>
+     <article class="writing">
        <h1><a href="2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/">Debugging a chef cookbook in vagrant with shef</a></h1>
        <div class="article-details">
          <div class="article-date">

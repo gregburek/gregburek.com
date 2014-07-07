@@ -5,10 +5,60 @@
   <id>http://blog.gregburek.com/</id>
   <link href="http://blog.gregburek.com/"/>
   <link href="http://blog.gregburek.com/feed.xml" rel="self"/>
-  <updated>2012-08-21T21:00:00-07:00</updated>
+  <updated>2014-07-06T18:57:00-07:00</updated>
   <author>
     <name>Greg Burek</name>
   </author>
+  <entry>
+    <title>Moving site to Middleman</title>
+    <link rel="alternate" href="/2014/07/06/moving-site-to-middleman/"/>
+    <id>/2014/07/06/moving-site-to-middleman/</id>
+    <published>2014-07-06T18:57:00-07:00</published>
+    <updated>2014-07-06T18:57:00-07:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;This is me attempting to resurrect my blog after several years of silence. This
+has also given me a chance to redesign things and adopt another static sight
+generator.&lt;/p&gt;
+
+&lt;p&gt;Octopress served me well, but I felt like it was difficult to grasp the
+fundamentals and hard to pick up after a while away. I went looking for new site
+framework and found &lt;a href="http://middlemanapp.com/"&gt;Middleman&lt;/a&gt;. I liked that it was
+written in Ruby and I really liked the tutorials I found for it.&lt;/p&gt;
+
+&lt;p&gt;In particular, Julie Pagano&amp;rsquo;s fantastic
+&lt;a href="http://juliepagano.com/blog/2013/11/10/site-redesign-using-middleman/"&gt;tutorial&lt;/a&gt;
+was invaluable in getting me past a bunch of unexpected things.&lt;/p&gt;
+
+&lt;p&gt;The plugins I am using are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/middleman/middleman-blog"&gt;middleman-blog&lt;/a&gt; for support of
+the article format&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/neo/middleman-gh-pages"&gt;middleman-gh-pages&lt;/a&gt; for an easy
+GitHub pages integrated workflow&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/middleman/middleman-blog"&gt;middleman-syntax&lt;/a&gt; for syntax
+highlighting of code snippets&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Starting from a blank Gemfile, unfortunately, seemed to not give properly
+rendered code syntax blocks.&lt;/p&gt;
+
+&lt;p&gt;An unmerged &lt;a href="https://github.com/middleman/middleman-syntax/pull/42"&gt;PR&lt;/a&gt; appears
+to address the problem, but I found that using Julie Pagano&amp;rsquo;s
+&lt;a href="https://github.com/juliepagano/juliepagano.com/blob/master/Gemfile.lock"&gt;Gemfile.lock&lt;/a&gt;
+also worked very well. I am very grateful that it was available.&lt;/p&gt;
+
+&lt;p&gt;The rest of the work was about adapting my strange icon color scheme into
+something that doesn&amp;rsquo;t repulse and offend. Mixed results, I would say.&lt;/p&gt;
+
+&lt;p&gt;Now that this is set up, I have high hopes to use this new system to write more
+about technology and my experiences with it.&lt;/p&gt;
+
+&lt;p&gt;The code for this site now resides on &lt;a href="https://github.com/gregburek/gregburek.com"&gt;GitHub&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Debugging a chef cookbook in vagrant with shef</title>
     <link rel="alternate" href="/2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/"/>
@@ -210,35 +260,6 @@ wireless reception.&lt;/p&gt;
 &lt;p&gt;I first saw this documented here: &lt;a href="http://hints.macworld.com/article.php?story=20110901113922148"&gt;Mac OS X Hints - 10.7: Disable internal
 laptop display when external display is
 attached&lt;/a&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Trick a Macbook into thinking it is closed</title>
-    <link rel="alternate" href="/2010/10/21/macbook-lcd-trick/"/>
-    <id>/2010/10/21/macbook-lcd-trick/</id>
-    <published>2010-10-21T00:00:00-07:00</published>
-    <updated>2010-10-21T00:00:00-07:00</updated>
-    <author>
-      <name>Greg Burek</name>
-    </author>
-    <content type="html">&lt;p&gt;&lt;em&gt;UPDATED Nov 2011&lt;/em&gt;: I found a better way to do this that is posted
-&lt;a href="/2011/11/09/Lid-open-display-off.html"&gt;here&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Up until now, I have run my laptop at work with the lid closed and everything
-on an external monitor on my desk.  However, I was starting to get really
-concerned about the heat (60C idle and 95C under load) and how the little fan
-was struggling to keep up.  &lt;/p&gt;
-
-&lt;p&gt;So, I started looking around for tips about how to leave the lid open, but
-trick my MacBook into thinking the lid was closed and leave the LCD off.  I
-found a few &lt;a title="Using MacBook Open, with External Monitor, MB LCD Off?" href="http://discussions.apple.com/message.jspa?messageID=9390796"&gt;good&lt;/a&gt;
-&lt;a title="Trick a
-MacBook's Lid" href="http://forums.macrumors.com/archive/index.php//t-625443.html"&gt;tips&lt;/a&gt;, but I still had to hunt with a magnet for that magical switch
-point. Well, I found it and the picture is below.  Things look pretty frosty so
-far, let&amp;rsquo;s hope this extends the life of my 3 year old laptop a bit more.  &lt;/p&gt;
-
-&lt;p&gt;&lt;a title="Macbook with lid trick magnet attached by greg.burek, on Flickr" href="http://www.flickr.com/photos/gregburek/5103718702/"&gt;&lt;img alt="MacBook with lid-closed magnet
-applied" src="http://farm5.static.flickr.com/4111/5103718702_6c0ef9e619.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
 </feed>
