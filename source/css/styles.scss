@@ -27,16 +27,24 @@ body {
 
 h1,h2,h3,h4 {
   line-height: 1.2em;
+  color: $alt-header-color;
 }
 
 h2, h3, h4 {
   font-weight: 600;
-  color: $alt-header-color;
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 2em;
+  margin-bottom: 0.1em;
   font-weight: 700;
+  a {
+    color: $text-color;
+
+    &:hover {
+      color: $link-color;
+    }
+  }
 }
 
 h2 {
@@ -275,23 +283,6 @@ code {
   }
 }
 
-/* page specific styles */
-.index {
-  section {
-    li {
-      margin-bottom: 1.5em;
-    }
-
-    a {
-      color: $text-color;
-      font-weight: normal;
-
-      &:hover {
-        color: $link-color;
-      }
-    }
-  }
-}
 
 .article-date {
   float: left;
@@ -306,36 +297,7 @@ code {
   @include clearfix;
 }
 
-#writing-list {
-  h2 {
-    font-size: 1.3em;
-    font-weight: normal;
-    margin: 0;
-
-    a {
-      color: $alt-header-color;
-
-      &:hover {
-        color: $link-color;
-      }
-    }
-  }
-
-  li {
-    margin-bottom: 1.5em;
-  }
-
-  .tags {
-    margin: 0;
-  }
-}
-
 .writing {
-  h1 {
-    font-size: 2em;
-    margin-bottom: 0.1em;
-  }
-
   ul {
     list-style: disc;
     padding: 0 0 0 30px;

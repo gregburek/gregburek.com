@@ -4,7 +4,7 @@
     <div class="article-details">
       <div class="article-date">
         <i class="fa fa-paper-plane-o"></i>
-        <%= current_article.date.strftime('%Y-%m-%d') %>
+        <%= current_article.date.strftime('%B %d, %Y') %>
         <div class="tags">
           tags:
           <% current_article.tags.sort.each_with_index do |tag, i| %>
