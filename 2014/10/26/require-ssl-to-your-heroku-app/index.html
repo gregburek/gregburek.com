@@ -9,7 +9,7 @@
     <!-- Use title if it's in the page YAML frontmatter -->
     <title>
       Greg Burek - 
-      
+      Require SSL to your Heroku app
       
     </title>
     <meta name="description" content="">
@@ -36,7 +36,7 @@
 
     </script>
   </head>
-  <body class="x2014 x2014_index">
+  <body class="x2014 x2014_10 x2014_10_26 x2014_10_26_require-ssl-to-your-heroku-app x2014_10_26_require-ssl-to-your-heroku-app_index">
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
@@ -44,23 +44,53 @@
     <header>
   <div class="container">
     <h1>
-      <a href="../">Greg Burek</a>
+      <a href="../../../../">Greg Burek</a>
     </h1>
   </div>
 </header>
 
 
     <div class="container">
-      <h1>Archive for
-    2014
-</h1>
+        <article class="writing">
+    <h1>Require SSL to your Heroku app</h1>
+    <div class="article-details">
+      <div class="article-date">
+        <i class="fa fa-paper-plane-o"></i>
+        October 26, 2014
+        <div class="tags">
+          tags:
+        </div>
+      </div>
+    </div>
+    <p>Configuring your Heroku app so that it will redirect insecure HTTP traffic to an
+HTTPS endpoint can be finicky and is language/framework specific. I was able to
+figure out a general and language independent method thanks to the <a href="https://github.com/ryandotsmith/nginx-buildpack">nginx
+buildpack</a>. By using nginx,
+you can redirect some or all http traffic to your app to the https verison of
+your site.</p>
 
+<p>By adding:</p>
+<pre class="highlight plaintext">if ($http_x_forwarded_proto != 'https') {
+  rewrite ^ https://$host$request_uri? permanent;
+}
+</pre>
 
-<ul>
-    <li><a href="10/26/require-ssl-to-your-heroku-app/">Require SSL to your Heroku app</a> <span>Oct 26</span></li>
-    <li><a href="07/06/moving-site-to-middleman/">Moving site to Middleman</a> <span>Jul  6</span></li>
-</ul>
+<p>to the <code>location</code> section of your app&rsquo;s nginx config file template, any access
+to that location will be met with a <code>301 Moved Permanently</code> redirect to the
+<code>https</code> version of that site and path.</p>
 
+<p>As all apps are accessible at <code>https://&lt;app-name&gt;.herokuapp.com/</code> by using
+Heroku&rsquo;s <code>herokuapp.com</code> SSL cert, this provides a free and easy way to secure
+your apps. Custom domain names require custom SSL certs, which are available
+from traditional SSL vendors or from Heroku addon <a href="https://www.expeditedssl.com/">Expedited
+SSL</a></p>
+
+<p>A sample app can be found at
+<a href="https://github.com/gregburek/heroku-force-ssl-sample">https://github.com/gregburek/heroku-force-ssl-sample</a>
+and deployed to your Heroku account by clicking this button: 
+<a href="https://heroku.com/deploy?template=https://github.com/gregburek/heroku-force-ssl-sample"><img alt="Deploy" src="https://www.herokucdn.com/deploy/button.png" /></a></p>
+
+  </article>
 
     </div>
 
@@ -93,13 +123,13 @@
         </a>
       </li>
      <li>
-        <a href="../feed.xml"><i class="fa fa-rss-square"></i></a>
+        <a href="../../../../feed.xml"><i class="fa fa-rss-square"></i></a>
       </li>
     </ul>
     <nav>
       <ul>
         <li>
-        <a href="../about/">About</a>
+        <a href="../../../../about/">About</a>
         </li>
         <li>
         <a href="/tags/">Tags</a>

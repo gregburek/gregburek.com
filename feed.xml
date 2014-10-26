@@ -5,10 +5,48 @@
   <id>http://blog.gregburek.com/</id>
   <link href="http://blog.gregburek.com/"/>
   <link href="http://blog.gregburek.com/feed.xml" rel="self"/>
-  <updated>2014-07-06T18:57:00-07:00</updated>
+  <updated>2014-10-26T15:29:00-07:00</updated>
   <author>
     <name>Greg Burek</name>
   </author>
+  <entry>
+    <title>Require SSL to your Heroku app</title>
+    <link rel="alternate" href="/2014/10/26/require-ssl-to-your-heroku-app/"/>
+    <id>/2014/10/26/require-ssl-to-your-heroku-app/</id>
+    <published>2014-10-26T15:29:00-07:00</published>
+    <updated>2014-10-26T15:29:00-07:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;Configuring your Heroku app so that it will redirect insecure HTTP traffic to an
+HTTPS endpoint can be finicky and is language/framework specific. I was able to
+figure out a general and language independent method thanks to the &lt;a href="https://github.com/ryandotsmith/nginx-buildpack"&gt;nginx
+buildpack&lt;/a&gt;. By using nginx,
+you can redirect some or all http traffic to your app to the https verison of
+your site.&lt;/p&gt;
+
+&lt;p&gt;By adding:&lt;/p&gt;
+&lt;pre class="highlight plaintext"&gt;if ($http_x_forwarded_proto != 'https') {
+  rewrite ^ https://$host$request_uri? permanent;
+}
+&lt;/pre&gt;
+
+&lt;p&gt;to the &lt;code&gt;location&lt;/code&gt; section of your app&amp;rsquo;s nginx config file template, any access
+to that location will be met with a &lt;code&gt;301 Moved Permanently&lt;/code&gt; redirect to the
+&lt;code&gt;https&lt;/code&gt; version of that site and path.&lt;/p&gt;
+
+&lt;p&gt;As all apps are accessible at &lt;code&gt;https://&amp;lt;app-name&amp;gt;.herokuapp.com/&lt;/code&gt; by using
+Heroku&amp;rsquo;s &lt;code&gt;herokuapp.com&lt;/code&gt; SSL cert, this provides a free and easy way to secure
+your apps. Custom domain names require custom SSL certs, which are available
+from traditional SSL vendors or from Heroku addon &lt;a href="https://www.expeditedssl.com/"&gt;Expedited
+SSL&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;A sample app can be found at
+&lt;a href="https://github.com/gregburek/heroku-force-ssl-sample"&gt;https://github.com/gregburek/heroku-force-ssl-sample&lt;/a&gt;
+and deployed to your Heroku account by clicking this button: 
+&lt;a href="https://heroku.com/deploy?template=https://github.com/gregburek/heroku-force-ssl-sample"&gt;&lt;img alt="Deploy" src="https://www.herokucdn.com/deploy/button.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Moving site to Middleman</title>
     <link rel="alternate" href="/2014/07/06/moving-site-to-middleman/"/>
@@ -214,52 +252,6 @@ everything works beautifully.&lt;/p&gt;
 &lt;p&gt;Flickr Map view&lt;/p&gt;
 
 &lt;p&gt;&lt;img alt="Flickr Map" src="/2011/11/11/export-aperture-to-flickr-with-GPS/flickr.png" /&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Lid Open, Display Off</title>
-    <link rel="alternate" href="/2011/11/09/Lid-open-display-off/"/>
-    <id>/2011/11/09/Lid-open-display-off/</id>
-    <published>2011-11-09T00:00:00-08:00</published>
-    <updated>2011-11-09T00:00:00-08:00</updated>
-    <author>
-      <name>Greg Burek</name>
-    </author>
-    <content type="html">&lt;p&gt;It has been more than a year since my &lt;a href="http://blog.gregburek.com/2010/10/21/macbook-lcd-trick.html"&gt;last
-post&lt;/a&gt; and that
-computer has been retired. However, I still find it useful to run my new
-MacBook Air attached to an external monitor and with its internal display
-disabled. A few days ago, I found a better and more permanent solution than a
-flimsy magnet: &lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Attach the closed MacBook to an external display&lt;/li&gt;
-&lt;li&gt;Wake the MacBook with an external input device, like usb or bluetooth
-keyboard. &lt;/li&gt;
-&lt;li&gt;Open the lid of the MacBook and the internal display will remain off&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;That&amp;rsquo;s it. No magnets required. &lt;/p&gt;
-
-&lt;p&gt;It takes a little bit more for this to work under OS X 10.7 Lion,
-though. Entering the following command in terminal seems to do the
-trick:&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;sudo nvram boot-args&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"iog=0x0"&lt;/span&gt;
-&lt;/pre&gt;
-
-&lt;p&gt;Undoing this is as simple as typing the following, also in terminal:&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;sudo nvram -d boot-args 
-&lt;/pre&gt;
-
-&lt;p&gt;You can also zap the PRAM (press Cmd+Opt+p+r at power up) to restore it
-to the new Lion behaviour. &lt;/p&gt;
-
-&lt;p&gt;This works great and I&amp;rsquo;ve been using it to improve my laptop&amp;rsquo;s ventilation and
-wireless reception.&lt;/p&gt;
-
-&lt;p&gt;I first saw this documented here: &lt;a href="http://hints.macworld.com/article.php?story=20110901113922148"&gt;Mac OS X Hints - 10.7: Disable internal
-laptop display when external display is
-attached&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
 </feed>

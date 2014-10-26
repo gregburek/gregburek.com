@@ -55,6 +55,48 @@
   <ul>
       <li>
      <article class="writing">
+       <h1><a href="2014/10/26/require-ssl-to-your-heroku-app/">Require SSL to your Heroku app</a></h1>
+       <div class="article-details">
+         <div class="article-date">
+           <i class="fa fa-paper-plane-o"></i>
+           October 26, 2014
+           <div class="tags">
+             tags:
+           </div>
+         </div>
+       </div>
+       <p>Configuring your Heroku app so that it will redirect insecure HTTP traffic to an
+HTTPS endpoint can be finicky and is language/framework specific. I was able to
+figure out a general and language independent method thanks to the <a href="https://github.com/ryandotsmith/nginx-buildpack">nginx
+buildpack</a>. By using nginx,
+you can redirect some or all http traffic to your app to the https verison of
+your site.</p>
+
+<p>By adding:</p>
+<pre class="highlight plaintext">if ($http_x_forwarded_proto != 'https') {
+  rewrite ^ https://$host$request_uri? permanent;
+}
+</pre>
+
+<p>to the <code>location</code> section of your app&rsquo;s nginx config file template, any access
+to that location will be met with a <code>301 Moved Permanently</code> redirect to the
+<code>https</code> version of that site and path.</p>
+
+<p>As all apps are accessible at <code>https://&lt;app-name&gt;.herokuapp.com/</code> by using
+Heroku&rsquo;s <code>herokuapp.com</code> SSL cert, this provides a free and easy way to secure
+your apps. Custom domain names require custom SSL certs, which are available
+from traditional SSL vendors or from Heroku addon <a href="https://www.expeditedssl.com/">Expedited
+SSL</a></p>
+
+<p>A sample app can be found at
+<a href="https://github.com/gregburek/heroku-force-ssl-sample">https://github.com/gregburek/heroku-force-ssl-sample</a>
+and deployed to your Heroku account by clicking this button: 
+<a href="https://heroku.com/deploy?template=https://github.com/gregburek/heroku-force-ssl-sample"><img alt="Deploy" src="https://www.herokucdn.com/deploy/button.png" /></a></p>
+
+     </article>
+     </li>
+      <li>
+     <article class="writing">
        <h1><a href="2014/07/06/moving-site-to-middleman/">Moving site to Middleman</a></h1>
        <div class="article-details">
          <div class="article-date">
