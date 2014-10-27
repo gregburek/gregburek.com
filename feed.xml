@@ -37,8 +37,8 @@ to that location will be met with a &lt;code&gt;301 Moved Permanently&lt;/code&g
 
 &lt;p&gt;EDIT: @jacobian &lt;a href="https://twitter.com/jacobian/status/526538110201368576"&gt;pointed
 out&lt;/a&gt; on twitter that
-using HTTP Strict Transport Security
-(HSTS)](&lt;a href="http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"&gt;http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security&lt;/a&gt;) headers
+using &lt;a href="http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"&gt;HTTP Strict Transport Security
+(HSTS)&lt;/a&gt; headers
 will make modern clients prefer HTTPS, even for the &lt;code&gt;/insecure&lt;/code&gt; path that lacks
 the redirect snippet.&lt;/p&gt;
 
