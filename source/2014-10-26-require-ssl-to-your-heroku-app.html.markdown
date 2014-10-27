@@ -25,7 +25,7 @@ to that location will be met with a `301 Moved Permanently` redirect to the
 
 EDIT: @jacobian [pointed
 out](https://twitter.com/jacobian/status/526538110201368576) on twitter that
-using HTTP Strict Transport Security
+using [HTTP Strict Transport Security
 (HSTS)](http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) headers
 will make modern clients prefer HTTPS, even for the `/insecure` path that lacks
 the redirect snippet.
