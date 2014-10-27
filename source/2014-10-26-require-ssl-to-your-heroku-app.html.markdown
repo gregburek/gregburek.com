@@ -1,5 +1,5 @@
 ---
-title: Require SSL to your Heroku app
+title: Require HTTPS to your Heroku app
 date: 2014-10-26 15:29 PDT
 tags:
 ---
@@ -23,6 +23,13 @@ to the `location` section of your app's nginx config file template, any access
 to that location will be met with a `301 Moved Permanently` redirect to the
 `https` version of that site and path.
 
+EDIT: @jacobian [pointed
+out](https://twitter.com/jacobian/status/526538110201368576) on twitter that
+using HTTP Strict Transport Security
+(HSTS)](http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security) headers
+will make modern clients prefer HTTPS, even for the `/insecure` path that lacks
+the redirect snippet.
+
 As all apps are accessible at `https://<app-name>.herokuapp.com/` by using
 Heroku's `herokuapp.com` SSL cert, this provides a free and easy way to secure
 your apps. Custom domain names require custom SSL certs, which are available
@@ -31,7 +38,7 @@ SSL](https://www.expeditedssl.com/)
 
 A sample app can be found at
 [https://github.com/gregburek/heroku-force-ssl-sample](https://github.com/gregburek/heroku-force-ssl-sample)
-and deployed to your Heroku account by clicking this button: 
+and deployed to your Heroku account here: 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/gregburek/heroku-force-ssl-sample)
 
 
