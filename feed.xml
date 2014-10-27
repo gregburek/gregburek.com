@@ -10,7 +10,7 @@
     <name>Greg Burek</name>
   </author>
   <entry>
-    <title>Require SSL to your Heroku app</title>
+    <title>Require HTTPS to your Heroku app</title>
     <link rel="alternate" href="/2014/10/26/require-ssl-to-your-heroku-app/"/>
     <id>/2014/10/26/require-ssl-to-your-heroku-app/</id>
     <published>2014-10-26T15:29:00-07:00</published>
@@ -35,6 +35,13 @@ your site.&lt;/p&gt;
 to that location will be met with a &lt;code&gt;301 Moved Permanently&lt;/code&gt; redirect to the
 &lt;code&gt;https&lt;/code&gt; version of that site and path.&lt;/p&gt;
 
+&lt;p&gt;EDIT: @jacobian &lt;a href="https://twitter.com/jacobian/status/526538110201368576"&gt;pointed
+out&lt;/a&gt; on twitter that
+using HTTP Strict Transport Security
+(HSTS)](&lt;a href="http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"&gt;http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security&lt;/a&gt;) headers
+will make modern clients prefer HTTPS, even for the &lt;code&gt;/insecure&lt;/code&gt; path that lacks
+the redirect snippet.&lt;/p&gt;
+
 &lt;p&gt;As all apps are accessible at &lt;code&gt;https://&amp;lt;app-name&amp;gt;.herokuapp.com/&lt;/code&gt; by using
 Heroku&amp;rsquo;s &lt;code&gt;herokuapp.com&lt;/code&gt; SSL cert, this provides a free and easy way to secure
 your apps. Custom domain names require custom SSL certs, which are available
@@ -43,7 +50,7 @@ SSL&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;A sample app can be found at
 &lt;a href="https://github.com/gregburek/heroku-force-ssl-sample"&gt;https://github.com/gregburek/heroku-force-ssl-sample&lt;/a&gt;
-and deployed to your Heroku account by clicking this button: 
+and deployed to your Heroku account here: 
 &lt;a href="https://heroku.com/deploy?template=https://github.com/gregburek/heroku-force-ssl-sample"&gt;&lt;img alt="Deploy" src="https://www.herokucdn.com/deploy/button.png" /&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
