@@ -266,6 +266,10 @@ pre {
   word-wrap: inherit;
 }
 
+.highlight, code {
+  background-color: $code-bg-color;
+}
+
 /* media specific styles */
 .youtube {
   height: 315px;

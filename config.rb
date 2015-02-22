@@ -74,6 +74,8 @@ set :relative_links, true
 
 # Build-specific configuration
 configure :build do
+  activate :minify_css
+  activate :minify_javascript
   # Enable cache buster
   # activate :cache_buster
 
