@@ -26,10 +26,10 @@ you can redirect some or all http traffic to your app to the https verison of
 your site.&lt;/p&gt;
 
 &lt;p&gt;By adding:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;if ($http_x_forwarded_proto != 'https') {
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;if ($http_x_forwarded_proto != 'https') {
   rewrite ^ https://$host$request_uri? permanent;
 }
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;to the &lt;code&gt;location&lt;/code&gt; section of your app&amp;rsquo;s nginx config file template, any access
 to that location will be met with a &lt;code&gt;301 Moved Permanently&lt;/code&gt; redirect to the
@@ -127,14 +127,14 @@ Opscode Open Source Wiki" href="http://wiki.opscode.com/display/chef/Shef"&gt;Sh
 but it needs some help to find all the configuration and attributes that
 vagrant provides. If my &lt;code&gt;new_and_broken&lt;/code&gt; cookbook is failing on a Ubuntu 12.04
 VM, all I need to do is run:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
     (output snip)
 chef &amp;gt; recipe
 chef:recipe &amp;gt; include_recipe 'new_and_broken'
     (huge output snip)
 chef:recipe &amp;gt; run_chef
     (where the error happens)
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This loads shef in solo mode, with vagrant generated configuration and JSON
 attributes files, enters into recipe mode, loads my new and broken cookbook and
@@ -167,8 +167,8 @@ embedded ruby environment, veewee is not able to find the vagrant gem to add
 to, making it a little harder to use for ruby newbies. &lt;/p&gt;
 
 &lt;p&gt;There is a way around this, though. If you were to run:&lt;/p&gt;
-&lt;pre class="highlight shell"&gt;sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
-&lt;/pre&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;veewee is installed to the vagrant embedded environment and &lt;code&gt;vagrant basebox&lt;/code&gt;
 is available and functions as expected. I&amp;rsquo;ve done this on my OSX 10.8 box that
@@ -192,7 +192,7 @@ uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. 
 APIs have rate limits on requests per minute or you may want to play nice
 and not overwhelm the service. In Python, you can use this decorator to
 rate limit a function that may handle the API access: &lt;/p&gt;
-&lt;pre class="highlight python"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
+&lt;pre class="highlight python"&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;time&lt;/span&gt;
 
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;RateLimited&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;maxPerSecond&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;minInterval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.0&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="nb"&gt;float&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;maxPerSecond&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -217,7 +217,7 @@ rate limit a function that may handle the API access: &lt;/p&gt;
     &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;"This should print 1,2,3... at about 2 per second."&lt;/span&gt;
     &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
         &lt;span class="n"&gt;PrintNumber&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This answer is simpler than setting up a queue system and is blocking,
 which can be good for sequential jobs. &lt;/p&gt;

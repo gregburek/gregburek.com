@@ -70,10 +70,10 @@ you can redirect some or all http traffic to your app to the https verison of
 your site.</p>
 
 <p>By adding:</p>
-<pre class="highlight plaintext">if ($http_x_forwarded_proto != 'https') {
+<pre class="highlight plaintext"><code>if ($http_x_forwarded_proto != 'https') {
   rewrite ^ https://$host$request_uri? permanent;
 }
-</pre>
+</code></pre>
 
 <p>to the <code>location</code> section of your app&rsquo;s nginx config file template, any access
 to that location will be met with a <code>301 Moved Permanently</code> redirect to the

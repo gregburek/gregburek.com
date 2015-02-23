@@ -97,14 +97,14 @@ somewhere. I used /Users/USERNAME/Library/Scripts/GoogleDocs/</p></li>
 <li><p>Open Script Editor.app and it should pop up with an Untitled and blank
 script window. Copy this into the window:</p></li>
 </ol>
-<pre class="highlight plaintext">on adding folder items to this_folder after receiving added_items
-  repeat with aFile in added_items
-    do shell script "java -jar /SOMEWHERE/google-docs-upload-1.3.2.jar
+<pre class="highlight applescript"><code><span class="k">on</span> <span class="nv">adding</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="nb">items</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="nv">this_folder</span><span class="w"> </span><span class="nb">after</span><span class="w"> </span><span class="nv">receiving</span><span class="w"> </span><span class="nv">added_items</span><span class="w">
+  </span><span class="k">repeat</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">aFile</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">added_items</span><span class="w">
+    </span><span class="nb">do shell script</span><span class="w"> </span><span class="s2">"java -jar /SOMEWHERE/google-docs-upload-1.3.2.jar
       aFile -rf Downloads --skip-all -u YOURUSERNAME -p
-      YOURPASSWORD &gt;&gt; /SOMEWHERE/GDocs-upload-log.txt"
-  end repeat
-end adding folder items to
-</pre>
+      YOURPASSWORD &gt;&gt; /SOMEWHERE/GDocs-upload-log.txt"</span><span class="w">
+  </span><span class="k">end</span><span class="w"> </span><span class="k">repeat</span><span class="w">
+</span><span class="k">end</span><span class="w"> </span><span class="nv">adding</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="nb">items</span><span class="w"> </span><span class="k">to</span><span class="w">
+</span></code></pre>
 
 <ol>
 <li><p>Replace SOMEWHERE with the path to google-docs-upload, USERNAME with your

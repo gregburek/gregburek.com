@@ -76,14 +76,14 @@ Opscode Open Source Wiki" href="http://wiki.opscode.com/display/chef/Shef">Shef<
 but it needs some help to find all the configuration and attributes that
 vagrant provides. If my <code>new_and_broken</code> cookbook is failing on a Ubuntu 12.04
 VM, all I need to do is run:</p>
-<pre class="highlight plaintext">$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
+<pre class="highlight plaintext"><code>$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
     (output snip)
 chef &gt; recipe
 chef:recipe &gt; include_recipe 'new_and_broken'
     (huge output snip)
 chef:recipe &gt; run_chef
     (where the error happens)
-</pre>
+</code></pre>
 
 <p>This loads shef in solo mode, with vagrant generated configuration and JSON
 attributes files, enters into recipe mode, loads my new and broken cookbook and

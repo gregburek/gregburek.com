@@ -73,10 +73,10 @@ you can redirect some or all http traffic to your app to the https verison of
 your site.</p>
 
 <p>By adding:</p>
-<pre class="highlight plaintext">if ($http_x_forwarded_proto != 'https') {
+<pre class="highlight plaintext"><code>if ($http_x_forwarded_proto != 'https') {
   rewrite ^ https://$host$request_uri? permanent;
 }
-</pre>
+</code></pre>
 
 <p>to the <code>location</code> section of your app&rsquo;s nginx config file template, any access
 to that location will be met with a <code>301 Moved Permanently</code> redirect to the
@@ -185,14 +185,14 @@ Opscode Open Source Wiki" href="http://wiki.opscode.com/display/chef/Shef">Shef<
 but it needs some help to find all the configuration and attributes that
 vagrant provides. If my <code>new_and_broken</code> cookbook is failing on a Ubuntu 12.04
 VM, all I need to do is run:</p>
-<pre class="highlight plaintext">$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
+<pre class="highlight plaintext"><code>$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
     (output snip)
 chef &gt; recipe
 chef:recipe &gt; include_recipe 'new_and_broken'
     (huge output snip)
 chef:recipe &gt; run_chef
     (where the error happens)
-</pre>
+</code></pre>
 
 <p>This loads shef in solo mode, with vagrant generated configuration and JSON
 attributes files, enters into recipe mode, loads my new and broken cookbook and
@@ -233,8 +233,8 @@ embedded ruby environment, veewee is not able to find the vagrant gem to add
 to, making it a little harder to use for ruby newbies. </p>
 
 <p>There is a way around this, though. If you were to run:</p>
-<pre class="highlight shell">sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
-</pre>
+<pre class="highlight shell"><code>sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
+</code></pre>
 
 <p>veewee is installed to the vagrant embedded environment and <code>vagrant basebox</code>
 is available and functions as expected. I&rsquo;ve done this on my OSX 10.8 box that
@@ -262,7 +262,7 @@ uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. 
 APIs have rate limits on requests per minute or you may want to play nice
 and not overwhelm the service. In Python, you can use this decorator to
 rate limit a function that may handle the API access: </p>
-<pre class="highlight python"><span class="kn">import</span> <span class="nn">time</span>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">time</span>
 
 <span class="k">def</span> <span class="nf">RateLimited</span><span class="p">(</span><span class="n">maxPerSecond</span><span class="p">):</span>
     <span class="n">minInterval</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxPerSecond</span><span class="p">)</span>
@@ -287,7 +287,7 @@ rate limit a function that may handle the API access: </p>
     <span class="k">print</span> <span class="s">"This should print 1,2,3... at about 2 per second."</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">):</span>
         <span class="n">PrintNumber</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</pre>
+</code></pre>
 
 <p>This answer is simpler than setting up a queue system and is blocking,
 which can be good for sequential jobs. </p>
@@ -367,12 +367,12 @@ keyboard. </li>
 <p>It takes a little bit more for this to work under OS X 10.7 Lion,
 though. Entering the following command in terminal seems to do the
 trick:</p>
-<pre class="highlight shell">sudo nvram boot-args<span class="o">=</span><span class="s2">"iog=0x0"</span>
-</pre>
+<pre class="highlight shell"><code>sudo nvram boot-args<span class="o">=</span><span class="s2">"iog=0x0"</span>
+</code></pre>
 
 <p>Undoing this is as simple as typing the following, also in terminal:</p>
-<pre class="highlight shell">sudo nvram -d boot-args 
-</pre>
+<pre class="highlight shell"><code>sudo nvram -d boot-args 
+</code></pre>
 
 <p>You can also zap the PRAM (press Cmd+Opt+p+r at power up) to restore it
 to the new Lion behaviour. </p>
@@ -437,18 +437,18 @@ that sits below my TV, at home, behind two firewalls.</p>
 <p>First, I <a title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS" href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt">hardened SSH</a> on the mini and setup my laptop to log in without a
 password, but I didn&rsquo;t go through the SSHFS stuff, as I like AFP better (for
 the moment).  Now, I can access my Mini by running:</p>
-<pre class="highlight shell"><span class="gp">LAPTOP$ </span>ssh -f -N -p PORT USER@OUTSIDEIP -L 1202:localhost:5900 -L 1203:localhost:548
-</pre>
+<pre class="highlight shell"><code><span class="gp">LAPTOP$ </span>ssh -f -N -p PORT USER@OUTSIDEIP -L 1202:localhost:5900 -L 1203:localhost:548
+</code></pre>
 
 <p>Where PORT is the random port I choose when <a title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS" href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt">hardening SSH</a>, USER is the
 username on my mini and OUTSIDEIP is the external IP of my cable modem.  Then,
 I can exit from Terminal on my laptop, press command-K and run:</p>
-<pre class="highlight shell">afp://localhost:1203
-</pre>
+<pre class="highlight shell"><code>afp://localhost:1203
+</code></pre>
 
 <p>and get the list of shared folders.  Or I can run:</p>
-<pre class="highlight shell">vnc://localhost:1202
-</pre>
+<pre class="highlight shell"><code>vnc://localhost:1202
+</code></pre>
 
 <p>and get Screen Sharing with the Mini behind all those firewalls.</p>
 
@@ -458,12 +458,12 @@ command, I can now access my very large iTunes library from anywhere with an
 internet connection.</p>
 
 <p>If I would like to end the SSH tunnel, I run:</p>
-<pre class="highlight shell">ps auxww | grep -i ssh
-</pre>
+<pre class="highlight shell"><code>ps auxww | grep -i ssh
+</code></pre>
 
 <p>After finding the ID of the process I do:</p>
-<pre class="highlight shell"><span class="nb">kill</span> -9 SSH_PID
-</pre>
+<pre class="highlight shell"><code><span class="nb">kill</span> -9 SSH_PID
+</code></pre>
 
 <p>with the SSH ID.</p>
 
@@ -520,14 +520,14 @@ somewhere. I used /Users/USERNAME/Library/Scripts/GoogleDocs/</p></li>
 <li><p>Open Script Editor.app and it should pop up with an Untitled and blank
 script window. Copy this into the window:</p></li>
 </ol>
-<pre class="highlight plaintext">on adding folder items to this_folder after receiving added_items
-  repeat with aFile in added_items
-    do shell script "java -jar /SOMEWHERE/google-docs-upload-1.3.2.jar
+<pre class="highlight applescript"><code><span class="k">on</span> <span class="nv">adding</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="nb">items</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="nv">this_folder</span><span class="w"> </span><span class="nb">after</span><span class="w"> </span><span class="nv">receiving</span><span class="w"> </span><span class="nv">added_items</span><span class="w">
+  </span><span class="k">repeat</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">aFile</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">added_items</span><span class="w">
+    </span><span class="nb">do shell script</span><span class="w"> </span><span class="s2">"java -jar /SOMEWHERE/google-docs-upload-1.3.2.jar
       aFile -rf Downloads --skip-all -u YOURUSERNAME -p
-      YOURPASSWORD &gt;&gt; /SOMEWHERE/GDocs-upload-log.txt"
-  end repeat
-end adding folder items to
-</pre>
+      YOURPASSWORD &gt;&gt; /SOMEWHERE/GDocs-upload-log.txt"</span><span class="w">
+  </span><span class="k">end</span><span class="w"> </span><span class="k">repeat</span><span class="w">
+</span><span class="k">end</span><span class="w"> </span><span class="nv">adding</span><span class="w"> </span><span class="nv">folder</span><span class="w"> </span><span class="nb">items</span><span class="w"> </span><span class="k">to</span><span class="w">
+</span></code></pre>
 
 <ol>
 <li><p>Replace SOMEWHERE with the path to google-docs-upload, USERNAME with your

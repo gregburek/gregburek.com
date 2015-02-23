@@ -68,7 +68,7 @@
 APIs have rate limits on requests per minute or you may want to play nice
 and not overwhelm the service. In Python, you can use this decorator to
 rate limit a function that may handle the API access: </p>
-<pre class="highlight python"><span class="kn">import</span> <span class="nn">time</span>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">time</span>
 
 <span class="k">def</span> <span class="nf">RateLimited</span><span class="p">(</span><span class="n">maxPerSecond</span><span class="p">):</span>
     <span class="n">minInterval</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxPerSecond</span><span class="p">)</span>
@@ -93,7 +93,7 @@ rate limit a function that may handle the API access: </p>
     <span class="k">print</span> <span class="s">"This should print 1,2,3... at about 2 per second."</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">):</span>
         <span class="n">PrintNumber</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</pre>
+</code></pre>
 
 <p>This answer is simpler than setting up a queue system and is blocking,
 which can be good for sequential jobs. </p>
