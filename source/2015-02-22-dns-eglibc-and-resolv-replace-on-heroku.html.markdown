@@ -51,7 +51,8 @@ require ipv6 or run into problems with [third party gems attempting to resolve
 that this bug affects you on the [Launchpad bug report requesting backporting][]
 to supported versions of Ubuntu.
 
-
+Thanks to Ed Muller, Michael Hale, Keiko Oda, Steve Conklin, Terence Lee and
+Richard Schneeman for help in figuring this out.
 
 [logplexerrors]: /2015-02-22-dns-eglibc-and-resolv-replace-on-heroku/logplex_errors.png
 [observatoryerrors]: /2015-02-22-dns-eglibc-and-resolv-replace-on-heroku/observatory_errors.png
