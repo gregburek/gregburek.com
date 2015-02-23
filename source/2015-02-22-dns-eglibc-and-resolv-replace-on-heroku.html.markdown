@@ -1,6 +1,6 @@
 ---
 title: DNS, eglibc and resolv-replace on Heroku
-date: 2015-02-21 15:33 PST
+date: 2015-02-22 15:33 PST
 tags: heroku, ruby, libc, dns, yaks
 published: false
 ---
@@ -53,8 +53,8 @@ to supported versions of Ubuntu.
 
 
 
-[logplexerrors]: /2015-02-21-use-resolv-replace-on-heroku/logplex_errors.png
-[observatoryerrors]: /2015-02-21-use-resolv-replace-on-heroku/observatory_errors.png
+[logplexerrors]: /2015-02-22-dns-eglibc-and-resolv-replace-on-heroku/logplex_errors.png
+[observatoryerrors]: /2015-02-22-dns-eglibc-and-resolv-replace-on-heroku/observatory_errors.png
 
 [Heroku Postgres]: https://www.heroku.com/postgres
 [Rollbar]: https://devcenter.heroku.com/articles/rollbar
