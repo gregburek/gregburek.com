@@ -2,7 +2,6 @@
 title: DNS, eglibc and resolv-replace on Heroku
 date: 2015-02-22 15:33 PST
 tags: heroku, ruby, libc, dns, yaks
-published: false
 ---
 
 I work on the team that runs [Heroku Postgres]. As we have continued to grow, I
