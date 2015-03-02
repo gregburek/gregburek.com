@@ -4,6 +4,9 @@ date: 2015-02-22 15:33 PST
 tags: heroku, ruby, libc, dns, yaks
 ---
 
+2015-03-01: Fixed versions of eglibc are available for Ubuntu Precise and
+Trusty. Time to update.
+
 I work on the team that runs [Heroku Postgres]. As we have continued to grow, I
 have been tracking an intermitent error with [Rollbar][] that occurs about once
 every 50,000 HTTP requests. As we are doing many hundreds of thousands of API
@@ -38,17 +41,18 @@ file descriptors, e.g. some unrelated socket connected to a remote service.
 
 As Heroku is a shared platform with multitenant runtime instances, it is
 possible for a random runtime to experience high load and the [cedar-14 glibc
-binaries][] are known to be impacted by this bug. As of version 2.20, the error
-should be fixed. However, Ubuntu Precise currently ships [2.15-0ubuntu10.10][]
-and Trusty provides [2.19-0ubuntu6.5][], so this bug may continue to be a
-problem for some time to come.
+binaries][] are known to be impacted by this bug. Version 2.20 of glibc has a
+fix and as of [2.19-0ubuntu6.6][] and [2.15-0ubuntu10.11][] this fix was
+backported to Ubuntu Precise and Trusty. <s>However, Ubuntu Precise currently
+ships [2.15-0ubuntu10.10][] and Trusty provides [2.19-0ubuntu6.5][], so this
+bug may continue to be a problem for some time to come.</s>
 
 My immediate recommendation is to use language native DNS resolution like
 `resolv-replace` whenever possible, on Heroku or other systems. However, if you
 require ipv6 or run into problems with [third party gems attempting to resolve
-`nil` addresses][], and are stuck with the system DNS system, please indicate
-that this bug affects you on the [Launchpad bug report requesting backporting][]
-to supported versions of Ubuntu.
+`nil` addresses][], and are stuck with the system DNS, upgrade yourself!
+<s>please indicate that this bug affects you on the [Launchpad bug report
+requesting backporting][] to supported versions of Ubuntu.</s>
 
 Thanks to Ed Muller, Michael Hale, Keiko Oda, Steve Conklin, Terence Lee and
 Richard Schneeman for help in figuring this out.
@@ -71,3 +75,5 @@ Richard Schneeman for help in figuring this out.
 [vote]: https://bugs.launchpad.net/eglibc/+bug/1421393
 [Launchpad bug report requesting backporting]: https://bugs.launchpad.net/eglibc/+bug/1421393
 [third party gems attempting to resolve `nil` addresses]: https://github.com/mperham/sidekiq/issues/1258#issuecomment-27389456
+[2.19-0ubuntu6.6]: https://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/eglibc/trusty-security/revision/346
+[2.15-0ubuntu10.11]: https://bazaar.launchpad.net/~ubuntu-branches/ubuntu/precise/eglibc/precise-security/revision/316
