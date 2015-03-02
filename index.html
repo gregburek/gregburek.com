@@ -70,7 +70,10 @@
            </div>
          </div>
        </div>
-       <p>I work on the team that runs <a href="https://www.heroku.com/postgres">Heroku Postgres</a>. As we have continued to grow, I
+       <p>2015-03-01: Fixed versions of eglibc are available for Ubuntu Precise and
+Trusty. Time to update.</p>
+
+<p>I work on the team that runs <a href="https://www.heroku.com/postgres">Heroku Postgres</a>. As we have continued to grow, I
 have been tracking an intermitent error with <a href="https://devcenter.heroku.com/articles/rollbar">Rollbar</a> that occurs about once
 every 50,000 HTTP requests. As we are doing many hundreds of thousands of API
 calls a minute to various services, this error can pop up fairly frequently and
@@ -104,17 +107,18 @@ file descriptors, e.g. some unrelated socket connected to a remote service.</p>
 
 <p>As Heroku is a shared platform with multitenant runtime instances, it is
 possible for a random runtime to experience high load and the <a href="https://devcenter.heroku.com/articles/cedar-ubuntu-packages">cedar-14 glibc
-binaries</a> are known to be impacted by this bug. As of version 2.20, the error
-should be fixed. However, Ubuntu Precise currently ships <a href="http://packages.ubuntu.com/precise-updates/libc6">2.15-0ubuntu10.10</a>
-and Trusty provides <a href="http://packages.ubuntu.com/trusty-updates/libc6">2.19-0ubuntu6.5</a>, so this bug may continue to be a
-problem for some time to come.</p>
+binaries</a> are known to be impacted by this bug. Version 2.20 of glibc has a
+fix and as of <a href="https://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/eglibc/trusty-security/revision/346">2.19-0ubuntu6.6</a> and <a href="https://bazaar.launchpad.net/~ubuntu-branches/ubuntu/precise/eglibc/precise-security/revision/316">2.15-0ubuntu10.11</a> this fix was
+backported to Ubuntu Precise and Trusty. <s>However, Ubuntu Precise currently
+ships <a href="http://packages.ubuntu.com/precise-updates/libc6">2.15-0ubuntu10.10</a> and Trusty provides <a href="http://packages.ubuntu.com/trusty-updates/libc6">2.19-0ubuntu6.5</a>, so this
+bug may continue to be a problem for some time to come.</s></p>
 
 <p>My immediate recommendation is to use language native DNS resolution like
 <code>resolv-replace</code> whenever possible, on Heroku or other systems. However, if you
 require ipv6 or run into problems with <a href="https://github.com/mperham/sidekiq/issues/1258#issuecomment-27389456">third party gems attempting to resolve
-<code>nil</code> addresses</a>, and are stuck with the system DNS system, please indicate
-that this bug affects you on the <a href="https://bugs.launchpad.net/eglibc/+bug/1421393">Launchpad bug report requesting backporting</a>
-to supported versions of Ubuntu.</p>
+<code>nil</code> addresses</a>, and are stuck with the system DNS, upgrade yourself!
+<s>please indicate that this bug affects you on the <a href="https://bugs.launchpad.net/eglibc/+bug/1421393">Launchpad bug report
+requesting backporting</a> to supported versions of Ubuntu.</s></p>
 
 <p>Thanks to Ed Muller, Michael Hale, Keiko Oda, Steve Conklin, Terence Lee and
 Richard Schneeman for help in figuring this out.</p>
