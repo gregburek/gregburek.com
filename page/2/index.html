@@ -55,6 +55,60 @@
   <ul>
       <li>
      <article class="writing">
+       <h1><a href="../../2010/06/20/iTunes-over-SSH-tunnel/">iTunes library at home accessible over SSH tunneled AFP</a></h1>
+       <div class="article-details">
+         <div class="article-date">
+           <i class="fa fa-paper-plane-o"></i>
+           June 20, 2010
+           <div class="tags">
+             tags:
+           </div>
+         </div>
+       </div>
+       <p>Today I freed 150GB of space from my Macbook by moving my music to my Mac Mini
+that sits below my TV, at home, behind two firewalls.</p>
+
+<p>First, I <a title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS" href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt">hardened SSH</a> on the mini and setup my laptop to log in without a
+password, but I didn&rsquo;t go through the SSHFS stuff, as I like AFP better (for
+the moment).  Now, I can access my Mini by running:</p>
+<pre class="highlight shell"><code><span class="gp">LAPTOP$ </span>ssh -f -N -p PORT USER@OUTSIDEIP -L 1202:localhost:5900 -L 1203:localhost:548
+</code></pre>
+
+<p>Where PORT is the random port I choose when <a title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS" href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt">hardening SSH</a>, USER is the
+username on my mini and OUTSIDEIP is the external IP of my cable modem.  Then,
+I can exit from Terminal on my laptop, press command-K and run:</p>
+<pre class="highlight shell"><code>afp://localhost:1203
+</code></pre>
+
+<p>and get the list of shared folders.  Or I can run:</p>
+<pre class="highlight shell"><code>vnc://localhost:1202
+</code></pre>
+
+<p>and get Screen Sharing with the Mini behind all those firewalls.</p>
+
+<p>Finally, I <a title="Move Your iTunes Library to an External Hard Drive" href="http://lifehacker.com/5261172/move-your-itunes-library-to-an-external-hard-drive">moved my iTunes Library to an external harddrive</a> and hooked up
+that beast to the Mini.  By SSHing into my Mini and then running the AFP
+command, I can now access my very large iTunes library from anywhere with an
+internet connection.</p>
+
+<p>If I would like to end the SSH tunnel, I run:</p>
+<pre class="highlight shell"><code>ps auxww | grep -i ssh
+</code></pre>
+
+<p>After finding the ID of the process I do:</p>
+<pre class="highlight shell"><code><span class="nb">kill</span> -9 SSH_PID
+</code></pre>
+
+<p>with the SSH ID.</p>
+
+<p>I will use some applescript to make this &ldquo;connect, mount, launch iTunes&rdquo; dance
+a little bit more simple, but I think this is progress, as it has breathed new
+life into my 2.5 year-old laptop.</p>
+
+     </article>
+     </li>
+      <li>
+     <article class="writing">
        <h1><a href="../../2010/03/12/Auto-uploading-Google-Docs-from-OSX/">Automatically upload new files to Google Documents from OSX</a></h1>
        <div class="article-details">
          <div class="article-date">

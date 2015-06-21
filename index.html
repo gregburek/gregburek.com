@@ -55,6 +55,70 @@
   <ul>
       <li>
      <article class="writing">
+       <h1><a href="2015/06/20/stream-a-remote-file-to-s3/">Stream a remote file to S3</a></h1>
+       <div class="article-details">
+         <div class="article-date">
+           <i class="fa fa-paper-plane-o"></i>
+           June 20, 2015
+           <div class="tags">
+             tags:
+             <a href="/tags/ruby-aws-s3-upload-open-uri/">ruby aws s3 upload open-uri</a>
+           </div>
+         </div>
+       </div>
+       <p>While attempting to work with my gif collection, I was experimenting with how
+to capture gifs from the internet and place them into a S3 bucket for later
+use. I found that it was possible to stream a remote file directly to S3.</p>
+
+<p>Using the <code>aws-sdk</code> <a href="https://github.com/aws/aws-sdk-ruby">gem version 2</a>, and
+the <code>open-uri</code> module of the <a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/open-uri/rdoc/OpenURI.html">ruby standard
+library</a>,
+one can link the two IO streams together fairly easily:</p>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'aws-sdk'</span>
+<span class="nb">require</span> <span class="s1">'open-uri'</span>
+<span class="nb">require</span> <span class="s1">'sequel'</span>
+<span class="nb">require</span> <span class="s1">'digest/md5'</span>
+
+<span class="k">class</span> <span class="nc">RemoteFile</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">url</span><span class="p">:)</span>
+    <span class="vi">@url</span> <span class="o">=</span> <span class="n">url</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">s3</span>
+    <span class="vi">@s3</span> <span class="o">||=</span> <span class="no">Aws</span><span class="o">::</span><span class="no">S3</span><span class="o">::</span><span class="no">Resource</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">region: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'AWS_REGION'</span><span class="p">])</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">md5_hash</span>
+    <span class="no">Digest</span><span class="o">::</span><span class="no">MD5</span><span class="p">.</span><span class="nf">hexdigest</span><span class="p">(</span><span class="vi">@url</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">obj</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">)</span>
+    <span class="n">s3</span><span class="p">.</span><span class="nf">bucket</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">).</span><span class="nf">object</span><span class="p">(</span><span class="n">md5_hash</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">url</span>
+    <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="no">URI</span><span class="p">.</span><span class="nf">escape</span><span class="p">(</span><span class="vi">@url</span><span class="p">))</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">upload_to_s3</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">:)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+      <span class="n">obj</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">).</span><span class="nf">put</span><span class="p">(</span><span class="ss">body: </span><span class="n">file</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">RemoteFile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'https://i.imgur.com/DO3Hr4A.gif'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">upload_to_s3</span><span class="p">(</span><span class="ss">bucket_name: </span><span class="s1">'mah_gifs'</span><span class="p">)</span>
+
+</code></pre>
+
+<p>This code snippet assumes you have <code>ENV[&#39;AWS_ACCESS_KEY_ID&#39;]</code> and
+<code>ENV[&#39;AWS_SECRET_ACCESS_KEY&#39;]</code> set.</p>
+
+     </article>
+     </li>
+      <li>
+     <article class="writing">
        <h1><a href="2015/02/22/dns-eglibc-and-resolv-replace-on-heroku/">DNS, eglibc and resolv-replace on Heroku</a></h1>
        <div class="article-details">
          <div class="article-date">
@@ -488,60 +552,6 @@ far, let&rsquo;s hope this extends the life of my 3 year old laptop a bit more. 
 
 <p><a title="Macbook with lid trick magnet attached by greg.burek, on Flickr" href="http://www.flickr.com/photos/gregburek/5103718702/"><img alt="MacBook with lid-closed magnet
 applied" src="http://farm5.static.flickr.com/4111/5103718702_6c0ef9e619.jpg" /></a></p>
-
-     </article>
-     </li>
-      <li>
-     <article class="writing">
-       <h1><a href="2010/06/20/iTunes-over-SSH-tunnel/">iTunes library at home accessible over SSH tunneled AFP</a></h1>
-       <div class="article-details">
-         <div class="article-date">
-           <i class="fa fa-paper-plane-o"></i>
-           June 20, 2010
-           <div class="tags">
-             tags:
-           </div>
-         </div>
-       </div>
-       <p>Today I freed 150GB of space from my Macbook by moving my music to my Mac Mini
-that sits below my TV, at home, behind two firewalls.</p>
-
-<p>First, I <a title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS" href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt">hardened SSH</a> on the mini and setup my laptop to log in without a
-password, but I didn&rsquo;t go through the SSHFS stuff, as I like AFP better (for
-the moment).  Now, I can access my Mini by running:</p>
-<pre class="highlight shell"><code><span class="gp">LAPTOP$ </span>ssh -f -N -p PORT USER@OUTSIDEIP -L 1202:localhost:5900 -L 1203:localhost:548
-</code></pre>
-
-<p>Where PORT is the random port I choose when <a title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS" href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt">hardening SSH</a>, USER is the
-username on my mini and OUTSIDEIP is the external IP of my cable modem.  Then,
-I can exit from Terminal on my laptop, press command-K and run:</p>
-<pre class="highlight shell"><code>afp://localhost:1203
-</code></pre>
-
-<p>and get the list of shared folders.  Or I can run:</p>
-<pre class="highlight shell"><code>vnc://localhost:1202
-</code></pre>
-
-<p>and get Screen Sharing with the Mini behind all those firewalls.</p>
-
-<p>Finally, I <a title="Move Your iTunes Library to an External Hard Drive" href="http://lifehacker.com/5261172/move-your-itunes-library-to-an-external-hard-drive">moved my iTunes Library to an external harddrive</a> and hooked up
-that beast to the Mini.  By SSHing into my Mini and then running the AFP
-command, I can now access my very large iTunes library from anywhere with an
-internet connection.</p>
-
-<p>If I would like to end the SSH tunnel, I run:</p>
-<pre class="highlight shell"><code>ps auxww | grep -i ssh
-</code></pre>
-
-<p>After finding the ID of the process I do:</p>
-<pre class="highlight shell"><code><span class="nb">kill</span> -9 SSH_PID
-</code></pre>
-
-<p>with the SSH ID.</p>
-
-<p>I will use some applescript to make this &ldquo;connect, mount, launch iTunes&rdquo; dance
-a little bit more simple, but I think this is progress, as it has breathed new
-life into my 2.5 year-old laptop.</p>
 
      </article>
      </li>

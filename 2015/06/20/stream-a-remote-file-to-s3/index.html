@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>
+      Greg Burek - 
+      Stream a remote file to S3
+      
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="x-B-7Gh5W7YevI09T48-S4on8MkU9MjG-6XD7aurE7Y" />
+    <meta name="google-site-verification" content="hzWlqDEbM4CUsiEb8YrcUdovSZSNx6jySbQkjRXyCCk" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link href="/css/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//use.typekit.net/rtf4ikk.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script src="/js/vendor/modernizr-2.6.1.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+           m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </head>
+  <body class="x2015 x2015_06 x2015_06_20 x2015_06_20_stream-a-remote-file-to-s3 x2015_06_20_stream-a-remote-file-to-s3_index">
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <header>
+  <div class="container">
+    <h1>
+      <a href="../../../../">Greg Burek</a>
+    </h1>
+  </div>
+</header>
+
+
+    <div class="container">
+        <article class="writing">
+    <h1>Stream a remote file to S3</h1>
+    <div class="article-details">
+      <div class="article-date">
+        <i class="fa fa-paper-plane-o"></i>
+        June 20, 2015
+        <div class="tags">
+          tags:
+            <a href="/tags/ruby-aws-s3-upload-open-uri/">ruby aws s3 upload open-uri</a>
+        </div>
+      </div>
+    </div>
+    <p>While attempting to work with my gif collection, I was experimenting with how
+to capture gifs from the internet and place them into a S3 bucket for later
+use. I found that it was possible to stream a remote file directly to S3.</p>
+
+<p>Using the <code>aws-sdk</code> <a href="https://github.com/aws/aws-sdk-ruby">gem version 2</a>, and
+the <code>open-uri</code> module of the <a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/open-uri/rdoc/OpenURI.html">ruby standard
+library</a>,
+one can link the two IO streams together fairly easily:</p>
+<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'aws-sdk'</span>
+<span class="nb">require</span> <span class="s1">'open-uri'</span>
+<span class="nb">require</span> <span class="s1">'sequel'</span>
+<span class="nb">require</span> <span class="s1">'digest/md5'</span>
+
+<span class="k">class</span> <span class="nc">RemoteFile</span>
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">url</span><span class="p">:)</span>
+    <span class="vi">@url</span> <span class="o">=</span> <span class="n">url</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">s3</span>
+    <span class="vi">@s3</span> <span class="o">||=</span> <span class="no">Aws</span><span class="o">::</span><span class="no">S3</span><span class="o">::</span><span class="no">Resource</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">region: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'AWS_REGION'</span><span class="p">])</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">md5_hash</span>
+    <span class="no">Digest</span><span class="o">::</span><span class="no">MD5</span><span class="p">.</span><span class="nf">hexdigest</span><span class="p">(</span><span class="vi">@url</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">obj</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">)</span>
+    <span class="n">s3</span><span class="p">.</span><span class="nf">bucket</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">).</span><span class="nf">object</span><span class="p">(</span><span class="n">md5_hash</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">url</span>
+    <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="no">URI</span><span class="p">.</span><span class="nf">escape</span><span class="p">(</span><span class="vi">@url</span><span class="p">))</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">upload_to_s3</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">:)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+      <span class="n">obj</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">).</span><span class="nf">put</span><span class="p">(</span><span class="ss">body: </span><span class="n">file</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">RemoteFile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'https://i.imgur.com/DO3Hr4A.gif'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nf">upload_to_s3</span><span class="p">(</span><span class="ss">bucket_name: </span><span class="s1">'mah_gifs'</span><span class="p">)</span>
+
+</code></pre>
+
+<p>This code snippet assumes you have <code>ENV[&#39;AWS_ACCESS_KEY_ID&#39;]</code> and
+<code>ENV[&#39;AWS_SECRET_ACCESS_KEY&#39;]</code> set.</p>
+
+  </article>
+
+    </div>
+
+    <footer>
+  <div class="container">
+    <ul class="social-nav">
+      <li>
+        <a href="https://twitter.com/gregburek">
+          <i class="fa fa-twitter-square"></i>
+        </a>
+      </li>
+       <li>
+        <a href="https://github.com/gregburek">
+          <i class="fa fa fa-github-square"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://lanyrd.com/profile/gregburek/">
+          <i class="fa fa fa-map-marker"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://www.linkedin.com/in/gregburek">
+          <i class="fa fa fa-linkedin-square"></i>
+        </a>
+      </li>
+      <li>
+      <a href="http://www.flickr.com/photos/gregburek/">
+          <i class="fa fa fa-flickr"></i>
+        </a>
+      </li>
+     <li>
+        <a href="../../../../feed.xml"><i class="fa fa-rss-square"></i></a>
+      </li>
+    </ul>
+    <nav>
+      <ul>
+        <li>
+        <a href="../../../../about/">About</a>
+        </li>
+        <li>
+        <a href="/tags/">Tags</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    <script src="/js/plugins.js" type="text/javascript"></script>
+    <script src="/js/ga.js" type="text/javascript"></script>
+  </body>
+</html>
