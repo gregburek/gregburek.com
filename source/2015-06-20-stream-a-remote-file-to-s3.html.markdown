@@ -20,7 +20,7 @@ require 'sequel'
 require 'digest/md5'
 
 class RemoteFile
-  def initialize(url:)
+  def initialize(url)
     @url = url
   end
 
