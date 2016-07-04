@@ -12,5 +12,8 @@ gem 'rake'
 
 gem 'redcarpet', '~> 3.3', '>= 3.3.3'
 
+# For blog summaries
+gem 'nokogiri'
+
 # For feed.xml.builder
 gem 'builder', '~> 3.0'
