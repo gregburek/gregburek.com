@@ -1,5 +1,6 @@
 ---
 title: Exporting from Aperture 3.2 to Flickr with location information metadata
+tags: software, photos, aperture, flickr
 ---
 
 Over the month of October, I took an incredible trip to Singapore and Japan.

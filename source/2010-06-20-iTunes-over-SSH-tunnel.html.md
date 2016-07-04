@@ -1,5 +1,6 @@
 ---
 title: iTunes library at home accessible over SSH tunneled AFP
+tags: itunes, diy, hacks
 ---
 
 Today I freed 150GB of space from my Macbook by moving my music to my Mac Mini

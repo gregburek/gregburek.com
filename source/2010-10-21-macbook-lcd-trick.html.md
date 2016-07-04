@@ -1,5 +1,6 @@
 ---
 title: Trick a Macbook into thinking it is closed
+tags: macbook, diy, hacks
 ---
 
 *UPDATED Nov 2011*: I found a better way to do this that is posted

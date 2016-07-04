@@ -1,5 +1,6 @@
 ---
 title: Lid Open, Display Off
+tags: macbook, diy, hacks
 ---
 
 It has been more than a year since my [last

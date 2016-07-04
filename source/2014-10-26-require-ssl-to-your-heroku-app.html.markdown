@@ -1,7 +1,7 @@
 ---
 title: Require HTTPS to your Heroku app
 date: 2014-10-26 15:29 PDT
-tags:
+tags: heroku, nginx, tech, tls, ssl
 ---
 
 Configuring your Heroku app so that it will redirect insecure HTTP traffic to an

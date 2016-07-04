@@ -1,7 +1,7 @@
 ---
 title: Stream a remote file to S3
 date: 2015-06-20 17:07 PDT
-tags: ruby aws s3 upload open-uri
+tags: ruby, aws, s3, upload, open-uri
 ---
 
 While attempting to work with my gif collection, I was experimenting with how

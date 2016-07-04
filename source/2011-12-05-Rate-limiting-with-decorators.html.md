@@ -1,5 +1,6 @@
 ---
 title: Rate Limiting Function Calls in Python with a Decorator
+tags: python, tech, programming
 ---
 
 source: [Stack Overflow "What's a good rate limiting algorithm?"](http://stackoverflow.com/a/667706/586172)

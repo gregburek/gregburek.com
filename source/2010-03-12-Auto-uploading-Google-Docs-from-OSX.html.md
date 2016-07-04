@@ -1,6 +1,7 @@
 ---
 title: Automatically upload new files to Google Documents from OSX
 date: 2010-03-12
+tags: gdocs, diy, hacks, sync
 ---
 
 ##The Problem
