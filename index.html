@@ -19,12 +19,11 @@
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <link href="/css/normalize.css" rel="stylesheet" type="text/css" />
-    <link href="/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/all.css" rel="stylesheet" />
     <script type="text/javascript" src="//use.typekit.net/rtf4ikk.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-    <script src="/js/vendor/modernizr-2.6.1.min.js" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -55,6 +54,32 @@
   <ul>
       <li>
      <article class="writing">
+       <h1><a href="2016/07/02/tabs-vs-windows/">Trying something new: Tabs of Representation</a></h1>
+       <div class="article-details">
+         <div class="article-date">
+           <i class="fa fa-paper-plane-o"></i>
+           July 02, 2016
+           <div class="tags">
+             tags:
+             <a href="/tags/tabs-roundups-links/">tabs roundups links</a>
+           </div>
+         </div>
+       </div>
+       <p>It has been difficult to write recently. So, starting with this post, I am
+trying something new. As an experiment, I will be posting at least once a
+week about my reading for that week. Whether it was a book, an article, a blog
+post, documentation, paper or video, my goal is write about it here. This is
+partially as a hedge against link rot and mind rot, as I frequently find myself
+casting back in twitter and google to find that thing that I read that time
+about that person and that thing.</p>
+
+<p>We will see how this goes.</p>
+
+       <a href="2016/07/02/tabs-vs-windows/">Read more…</a>
+     </article>
+     </li>
+      <li>
+     <article class="writing">
        <h1><a href="2015/06/20/stream-a-remote-file-to-s3/">Stream a remote file to S3</a></h1>
        <div class="article-details">
          <div class="article-date">
@@ -74,47 +99,8 @@ use. I found that it was possible to stream a remote file directly to S3.</p>
 the <code>open-uri</code> module of the <a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/open-uri/rdoc/OpenURI.html">ruby standard
 library</a>,
 one can link the two IO streams together fairly easily:</p>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'aws-sdk'</span>
-<span class="nb">require</span> <span class="s1">'open-uri'</span>
-<span class="nb">require</span> <span class="s1">'sequel'</span>
-<span class="nb">require</span> <span class="s1">'digest/md5'</span>
 
-<span class="k">class</span> <span class="nc">RemoteFile</span>
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="vi">@url</span> <span class="o">=</span> <span class="n">url</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">s3</span>
-    <span class="vi">@s3</span> <span class="o">||=</span> <span class="no">Aws</span><span class="o">::</span><span class="no">S3</span><span class="o">::</span><span class="no">Resource</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="ss">region: </span><span class="no">ENV</span><span class="p">[</span><span class="s1">'AWS_REGION'</span><span class="p">])</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">md5_hash</span>
-    <span class="no">Digest</span><span class="o">::</span><span class="no">MD5</span><span class="p">.</span><span class="nf">hexdigest</span><span class="p">(</span><span class="vi">@url</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">obj</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">)</span>
-    <span class="n">s3</span><span class="p">.</span><span class="nf">bucket</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">).</span><span class="nf">object</span><span class="p">(</span><span class="n">md5_hash</span><span class="p">)</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">url</span>
-    <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="no">URI</span><span class="p">.</span><span class="nf">escape</span><span class="p">(</span><span class="vi">@url</span><span class="p">))</span>
-  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">upload_to_s3</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">:)</span>
-    <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
-      <span class="n">obj</span><span class="p">(</span><span class="n">bucket_name</span><span class="p">).</span><span class="nf">put</span><span class="p">(</span><span class="ss">body: </span><span class="n">file</span><span class="p">)</span>
-    <span class="k">end</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="no">RemoteFile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'https://i.imgur.com/DO3Hr4A.gif'</span><span class="p">)</span>
-  <span class="p">.</span><span class="nf">upload_to_s3</span><span class="p">(</span><span class="ss">bucket_name: </span><span class="s1">'mah_gifs'</span><span class="p">)</span>
-
-</code></pre>
-
-<p>This code snippet assumes you have <code>ENV[&#39;AWS_ACCESS_KEY_ID&#39;]</code> and
-<code>ENV[&#39;AWS_SECRET_ACCESS_KEY&#39;]</code> set.</p>
-
+       <a href="2015/06/20/stream-a-remote-file-to-s3/">Read more…</a>
      </article>
      </li>
       <li>
@@ -143,50 +129,8 @@ every 50,000 HTTP requests. As we are doing many hundreds of thousands of API
 calls a minute to various services, this error can pop up fairly frequently and
 in very inconvenient places. The most common traceback seems to indicate a
 failure to resolve DNS:</p>
-<pre class="highlight ruby"><code><span class="c1">#&lt;SocketError: getaddrinfo: Name or service not known&gt;</span>
-<span class="sr">/app/</span><span class="n">vendor</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">5</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">http</span><span class="p">.</span><span class="nf">rb</span><span class="p">:</span><span class="mi">879</span><span class="ss">:in</span> <span class="s1">'initialize'</span>
-<span class="sr">/app/</span><span class="n">vendor</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">5</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">http</span><span class="p">.</span><span class="nf">rb</span><span class="p">:</span><span class="mi">879</span><span class="ss">:in</span> <span class="s1">'open'</span>
-<span class="sr">/app/</span><span class="n">vendor</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">5</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">http</span><span class="p">.</span><span class="nf">rb</span><span class="p">:</span><span class="mi">879</span><span class="ss">:in</span> <span class="s1">'block in connect'</span>
-<span class="p">.</span><span class="nf">.</span><span class="o">.</span>
-</code></pre>
 
-<p><a href="http://lmgtfy.com/?q=SocketError%3A+getaddrinfo%3A+Name+or+service+not+known+heroku">Google</a> led me to a <a href="http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html">pertinent blog post</a> that recommended using ruby&rsquo;s
-<a href="http://apidock.com/ruby/Resolv">Resolv</a> library for all DNS requests via a script called <a href="https://github.com/ruby/ruby/blob/trunk/lib/resolv-replace.rb">resolv-replace</a>.
-Adding a single line to our initializers, <code>require resolv-replace</code>, caused errors
-while submitting Logplex messages to immediately drop:</p>
-
-<p><img alt="Logplex Errors" src="/2015/02/22/dns-eglibc-and-resolv-replace-on-heroku/logplex_errors.png" /></p>
-
-<p>As did errors from trying to interact with our monitoring service, Observatory:</p>
-
-<p><img alt="Observatory Errors" src="/2015/02/22/dns-eglibc-and-resolv-replace-on-heroku/observatory_errors.png" /></p>
-
-<p>In an internal thread, <a href="https://twitter.com/freeformz">Ed Muller</a> pointed out a <a href="https://github.com/golang/go/issues/6336#issuecomment-66085142">golang work around</a>
-of a <a href="https://sourceware.org/bugzilla/show_bug.cgi?id=15946">bug in glibc</a> which is very likely to be a factor in this error:</p>
-
-<blockquote>
-<p>Under high load, getaddrinfo() starts sending DNS queries to random
-file descriptors, e.g. some unrelated socket connected to a remote service.</p>
-</blockquote>
-
-<p>As Heroku is a shared platform with multitenant runtime instances, it is
-possible for a random runtime to experience high load and the <a href="https://devcenter.heroku.com/articles/cedar-ubuntu-packages">cedar-14 glibc
-binaries</a> are known to be impacted by this bug. Version 2.20 of glibc has a
-fix and as of <a href="https://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/eglibc/trusty-security/revision/346">2.19-0ubuntu6.6</a> and <a href="https://bazaar.launchpad.net/~ubuntu-branches/ubuntu/precise/eglibc/precise-security/revision/316">2.15-0ubuntu10.11</a> this fix was
-backported to Ubuntu Precise and Trusty. <s>However, Ubuntu Precise currently
-ships <a href="http://packages.ubuntu.com/precise-updates/libc6">2.15-0ubuntu10.10</a> and Trusty provides <a href="http://packages.ubuntu.com/trusty-updates/libc6">2.19-0ubuntu6.5</a>, so this
-bug may continue to be a problem for some time to come.</s></p>
-
-<p>My immediate recommendation is to use language native DNS resolution like
-<code>resolv-replace</code> whenever possible, on Heroku or other systems. However, if you
-require ipv6 or run into problems with <a href="https://github.com/mperham/sidekiq/issues/1258#issuecomment-27389456">third party gems attempting to resolve
-<code>nil</code> addresses</a>, and are stuck with the system DNS, upgrade yourself!
-<s>please indicate that this bug affects you on the <a href="https://bugs.launchpad.net/eglibc/+bug/1421393">Launchpad bug report
-requesting backporting</a> to supported versions of Ubuntu.</s></p>
-
-<p>Thanks to Ed Muller, Michael Hale, Keiko Oda, Steve Conklin, Terence Lee and
-Richard Schneeman for help in figuring this out.</p>
-
+       <a href="2015/02/22/dns-eglibc-and-resolv-replace-on-heroku/">Read more…</a>
      </article>
      </li>
       <li>
@@ -208,34 +152,7 @@ buildpack</a>. By using nginx,
 you can redirect some or all http traffic to your app to the https verison of
 your site.</p>
 
-<p>By adding:</p>
-<pre class="highlight plaintext"><code>if ($http_x_forwarded_proto != 'https') {
-  rewrite ^ https://$host$request_uri? permanent;
-}
-</code></pre>
-
-<p>to the <code>location</code> section of your app&rsquo;s nginx config file template, any access
-to that location will be met with a <code>301 Moved Permanently</code> redirect to the
-<code>https</code> version of that site and path.</p>
-
-<p>EDIT: @jacobian <a href="https://twitter.com/jacobian/status/526538110201368576">pointed
-out</a> on twitter that
-using <a href="http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">HTTP Strict Transport Security
-(HSTS)</a> headers
-will make modern clients prefer HTTPS, even for the <code>/insecure</code> path that lacks
-the redirect snippet.</p>
-
-<p>As all apps are accessible at <code>https://&lt;app-name&gt;.herokuapp.com/</code> by using
-Heroku&rsquo;s <code>herokuapp.com</code> SSL cert, this provides a free and easy way to secure
-your apps. Custom domain names require custom SSL certs, which are available
-from traditional SSL vendors or from Heroku addon <a href="https://www.expeditedssl.com/">Expedited
-SSL</a></p>
-
-<p>A sample app can be found at
-<a href="https://github.com/gregburek/heroku-force-ssl-sample">https://github.com/gregburek/heroku-force-ssl-sample</a>
-and deployed to your Heroku account here: 
-<a href="https://heroku.com/deploy?template=https://github.com/gregburek/heroku-force-ssl-sample"><img alt="Deploy" src="https://www.herokucdn.com/deploy/button.png" /></a></p>
-
+       <a href="2014/10/26/require-ssl-to-your-heroku-app/">Read more…</a>
      </article>
      </li>
       <li>
@@ -254,45 +171,10 @@ and deployed to your Heroku account here:
          </div>
        </div>
        <p>This is me attempting to resurrect my blog after several years of silence. This
-has also given me a chance to redesign things and adopt another static sight
+has also given me a chance to redesign things and adopt another static site
 generator.</p>
 
-<p>Octopress served me well, but I felt like it was difficult to grasp the
-fundamentals and hard to pick up after a while away. I went looking for new site
-framework and found <a href="http://middlemanapp.com/">Middleman</a>. I liked that it was
-written in Ruby and I really liked the tutorials I found for it.</p>
-
-<p>In particular, Julie Pagano&rsquo;s fantastic
-<a href="http://juliepagano.com/blog/2013/11/10/site-redesign-using-middleman/">tutorial</a>
-was invaluable in getting me past a bunch of unexpected things.</p>
-
-<p>The plugins I am using are:</p>
-
-<ul>
-<li><a href="https://github.com/middleman/middleman-blog">middleman-blog</a> for support of
-the article format</li>
-<li><a href="https://github.com/neo/middleman-gh-pages">middleman-gh-pages</a> for an easy
-GitHub pages integrated workflow</li>
-<li><a href="https://github.com/middleman/middleman-blog">middleman-syntax</a> for syntax
-highlighting of code snippets</li>
-</ul>
-
-<p>Starting from a blank Gemfile, unfortunately, seemed to not give properly
-rendered code syntax blocks.</p>
-
-<p>An unmerged <a href="https://github.com/middleman/middleman-syntax/pull/42">PR</a> appears
-to address the problem, but I found that using Julie Pagano&rsquo;s
-<a href="https://github.com/juliepagano/juliepagano.com/blob/master/Gemfile.lock">Gemfile.lock</a>
-also worked very well. I am very grateful that it was available.</p>
-
-<p>The rest of the work was about adapting my strange icon color scheme into
-something that doesn&rsquo;t repulse and offend. Mixed results, I would say.</p>
-
-<p>Now that this is set up, I have high hopes to use this new system to write more
-about technology and my experiences with it.</p>
-
-<p>The code for this site now resides on <a href="https://github.com/gregburek/gregburek.com">GitHub</a></p>
-
+       <a href="2014/07/06/moving-site-to-middleman/">Read more…</a>
      </article>
      </li>
       <li>
@@ -304,37 +186,18 @@ about technology and my experiences with it.</p>
            August 21, 2012
            <div class="tags">
              tags:
+             <a href="/tags/chef/">chef</a>,
+             <a href="/tags/debugging/">debugging</a>,
+             <a href="/tags/shef/">shef</a>,
+             <a href="/tags/testing/">testing</a>,
+             <a href="/tags/vagrant/">vagrant</a>
            </div>
          </div>
        </div>
-       <p>Sometimes <a title="Vagrant - Virtualized development for
-the masses" href="http://vagrantup.com">Vagrant</a>&rsquo;s provisioning error messages can be a little cryptic. When
-troubleshooting a failing chef-solo run, tweaking a <code>run_list</code> or debugging a
-new recipe, I&rsquo;ve found it very handy to log into the partially provisioned VM
-with <code>vagrant ssh</code> and then run: <a title="Vagrant -
-Virtualized development for the masses" href="http://vagrantup.com">Vagrant</a> is a great tool for developing and
-testing new chef cookbooks. After bringing up a new vm, and editing a
-cookbook,<code>vagrant provision</code> runs the chef-solo provisioner and tests things
-out. However, when things fail, vagrant&rsquo;s provisioning error messages can be a
-little cryptic. <a title="Shef - Chef -
-Opscode Open Source Wiki" href="http://wiki.opscode.com/display/chef/Shef">Shef</a> is a good tool for running cookbooks in isolation,
-but it needs some help to find all the configuration and attributes that
-vagrant provides. If my <code>new_and_broken</code> cookbook is failing on a Ubuntu 12.04
-VM, all I need to do is run:</p>
-<pre class="highlight plaintext"><code>$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
-    (output snip)
-chef &gt; recipe
-chef:recipe &gt; include_recipe 'new_and_broken'
-    (huge output snip)
-chef:recipe &gt; run_chef
-    (where the error happens)
-</code></pre>
+       <p>Sometimes <a href="http://vagrantup.com" title="Vagrant - Virtualized development for
+the masses">Vagrant</a>’s provisioning error messages can be a little cryptic.</p>
 
-<p>This loads shef in solo mode, with vagrant generated configuration and JSON
-attributes files, enters into recipe mode, loads my new and broken cookbook and
-runs it. The resulting error messages are usually more helpful than <code>vagrant
-provision</code> and I can get back to work. </p>
-
+       <a href="2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/">Read more…</a>
      </article>
      </li>
       <li>
@@ -353,31 +216,12 @@ provision</code> and I can get back to work. </p>
            </div>
          </div>
        </div>
-       <p>I&rsquo;m a huge fan of <a title="Vagrant - Virtualized
-development for the masses" href="http://vagrantup.com">Vagrant</a>&rsquo;s recent omnibus style installer. It makes it so
+       <p>I’m a huge fan of <a href="http://vagrantup.com" title="Vagrant - Virtualized
+development for the masses">Vagrant</a>’s recent omnibus style installer. It makes it so
 much easier to recommend to others as they can be up and running with Vagrant
 extremely quickly, instead of wondering why their distro packaged ruby
-installation isn&rsquo;t working. However, because Vagrant is using an embedded ruby
-installation, other gems which add to vagrant are unable to find it. </p>
-
-<p>One such tool is <a title="Veewee on
-Github" href="http://github.com/jedi4ever/veewee/">veewee</a>, which makes it dead simple to automatically build VMs from
-kickstarter files and basic scripts. Version 0.2 also adds a great subcommand
-to Vagrant called &lsquo;basebox&rsquo; which lets you use veewee to build baseboxes that
-Vagrant may then use to launch new VMs. But with Vagrant being run from its own
-embedded ruby environment, veewee is not able to find the vagrant gem to add
-to, making it a little harder to use for ruby newbies. </p>
-
-<p>There is a way around this, though. If you were to run:</p>
-<pre class="highlight shell"><code>sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
-</code></pre>
-
-<p>veewee is installed to the vagrant embedded environment and <code>vagrant basebox</code>
-is available and functions as expected. I&rsquo;ve done this on my OSX 10.8 box that
-uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. </p>
-
-<p>Let me know if this does or doesn&rsquo;t work for you.</p>
-
+installation isn’t working...</p>
+       <a href="2012/08/12/using-veewee-0-dot-2-with-vagrant-omnibus/">Read more…</a>
      </article>
      </li>
       <li>
@@ -392,42 +236,12 @@ uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. 
            </div>
          </div>
        </div>
-       <p>source: <a href="http://stackoverflow.com/a/667706/586172">Stack Overflow &ldquo;What&rsquo;s a good rate limiting algorithm?&rdquo;</a></p>
+       <p>source: <a href="http://stackoverflow.com/a/667706/586172">Stack Overflow “What’s a good rate limiting algorithm?”</a></p>
 
 <p>I making this into a post because I have found it so handy. Some web
 APIs have rate limits on requests per minute or you may want to play nice
-and not overwhelm the service. In Python, you can use this decorator to
-rate limit a function that may handle the API access: </p>
-<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">time</span>
-
-<span class="k">def</span> <span class="nf">RateLimited</span><span class="p">(</span><span class="n">maxPerSecond</span><span class="p">):</span>
-    <span class="n">minInterval</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">maxPerSecond</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">decorate</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-        <span class="n">lastTimeCalled</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
-        <span class="k">def</span> <span class="nf">rateLimitedFunction</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-            <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">lastTimeCalled</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">leftToWait</span> <span class="o">=</span> <span class="n">minInterval</span> <span class="o">-</span> <span class="n">elapsed</span>
-            <span class="k">if</span> <span class="n">leftToWait</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">leftToWait</span><span class="p">)</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kargs</span><span class="p">)</span>
-            <span class="n">lastTimeCalled</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">ret</span>
-        <span class="k">return</span> <span class="n">rateLimitedFunction</span>
-    <span class="k">return</span> <span class="n">decorate</span>
-
-<span class="nd">@RateLimited</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c"># 2 per second at most</span>
-<span class="k">def</span> <span class="nf">PrintNumber</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">num</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
-    <span class="k">print</span> <span class="s">"This should print 1,2,3... at about 2 per second."</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">):</span>
-        <span class="n">PrintNumber</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</code></pre>
-
-<p>This answer is simpler than setting up a queue system and is blocking,
-which can be good for sequential jobs. </p>
-
+and not overwhelm the service. In Python...</p>
+       <a href="2011/12/05/Rate-limiting-with-decorators/">Read more…</a>
      </article>
      </li>
       <li>
@@ -444,32 +258,13 @@ which can be good for sequential jobs. </p>
        </div>
        <p>Over the month of October, I took an incredible trip to Singapore and Japan.
 That trip deserves its own post, but until then,
-<a title="Singapore 2011 on Flickr" href="http://www.flickr.com/photos/gregburek/sets/72157628032336264/">these</a>
-<a title="Japan
-2011 on Flickr" href="http://www.flickr.com/photos/gregburek/sets/72157627963313507/">photos</a> will have to suffice.</p>
+<a href="http://www.flickr.com/photos/gregburek/sets/72157628032336264/" title="Singapore 2011 on Flickr">these</a>
+<a href="http://www.flickr.com/photos/gregburek/sets/72157627963313507/" title="Japan
+2011 on Flickr">photos</a> will have to suffice.</p>
 
 <p>However, I ran into a little snag while editing and publishing everything. The
-problem was that each photo&rsquo;s GPS/location data wasn&rsquo;t making the jump to
-Flickr from Aperture. The solution was these two check boxes that needed to be
-selected in order for the location info to be correctly exported: one in
-Advanced Options and another in Export Preferences.</p>
-
-<p><img alt="Aperture Advanced Options" src="/2011/11/11/export-aperture-to-flickr-with-GPS/advanced.jpg" /></p>
-
-<p><img alt="Aperture Export Preferences" src="/2011/11/11/export-aperture-to-flickr-with-GPS/export.jpg" /></p>
-
-<p>So in the end, if you make sure &ldquo;Include location information for published
-photos&rdquo; and &ldquo;Include location info in exported photos&rdquo; are both selected,
-everything works beautifully.</p>
-
-<p>Aperture Places view</p>
-
-<p><img alt="Aperture Places" src="/2011/11/11/export-aperture-to-flickr-with-GPS/aperture.png" /></p>
-
-<p>Flickr Map view</p>
-
-<p><img alt="Flickr Map" src="/2011/11/11/export-aperture-to-flickr-with-GPS/flickr.png" /></p>
-
+problem...</p>
+       <a href="2011/11/11/export-aperture-to-flickr-with-GPS/">Read more…</a>
      </article>
      </li>
       <li>
@@ -484,82 +279,19 @@ everything works beautifully.</p>
            </div>
          </div>
        </div>
-       <p>It has been more than a year since my <a href="http://blog.gregburek.com/2010/10/21/macbook-lcd-trick.html">last
+       <p>It has been more than a year since my <a href="/2010/10/21/macbook-lcd-trick">last
 post</a> and that
 computer has been retired. However, I still find it useful to run my new
 MacBook Air attached to an external monitor and with its internal display
-disabled. A few days ago, I found a better and more permanent solution than a
-flimsy magnet: </p>
-
-<ol>
-<li>Attach the closed MacBook to an external display</li>
-<li>Wake the MacBook with an external input device, like usb or bluetooth
-keyboard. </li>
-<li>Open the lid of the MacBook and the internal display will remain off</li>
-</ol>
-
-<p>That&rsquo;s it. No magnets required. </p>
-
-<p>It takes a little bit more for this to work under OS X 10.7 Lion,
-though. Entering the following command in terminal seems to do the
-trick:</p>
-<pre class="highlight shell"><code>sudo nvram boot-args<span class="o">=</span><span class="s2">"iog=0x0"</span>
-</code></pre>
-
-<p>Undoing this is as simple as typing the following, also in terminal:</p>
-<pre class="highlight shell"><code>sudo nvram -d boot-args 
-</code></pre>
-
-<p>You can also zap the PRAM (press Cmd+Opt+p+r at power up) to restore it
-to the new Lion behaviour. </p>
-
-<p>This works great and I&rsquo;ve been using it to improve my laptop&rsquo;s ventilation and
-wireless reception.</p>
-
-<p>I first saw this documented here: <a href="http://hints.macworld.com/article.php?story=20110901113922148">Mac OS X Hints - 10.7: Disable internal
-laptop display when external display is
-attached</a></p>
-
-     </article>
-     </li>
-      <li>
-     <article class="writing">
-       <h1><a href="2010/10/21/macbook-lcd-trick/">Trick a Macbook into thinking it is closed</a></h1>
-       <div class="article-details">
-         <div class="article-date">
-           <i class="fa fa-paper-plane-o"></i>
-           October 21, 2010
-           <div class="tags">
-             tags:
-           </div>
-         </div>
-       </div>
-       <p><em>UPDATED Nov 2011</em>: I found a better way to do this that is posted
-<a href="/2011/11/09/Lid-open-display-off.html">here</a></p>
-
-<p>Up until now, I have run my laptop at work with the lid closed and everything
-on an external monitor on my desk.  However, I was starting to get really
-concerned about the heat (60C idle and 95C under load) and how the little fan
-was struggling to keep up.  </p>
-
-<p>So, I started looking around for tips about how to leave the lid open, but
-trick my MacBook into thinking the lid was closed and leave the LCD off.  I
-found a few <a title="Using MacBook Open, with External Monitor, MB LCD Off?" href="http://discussions.apple.com/message.jspa?messageID=9390796">good</a>
-<a title="Trick a
-MacBook's Lid" href="http://forums.macrumors.com/archive/index.php//t-625443.html">tips</a>, but I still had to hunt with a magnet for that magical switch
-point. Well, I found it and the picture is below.  Things look pretty frosty so
-far, let&rsquo;s hope this extends the life of my 3 year old laptop a bit more.  </p>
-
-<p><a title="Macbook with lid trick magnet attached by greg.burek, on Flickr" href="http://www.flickr.com/photos/gregburek/5103718702/"><img alt="MacBook with lid-closed magnet
-applied" src="http://farm5.static.flickr.com/4111/5103718702_6c0ef9e619.jpg" /></a></p>
-
+disabled. A few days ago, I found a better and...</p>
+       <a href="2011/11/09/Lid-open-display-off/">Read more…</a>
      </article>
      </li>
    </ul>
 
     <p>Page 1 of 2</p>
     <p>
-      <a class="pagination" href="page/2/">next <i class="fa fa-angle-double-right"></i></a>
+      <a href="page/2/" class="pagination">next <i class="fa fa-angle-double-right"></i></a>
     </p>
 
 </section>
@@ -611,7 +343,7 @@ applied" src="http://farm5.static.flickr.com/4111/5103718702_6c0ef9e619.jpg" /><
   </div>
 </footer>
 
-    <script src="/js/plugins.js" type="text/javascript"></script>
-    <script src="/js/ga.js" type="text/javascript"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>
