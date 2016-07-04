@@ -14,6 +14,8 @@ calls a minute to various services, this error can pop up fairly frequently and
 in very inconvenient places. The most common traceback seems to indicate a
 failure to resolve DNS:
 
+READMORE
+
 ```ruby
 #<SocketError: getaddrinfo: Name or service not known>
 /app/vendor/ruby-2.1.5/lib/ruby/2.1.0/net/http.rb:879:in 'initialize'

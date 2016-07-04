@@ -3,7 +3,7 @@ title: Lid Open, Display Off
 ---
 
 It has been more than a year since my [last
-post](http://blog.gregburek.com/2010/10/21/macbook-lcd-trick.html) and that
+post](/2010/10/21/macbook-lcd-trick) and that
 computer has been retired. However, I still find it useful to run my new
 MacBook Air attached to an external monitor and with its internal display
 disabled. A few days ago, I found a better and more permanent solution than a

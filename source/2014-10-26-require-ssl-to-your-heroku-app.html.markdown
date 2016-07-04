@@ -11,6 +11,8 @@ buildpack](https://github.com/ryandotsmith/nginx-buildpack). By using nginx,
 you can redirect some or all http traffic to your app to the https verison of
 your site.
 
+READMORE
+
 By adding:
 
 ```

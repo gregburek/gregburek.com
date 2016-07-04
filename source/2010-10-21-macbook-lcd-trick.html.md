@@ -3,12 +3,12 @@ title: Trick a Macbook into thinking it is closed
 ---
 
 *UPDATED Nov 2011*: I found a better way to do this that is posted
-[here](/2011/11/09/Lid-open-display-off.html)
+[here](/2011/11/09/Lid-open-display-off)
 
 Up until now, I have run my laptop at work with the lid closed and everything
 on an external monitor on my desk.  However, I was starting to get really
 concerned about the heat (60C idle and 95C under load) and how the little fan
-was struggling to keep up.  
+was struggling to keep up.
 
 So, I started looking around for tips about how to leave the lid open, but
 trick my MacBook into thinking the lid was closed and leave the LCD off.  I
