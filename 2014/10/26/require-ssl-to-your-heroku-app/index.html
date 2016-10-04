@@ -80,7 +80,6 @@ your site.</p>
   rewrite ^ https://$host$request_uri? permanent;
 }
 </code></pre>
-
 <p>to the <code>location</code> section of your app&rsquo;s nginx config file template, any access
 to that location will be met with a <code>301 Moved Permanently</code> redirect to the
 <code>https</code> version of that site and path.</p>

@@ -5,68 +5,10 @@
   <id>http://blog.gregburek.com/</id>
   <link href="http://blog.gregburek.com/"/>
   <link href="http://blog.gregburek.com/feed.xml" rel="self"/>
-  <updated>2016-07-02T12:40:00-07:00</updated>
+  <updated>2015-06-20T17:07:00-07:00</updated>
   <author>
     <name>Greg Burek</name>
   </author>
-  <entry>
-    <title>Trying something new: Summary of Tabs</title>
-    <link rel="alternate" href="/2016/07/02/summary-of-tabs/"/>
-    <id>/2016/07/02/summary-of-tabs/</id>
-    <published>2016-07-02T12:40:00-07:00</published>
-    <updated>2016-07-02T12:40:00-07:00</updated>
-    <author>
-      <name>Greg Burek</name>
-    </author>
-    <content type="html">&lt;p&gt;It has been difficult to write recently. So, starting with this post, I am
-trying something new. As an experiment, I will be posting at least once a
-week about my reading for that week. Whether it was a book, an article, a blog
-post, documentation, paper or video, my goal is write about it here. This is
-partially as a hedge against link rot and mind rot, as I frequently find myself
-casting back in twitter and google to find that thing that I read that time
-about that person and that thing.&lt;/p&gt;
-
-&lt;p&gt;We will see how this goes.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href="https://www.theguardian.com/commentisfree/2016/jun/28/brexit-disaster-crisis-changes-left"&gt;Brexit is a disaster, but we can build on the
-ruins&lt;/a&gt;
-via &lt;a href="https://twitter.com/monstro/status/749247754983993344"&gt;@monstro&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Culture is not working. A worldview that insists both people and place are
-fungible is inherently hostile to the need for belonging. For years now we
-have been told that we do not belong, that we should shift out without
-complaint while others are shifted in to take our place. &lt;/p&gt;
-
-&lt;p&gt;&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;Man was born free, and he is everywhere in chainstores.&lt;/p&gt;
-&lt;/blockquote&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href="http://nytimes.com/2016/07/03/upshot/how-a-quest-by-elites-is-driving-brexit-and-trump.html"&gt;How a Quest by Elites Is Driving ‘Brexit’ and
-Trump&lt;/a&gt;
-via &lt;a href="https://twitter.com/monstro/status/749247754983993344"&gt;@monstro&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Here is an overarching theory of what we might have missed in the march
-toward a hyper-efficient global economy: Economic efficiency isn’t all
-it’s cracked up to be.&lt;/p&gt;
-
-&lt;p&gt;&amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;But maybe it is really important for people who live in a place to be
-able to stay there indefinitely. Maybe the idea that things should stay
-the way they are, without new people moving in and new buildings going
-up, is not as inherently irrational as Economics 101 would suggest. Yes,
-rent control is a bad idea if you’re worried about the long-term
-prospects for economic efficiency. But maybe the people who advocate
-these policies know exactly what they’re rooting for, and that’s not it.&lt;/p&gt;
-&lt;/blockquote&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-  </entry>
   <entry>
     <title>Stream a remote file to S3</title>
     <link rel="alternate" href="/2015/06/20/stream-a-remote-file-to-s3/"/>
@@ -123,7 +65,6 @@ one can link the two IO streams together fairly easily:&lt;/p&gt;
   &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;upload_to_s3&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;bucket_name: &lt;/span&gt;&lt;span class="s1"&gt;'mah_gifs'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;
-
 &lt;p&gt;This code snippet assumes you have &lt;code&gt;ENV[&amp;#39;AWS_ACCESS_KEY_ID&amp;#39;]&lt;/code&gt; and
 &lt;code&gt;ENV[&amp;#39;AWS_SECRET_ACCESS_KEY&amp;#39;]&lt;/code&gt; set.&lt;/p&gt;
 </content>
@@ -154,7 +95,6 @@ failure to resolve DNS:&lt;/p&gt;
 &lt;span class="sr"&gt;/app/&lt;/span&gt;&lt;span class="n"&gt;vendor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;rb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;879&lt;/span&gt;&lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="s1"&gt;'block in connect'&lt;/span&gt;
 &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
-
 &lt;p&gt;&lt;a href="http://lmgtfy.com/?q=SocketError%3A+getaddrinfo%3A+Name+or+service+not+known+heroku"&gt;Google&lt;/a&gt; led me to a &lt;a href="http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html"&gt;pertinent blog post&lt;/a&gt; that recommended using ruby&amp;rsquo;s
 &lt;a href="http://apidock.com/ruby/Resolv"&gt;Resolv&lt;/a&gt; library for all DNS requests via a script called &lt;a href="https://github.com/ruby/ruby/blob/trunk/lib/resolv-replace.rb"&gt;resolv-replace&lt;/a&gt;.
 Adding a single line to our initializers, &lt;code&gt;require resolv-replace&lt;/code&gt;, caused errors
@@ -216,7 +156,6 @@ your site.&lt;/p&gt;
   rewrite ^ https://$host$request_uri? permanent;
 }
 &lt;/code&gt;&lt;/pre&gt;
-
 &lt;p&gt;to the &lt;code&gt;location&lt;/code&gt; section of your app&amp;rsquo;s nginx config file template, any access
 to that location will be met with a &lt;code&gt;301 Moved Permanently&lt;/code&gt; redirect to the
 &lt;code&gt;https&lt;/code&gt; version of that site and path.&lt;/p&gt;
@@ -325,11 +264,44 @@ chef:recipe &amp;gt; include_recipe 'new_and_broken'
 chef:recipe &amp;gt; run_chef
     (where the error happens)
 &lt;/code&gt;&lt;/pre&gt;
-
 &lt;p&gt;This loads shef in solo mode, with vagrant generated configuration and JSON
 attributes files, enters into recipe mode, loads my new and broken cookbook and
 runs it. The resulting error messages are usually more helpful than &lt;code&gt;vagrant
 provision&lt;/code&gt; and I can get back to work. &lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Using veewee 0.2 with Vagrant omnibus</title>
+    <link rel="alternate" href="/2012/08/12/using-veewee-0-dot-2-with-vagrant-omnibus/"/>
+    <id>/2012/08/12/using-veewee-0-dot-2-with-vagrant-omnibus/</id>
+    <published>2012-08-12T15:20:00-07:00</published>
+    <updated>2012-08-12T15:20:00-07:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;I&amp;rsquo;m a huge fan of &lt;a href="http://vagrantup.com" title="Vagrant - Virtualized
+development for the masses"&gt;Vagrant&lt;/a&gt;&amp;rsquo;s recent omnibus style installer. It makes it so
+much easier to recommend to others as they can be up and running with Vagrant
+extremely quickly, instead of wondering why their distro packaged ruby
+installation isn&amp;rsquo;t working. However, because Vagrant is using an embedded ruby
+installation, other gems which add to vagrant are unable to find it. &lt;/p&gt;
+
+&lt;p&gt;One such tool is &lt;a href="http://github.com/jedi4ever/veewee/" title="Veewee on
+Github"&gt;veewee&lt;/a&gt;, which makes it dead simple to automatically build VMs from
+kickstarter files and basic scripts. Version 0.2 also adds a great subcommand
+to Vagrant called &amp;lsquo;basebox&amp;rsquo; which lets you use veewee to build baseboxes that
+Vagrant may then use to launch new VMs. But with Vagrant being run from its own
+embedded ruby environment, veewee is not able to find the vagrant gem to add
+to, making it a little harder to use for ruby newbies. &lt;/p&gt;
+
+&lt;p&gt;There is a way around this, though. If you were to run:&lt;/p&gt;
+&lt;pre class="highlight shell"&gt;&lt;code&gt;sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;veewee is installed to the vagrant embedded environment and &lt;code&gt;vagrant basebox&lt;/code&gt;
+is available and functions as expected. I&amp;rsquo;ve done this on my OSX 10.8 box that
+uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. &lt;/p&gt;
+
+&lt;p&gt;Let me know if this does or doesn&amp;rsquo;t work for you.&lt;/p&gt;
 </content>
   </entry>
 </feed>

@@ -83,7 +83,6 @@ failure to resolve DNS:</p>
 <span class="sr">/app/</span><span class="n">vendor</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">5</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="mi">2</span><span class="o">.</span><span class="mi">1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">net</span><span class="o">/</span><span class="n">http</span><span class="p">.</span><span class="nf">rb</span><span class="p">:</span><span class="mi">879</span><span class="ss">:in</span> <span class="s1">'block in connect'</span>
 <span class="p">.</span><span class="nf">.</span><span class="o">.</span>
 </code></pre>
-
 <p><a href="http://lmgtfy.com/?q=SocketError%3A+getaddrinfo%3A+Name+or+service+not+known+heroku">Google</a> led me to a <a href="http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html">pertinent blog post</a> that recommended using ruby&rsquo;s
 <a href="http://apidock.com/ruby/Resolv">Resolv</a> library for all DNS requests via a script called <a href="https://github.com/ruby/ruby/blob/trunk/lib/resolv-replace.rb">resolv-replace</a>.
 Adding a single line to our initializers, <code>require resolv-replace</code>, caused errors

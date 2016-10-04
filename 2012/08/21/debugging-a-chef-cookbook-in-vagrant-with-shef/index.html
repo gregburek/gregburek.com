@@ -90,7 +90,6 @@ chef:recipe &gt; include_recipe 'new_and_broken'
 chef:recipe &gt; run_chef
     (where the error happens)
 </code></pre>
-
 <p>This loads shef in solo mode, with vagrant generated configuration and JSON
 attributes files, enters into recipe mode, loads my new and broken cookbook and
 runs it. The resulting error messages are usually more helpful than <code>vagrant
