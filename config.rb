@@ -47,17 +47,8 @@ activate :blog do |blog|
   blog.page_link = "page/{num}"
 end
 
-# Reload the browser automatically whenever files change
-configure :development do
-  activate :livereload
-end
-
-# Methods defined in the helpers block are available in templates
-# helpers do
-#   def some_helper
-#     "Helping"
-#   end
-# end
+set :relative_links, true
+activate :livereload
 
 # Build-specific configuration
 configure :build do
