@@ -5,10 +5,36 @@
   <id>http://blog.gregburek.com/</id>
   <link href="http://blog.gregburek.com/"/>
   <link href="http://blog.gregburek.com/feed.xml" rel="self"/>
-  <updated>2016-10-04T14:51:00-07:00</updated>
+  <updated>2016-10-06T15:08:00-07:00</updated>
   <author>
     <name>Greg Burek</name>
   </author>
+  <entry>
+    <title>Lessons from Automatic Incident Resolution for a Million Databases - SREcon16 EU</title>
+    <link rel="alternate" href="/2016/10/06/lessons-from-automatic-incident-resolution-for-a-million-databases-srecon16-eu/"/>
+    <id>/2016/10/06/lessons-from-automatic-incident-resolution-for-a-million-databases-srecon16-eu/</id>
+    <published>2016-10-06T15:08:00-07:00</published>
+    <updated>2016-10-06T15:08:00-07:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;In July, I traveled to Dublin, Ireland to give a short talk about automtic
+incident resolution as we do it at Heroku Data. The original video may be found
+on the &lt;a href="https://www.usenix.org/conference/srecon16europe/program/presentation/burek"&gt;SREcon16 EU site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The slides, including working gifs and a video of the talk are embedded below.&lt;/p&gt;
+
+&lt;div class='slide'&gt;
+  &lt;iframe src="https://docs.google.com/presentation/d/1JLMFNUBh0EI5DihNw5Jsq7Gh1ePe6AeoFdFY5mz3_jM/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="760" height="475" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"&gt;&lt;/iframe&gt;
+  &lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;div class='slide'&gt;
+  &lt;iframe width="760" height="475" src="https://www.youtube.com/embed/hrNsVSQdXxU" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+  &lt;/iframe&gt;
+&lt;/div&gt;
+</content>
+  </entry>
   <entry>
     <title>Installing bcc to evaluate BPF and Postgres</title>
     <link rel="alternate" href="/2016/10/04/installing-bcc-to-evaluate-bpf-and-postgres/"/>
@@ -425,45 +451,6 @@ something that doesn&amp;rsquo;t repulse and offend. Mixed results, I would say.
 about technology and my experiences with it.&lt;/p&gt;
 
 &lt;p&gt;The code for this site now resides on &lt;a href="https://github.com/gregburek/gregburek.com"&gt;GitHub&lt;/a&gt;&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Debugging a chef cookbook in vagrant with shef</title>
-    <link rel="alternate" href="/2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/"/>
-    <id>/2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/</id>
-    <published>2012-08-21T21:00:00-07:00</published>
-    <updated>2012-08-21T21:00:00-07:00</updated>
-    <author>
-      <name>Greg Burek</name>
-    </author>
-    <content type="html">&lt;p&gt;Sometimes &lt;a href="http://vagrantup.com" title="Vagrant - Virtualized development for
-the masses"&gt;Vagrant&lt;/a&gt;&amp;rsquo;s provisioning error messages can be a little cryptic.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;When troubleshooting a failing chef-solo run, tweaking a &lt;code&gt;run_list&lt;/code&gt; or
-debugging a new recipe, I&amp;rsquo;ve found it very handy to log into the partially
-provisioned VM with &lt;code&gt;vagrant ssh&lt;/code&gt; and then run: &lt;a href="http://vagrantup.com" title="Vagrant - Virtualized development for the masses"&gt;Vagrant&lt;/a&gt; is a great tool for
-developing and testing new chef cookbooks. After bringing up a new vm, and
-editing a cookbook,&lt;code&gt;vagrant provision&lt;/code&gt; runs the chef-solo provisioner and tests
-things out. However, when things fail, vagrant&amp;rsquo;s provisioning error messages
-can be a little cryptic. &lt;a href="http://wiki.opscode.com/display/chef/Shef" title="Shef
-- Chef - Opscode Open Source Wiki"&gt;Shef&lt;/a&gt; is a good tool for running cookbooks in
-isolation, but it needs some help to find all the configuration and attributes
-that vagrant provides. If my &lt;code&gt;new_and_broken&lt;/code&gt; cookbook is failing on a Ubuntu
-12.04 VM, all I need to do is run:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;$ shef -s -c /tmp/vagrant-chef-1/solo.rb -j /tmp/vagrant-chef-1/dna.json
-    (output snip)
-chef &amp;gt; recipe
-chef:recipe &amp;gt; include_recipe 'new_and_broken'
-    (huge output snip)
-chef:recipe &amp;gt; run_chef
-    (where the error happens)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This loads shef in solo mode, with vagrant generated configuration and JSON
-attributes files, enters into recipe mode, loads my new and broken cookbook and
-runs it. The resulting error messages are usually more helpful than &lt;code&gt;vagrant
-provision&lt;/code&gt; and I can get back to work. &lt;/p&gt;
 </content>
   </entry>
 </feed>
