@@ -345,6 +345,16 @@ pre {
     }
   }
 
+  iframe {
+    float: left;
+    padding-top: 10px;
+
+    @media screen and (max-width: 750px) {
+      width: 95%;
+      height: 95%
+    }
+  }
+
   p {
     margin: 0 0 0.7em 0;
   }
