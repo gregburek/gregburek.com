@@ -1,7 +1,7 @@
 ---
 title: Installing bcc to evaluate BPF and Postgres
 date: 2016-10-04 14:51 PDT
-tags: bpf postgres linux performance ubuntu discovery
+tags: bpf, postgres, linux, performance, ubuntu, discovery
 ---
 
 [@t_crayford](https://twitter.com/t_crayford) sent me Brendan Gregg's latest

@@ -1,7 +1,7 @@
 ---
 title: Lessons from Automatic Incident Resolution for a Million Databases - SREcon16 EU
 date: 2016-10-06 15:08 PDT
-tags: srecon presentations talks
+tags: srecon, presentations, talks
 ---
 
 In July, I traveled to Dublin, Ireland to give a short talk about automtic
