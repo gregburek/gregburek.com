@@ -4,39 +4,46 @@ date: 2016-10-08 15:09 PDT
 tags: node, npm, postgres, nodejs, discovery, plv8, plv8x
 ---
 
-[PLV8](https://github.com/plv8/plv8) is a procedural language for Postgres, in
-JavaScript, powered by the
+[PLV8](https://github.com/plv8/plv8) is a procedural language for Postgres,
+that runs JavaScript, powered by the
 [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) runtime. This allows
 generic JavaScript code to be executed on a Postgres host, with the same
 runtime that the web browser Chrome uses. So, it follows that most code that
 could run in a browser should also be able to be run in Postgres.
 
+PLV8 has been an extension of Postgres since version 9.2, and has been
+available on [Heroku
+Postgres](https://devcenter.heroku.com/articles/heroku-postgres-extensions-postgis-full-text-search#languages)
+professional tier databases for about as long.
+
+# This is probably a bad idea
+
 READMORE
 
-PLV8 has been an extension of Postgres since version 9.2, and has been
-available on Heroku Postgres professional tier databases for about as long.
 While potentially powerful, I personally have not seen much use of PLV8 other
-than causing Out of Memory errors on busy postgres dbs.
+than causing Out of Memory errors on busy Postgres dbs.
 
 This series of posts aims to document my attempts to use node modules and npm
-in PLV8 to develop a simple js app.
+in PLV8 to develop a simple js app that uses Postgres as a runtime for the V8
+runtime.
 
 To be fair, this is one of my first attempts at using node and npm, so these
 posts will be about that as much as anything.
 
-# WHY
+# Why?
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Why use node when you can use Postgres as your JavaScript runtime?</p>&mdash; Damaged Guids (@t_crayford) <a href="https://twitter.com/t_crayford/status/784529763603976192">October 7, 2016</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Why not?
 
-![Why not postgres?](http://i.imgur.com/S0YQYR4.jpg)
+![Why not Postgres?](http://i.imgur.com/S0YQYR4.jpg)
 
 # Goal
 
-To have a postgres function that logs into twitter and downloads my home feed to
-the database it runs in. I'll attempt to use
+To have a Postgres function that logs into twitter and downloads my home feed to
+the database it runs in. I'll limit myself to a Heroku Postgres db, out of my
+own convenience. I'll attempt to use
 [twitter-node-client](https://github.com/BoyCook/TwitterJSClient) for this
 purpose.
 
@@ -580,7 +587,7 @@ are similar to ones in Livescript (`|>` pipeline operator) and CoffeeScript
 (`->` thin arrows which are translated as `~>`).
 
 Custom operators are superuser only and run the risk of crashing the
-postmaster, so many postgres providers do not support them.
+postmaster, so many Postgres providers do not support them.
 
 However, it seems that they are not critical to using vanilla js and node, so
 we may continue.
