@@ -565,12 +565,24 @@ omitted):&lt;/p&gt;
 are similar to ones in Livescript (&lt;code&gt;|&amp;gt;&lt;/code&gt; pipeline operator) and CoffeeScript
 (&lt;code&gt;-&amp;gt;&lt;/code&gt; thin arrows which are translated as &lt;code&gt;~&amp;gt;&lt;/code&gt;).&lt;/p&gt;
 
-&lt;p&gt;Custom operators are superuser only and run the risk of crashing the
-postmaster, so many Postgres providers do not support them.&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;Custom operators are superuser only and run the risk of crashing the
+postmaster, so many Postgres providers do not support them.&lt;/del&gt;&lt;/p&gt;
 
-&lt;p&gt;However, it seems that they are not critical to using vanilla js and node, so
-we may continue.&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;However, it seems that they are not critical to using vanilla js and node, so
+we may continue.&lt;/del&gt;&lt;/p&gt;
 
+&lt;h3 id="update-only-custom-default-operators-seem-to-not-work-after-altering-the-search_path-of-the-db-these-appear-to-be-created-properly"&gt;&lt;em&gt;UPDATE:&lt;/em&gt; Only custom &lt;em&gt;default&lt;/em&gt; operators seem to not work. After altering the search_path of the db, these appear to be created properly.&lt;/h3&gt;
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; select * from pg_operator where oprcode::text ilike 'plv8%';
+ oprname | oprnamespace | oprowner | oprkind | oprcanmerge | oprcanhash | oprleft | oprright | oprresult | oprcom | oprnegate |      oprcode       | oprrest | oprjoin
+---------+--------------+----------+---------+-------------+------------+---------+----------+-----------+--------+-----------+--------------------+---------+---------
+ |&amp;gt;      |        17017 |    16384 | l       | f           | f          |       0 |       25 |     17027 |      0 |         0 | plv8x.json_eval    | -       | -
+ |&amp;gt;      |        17017 |    16384 | b       | f           | f          |   17027 |       25 |     17027 |  17316 |         0 | plv8x.json_eval    | -       | -
+ &amp;lt;|      |        17017 |    16384 | b       | f           | f          |      25 |    17027 |     17027 |  17317 |         0 | plv8x.json_eval    | -       | -
+ ~&amp;gt;      |        17017 |    16384 | l       | f           | f          |       0 |       25 |     17027 |      0 |         0 | plv8x.json_eval_ls | -       | -
+ ~&amp;gt;      |        17017 |    16384 | b       | f           | f          |   17027 |       25 |     17027 |  17320 |         0 | plv8x.json_eval_ls | -       | -
+ &amp;lt;~      |        17017 |    16384 | b       | f           | f          |      25 |    17027 |     17027 |  17321 |         0 | plv8x.json_eval_ls | -       | -
+(6 rows)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="how-does-this-work"&gt;How does this work?&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s take a look at the db:&lt;/p&gt;
@@ -687,16 +699,31 @@ LOCATION:  rethrow, plv8.cc:1649
 &lt;p&gt;It looks like the lack of custom operators is preventing this code from
 running.&lt;/p&gt;
 
-&lt;h1 id="failure"&gt;Failure&lt;/h1&gt;
+&lt;h1 id="failure"&gt;Failure?&lt;/h1&gt;
 
-&lt;p&gt;After all this exploration, I think using plv8x with a Heroku Postgres db is
+&lt;h3 id="update-it-seems-that-the-search-path-of-the-db-was-not-wide-enough-and-including-all-possible-schemas-allows-operator-creation-and-for-modules-to-be-loaded-and-run"&gt;UPDATE: It seems that the search path of the db was not wide enough, and including all possible schemas, allows operator creation and for modules to be loaded and run:&lt;/h3&gt;
+&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; alter database df5f7ilg16vje set search_path to "$user", public, plv8, plv8x;
+ALTER DATABASE
+Time: 79.494 ms
+&amp;gt; SELECT |&amp;gt;'(require("moment")()).format()';
+          ?column?
+-----------------------------
+ "2016-10-12T20:30:26+00:00"
+(1 row)
+
+Time: 76.703 ms
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Part 2 will continue down this path to running node/npm in Postgres and will
+show how the above was found.&lt;/p&gt;
+
+&lt;p&gt;&lt;del&gt;After all this exploration, I think using plv8x with a Heroku Postgres db is
 not possible. The use of custom operators seems to extend beyond the ability to
-use LiveScript and Coffeescript and prevents loading vanilla modules.&lt;/p&gt;
+use LiveScript and Coffeescript and prevents loading vanilla modules.&lt;/del&gt;&lt;/p&gt;
 
-&lt;p&gt;I am not too discouraged, however, as
+&lt;p&gt;&lt;del&gt;I am not too discouraged, however, as
 &lt;a href="https://github.com/langateam/node-plv8"&gt;node-plv8&lt;/a&gt; and
 &lt;a href="https://github.com/mgutz/plv8-bedrock"&gt;plv8-bedrock&lt;/a&gt; seem like viable
-alternatives. I&amp;rsquo;ll try those next!&lt;/p&gt;
+alternatives. I&amp;rsquo;ll try those next!&lt;/del&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
