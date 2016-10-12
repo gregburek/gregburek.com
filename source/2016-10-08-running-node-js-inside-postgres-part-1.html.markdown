@@ -724,14 +724,33 @@ LOCATION:  rethrow, plv8.cc:1649
 It looks like the lack of custom operators is preventing this code from
 running.
 
+# Failure?
 
-# Failure
+UPDATE: It seems that the search path of the db was not wide enough, and
+including all possible schemas, allows operator creation and for modules to be
+loaded and run:
 
-After all this exploration, I think using plv8x with a Heroku Postgres db is
+```
+> alter database df5f7ilg16vje set search_path to "$user", public, plv8, plv8x;
+ALTER DATABASE
+Time: 79.494 ms
+> SELECT |>'(require("moment")()).format()';
+          ?column?
+-----------------------------
+ "2016-10-12T20:30:26+00:00"
+(1 row)
+
+Time: 76.703 ms
+```
+
+Part 2 will continue down this path to running node/npm in Postgres and will
+show how the above was found.
+
+~~After all this exploration, I think using plv8x with a Heroku Postgres db is
 not possible. The use of custom operators seems to extend beyond the ability to
 use LiveScript and Coffeescript and prevents loading vanilla modules.
 
 I am not too discouraged, however, as
 [node-plv8](https://github.com/langateam/node-plv8) and
 [plv8-bedrock](https://github.com/mgutz/plv8-bedrock) seem like viable
-alternatives. I'll try those next!
+alternatives. I'll try those next!~~

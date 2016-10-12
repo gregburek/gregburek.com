@@ -30,8 +30,8 @@ set :markdown, :layout_engine => :erb,
   :tables => true,
   :autolink => true,
   :smartypants => true,
-  :with_toc_data => true
-
+  :with_toc_data => true,
+  :strikethrough => true
 
 activate :blog do |blog|
   blog.taglink = "tags/{tag}.html"
