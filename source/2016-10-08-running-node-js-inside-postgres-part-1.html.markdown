@@ -586,11 +586,26 @@ This is not great. It seems that `plv8x` wants to create custom operators that
 are similar to ones in Livescript (`|>` pipeline operator) and CoffeeScript
 (`->` thin arrows which are translated as `~>`).
 
-Custom operators are superuser only and run the risk of crashing the
-postmaster, so many Postgres providers do not support them.
+~~Custom operators are superuser only and run the risk of crashing the
+postmaster, so many Postgres providers do not support them.~~
 
-However, it seems that they are not critical to using vanilla js and node, so
-we may continue.
+~~However, it seems that they are not critical to using vanilla js and node, so
+we may continue.~~
+
+### *UPDATE:* Only custom *default* operators seem to not work. After altering the search_path of the db, these appear to be created properly.
+
+```
+> select * from pg_operator where oprcode::text ilike 'plv8%';
+ oprname | oprnamespace | oprowner | oprkind | oprcanmerge | oprcanhash | oprleft | oprright | oprresult | oprcom | oprnegate |      oprcode       | oprrest | oprjoin
+---------+--------------+----------+---------+-------------+------------+---------+----------+-----------+--------+-----------+--------------------+---------+---------
+ |>      |        17017 |    16384 | l       | f           | f          |       0 |       25 |     17027 |      0 |         0 | plv8x.json_eval    | -       | -
+ |>      |        17017 |    16384 | b       | f           | f          |   17027 |       25 |     17027 |  17316 |         0 | plv8x.json_eval    | -       | -
+ <|      |        17017 |    16384 | b       | f           | f          |      25 |    17027 |     17027 |  17317 |         0 | plv8x.json_eval    | -       | -
+ ~>      |        17017 |    16384 | l       | f           | f          |       0 |       25 |     17027 |      0 |         0 | plv8x.json_eval_ls | -       | -
+ ~>      |        17017 |    16384 | b       | f           | f          |   17027 |       25 |     17027 |  17320 |         0 | plv8x.json_eval_ls | -       | -
+ <~      |        17017 |    16384 | b       | f           | f          |      25 |    17027 |     17027 |  17321 |         0 | plv8x.json_eval_ls | -       | -
+(6 rows)
+```
 
 ## How does this work?
 
@@ -726,9 +741,7 @@ running.
 
 # Failure?
 
-UPDATE: It seems that the search path of the db was not wide enough, and
-including all possible schemas, allows operator creation and for modules to be
-loaded and run:
+### UPDATE: It seems that the search path of the db was not wide enough, and including all possible schemas, allows operator creation and for modules to be loaded and run:
 
 ```
 > alter database df5f7ilg16vje set search_path to "$user", public, plv8, plv8x;
@@ -748,9 +761,9 @@ show how the above was found.
 
 ~~After all this exploration, I think using plv8x with a Heroku Postgres db is
 not possible. The use of custom operators seems to extend beyond the ability to
-use LiveScript and Coffeescript and prevents loading vanilla modules.
+use LiveScript and Coffeescript and prevents loading vanilla modules.~~
 
-I am not too discouraged, however, as
+~~I am not too discouraged, however, as
 [node-plv8](https://github.com/langateam/node-plv8) and
 [plv8-bedrock](https://github.com/mgutz/plv8-bedrock) seem like viable
 alternatives. I'll try those next!~~
