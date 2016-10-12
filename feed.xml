@@ -18,27 +18,33 @@
     <author>
       <name>Greg Burek</name>
     </author>
-    <content type="html">&lt;p&gt;&lt;a href="https://github.com/plv8/plv8"&gt;PLV8&lt;/a&gt; is a procedural language for Postgres, in
-JavaScript, powered by the
+    <content type="html">&lt;p&gt;&lt;a href="https://github.com/plv8/plv8"&gt;PLV8&lt;/a&gt; is a procedural language for Postgres,
+that runs JavaScript, powered by the
 &lt;a href="https://en.wikipedia.org/wiki/V8_(JavaScript_engine)"&gt;V8&lt;/a&gt; runtime. This allows
 generic JavaScript code to be executed on a Postgres host, with the same
 runtime that the web browser Chrome uses. So, it follows that most code that
 could run in a browser should also be able to be run in Postgres.&lt;/p&gt;
 
+&lt;p&gt;PLV8 has been an extension of Postgres since version 9.2, and has been
+available on &lt;a href="https://devcenter.heroku.com/articles/heroku-postgres-extensions-postgis-full-text-search#languages"&gt;Heroku
+Postgres&lt;/a&gt;
+professional tier databases for about as long.&lt;/p&gt;
+
+&lt;h1 id="this-is-probably-a-bad-idea"&gt;This is probably a bad idea&lt;/h1&gt;
+
 &lt;p&gt;&lt;/p&gt;
 
-&lt;p&gt;PLV8 has been an extension of Postgres since version 9.2, and has been
-available on Heroku Postgres professional tier databases for about as long.
-While potentially powerful, I personally have not seen much use of PLV8 other
-than causing Out of Memory errors on busy postgres dbs.&lt;/p&gt;
+&lt;p&gt;While potentially powerful, I personally have not seen much use of PLV8 other
+than causing Out of Memory errors on busy Postgres dbs.&lt;/p&gt;
 
 &lt;p&gt;This series of posts aims to document my attempts to use node modules and npm
-in PLV8 to develop a simple js app.&lt;/p&gt;
+in PLV8 to develop a simple js app that uses Postgres as a runtime for the V8
+runtime.&lt;/p&gt;
 
 &lt;p&gt;To be fair, this is one of my first attempts at using node and npm, so these
 posts will be about that as much as anything.&lt;/p&gt;
 
-&lt;h1 id="why"&gt;WHY&lt;/h1&gt;
+&lt;h1 id="why"&gt;Why?&lt;/h1&gt;
 
 &lt;blockquote class="twitter-tweet" data-lang="en"&gt;&lt;p lang="en" dir="ltr"&gt;Why use node when you can use Postgres as your JavaScript runtime?&lt;/p&gt;&amp;mdash; Damaged Guids (@t_crayford) &lt;a href="https://twitter.com/t_crayford/status/784529763603976192"&gt;October 7, 2016&lt;/a&gt;&lt;/blockquote&gt;
 
@@ -46,12 +52,13 @@ posts will be about that as much as anything.&lt;/p&gt;
 
 &lt;p&gt;Why not?&lt;/p&gt;
 
-&lt;p&gt;&lt;img src="http://i.imgur.com/S0YQYR4.jpg" alt="Why not postgres?" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="http://i.imgur.com/S0YQYR4.jpg" alt="Why not Postgres?" /&gt;&lt;/p&gt;
 
 &lt;h1 id="goal"&gt;Goal&lt;/h1&gt;
 
-&lt;p&gt;To have a postgres function that logs into twitter and downloads my home feed to
-the database it runs in. I&amp;rsquo;ll attempt to use
+&lt;p&gt;To have a Postgres function that logs into twitter and downloads my home feed to
+the database it runs in. I&amp;rsquo;ll limit myself to a Heroku Postgres db, out of my
+own convenience. I&amp;rsquo;ll attempt to use
 &lt;a href="https://github.com/BoyCook/TwitterJSClient"&gt;twitter-node-client&lt;/a&gt; for this
 purpose.&lt;/p&gt;
 
@@ -559,7 +566,7 @@ are similar to ones in Livescript (&lt;code&gt;|&amp;gt;&lt;/code&gt; pipeline o
 (&lt;code&gt;-&amp;gt;&lt;/code&gt; thin arrows which are translated as &lt;code&gt;~&amp;gt;&lt;/code&gt;).&lt;/p&gt;
 
 &lt;p&gt;Custom operators are superuser only and run the risk of crashing the
-postmaster, so many postgres providers do not support them.&lt;/p&gt;
+postmaster, so many Postgres providers do not support them.&lt;/p&gt;
 
 &lt;p&gt;However, it seems that they are not critical to using vanilla js and node, so
 we may continue.&lt;/p&gt;
