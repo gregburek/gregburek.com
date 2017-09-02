@@ -47,6 +47,8 @@ own convenience. I'll attempt to use
 [twitter-node-client](https://github.com/BoyCook/TwitterJSClient) for this
 purpose.
 
+EDIT: [This goal is not currently possible.](/2017/09/01/running-node-js-inside-postgres-part-mea-culpa/)
+
 # First thing to attempt
 
 A google search for `node plv8` led me to the
