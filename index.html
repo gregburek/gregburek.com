@@ -24,16 +24,15 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body class="index">
     <!--[if lt IE 7]>
@@ -52,6 +51,40 @@
     <div class="container">
       <section>
   <ul>
+      <li>
+     <article class="writing">
+       <h1><a href="2017/09/01/running-node-js-inside-postgres-part-mea-culpa/">Running Node.js inside Postgres, Part Mea Culpa</a></h1>
+       <div class="article-details">
+         <div class="article-date">
+           <i class="fa fa-paper-plane-o"></i>
+           September 01, 2017
+           <div class="tags">
+             tags:
+             <a href="/tags/discovery/">discovery</a>,
+             <a href="/tags/mea-culpa/">mea culpa</a>,
+             <a href="/tags/node/">node</a>,
+             <a href="/tags/nodejs/">nodejs</a>,
+             <a href="/tags/npm/">npm</a>,
+             <a href="/tags/plv8/">plv8</a>,
+             <a href="/tags/plv8x/">plv8x</a>,
+             <a href="/tags/postgres/">postgres</a>
+           </div>
+         </div>
+       </div>
+       <p><a href="/2016/10/08/running-node-js-inside-postgres-part-1">Previously</a>, I wrote about
+trying to run node.js code in PLV8 in Postgres. Unfortunately, that effort
+sputtered out once I
+<a href="https://stackoverflow.com/questions/12666148/does-plv8-support-making-http-calls-to-other-servers">found</a>
+<a href="https://github.com/plv8/plv8/issues/190">out</a>
+that PLV8 is a ‘trusted’ languagefor postgres. As documented for
+<a href="https://www.postgresql.org/docs/current/static/plperl-trusted.html">PL/Perl</a>:</p>
+
+<blockquote>
+<p>Normally, PL/Perl is installed as a “trusted...</p>
+</blockquote>
+       <a href="2017/09/01/running-node-js-inside-postgres-part-mea-culpa/">Read more…</a>
+     </article>
+     </li>
       <li>
      <article class="writing">
        <h1><a href="2016/10/08/running-node-js-inside-postgres-part-1/">Running Node.js inside Postgres, Part 1</a></h1>
@@ -85,6 +118,7 @@ professional tier databases for about as long.</p>
 
 <h1 id="this-is-probably-a-bad-idea">This is probably a bad idea</h1>
 
+<p></p>
        <a href="2016/10/08/running-node-js-inside-postgres-part-1/">Read more…</a>
      </article>
      </li>
@@ -132,6 +166,7 @@ on the <a href="https://www.usenix.org/conference/srecon16europe/program/present
        <p><a href="https://twitter.com/t_crayford">@t_crayford</a> sent me Brendan Gregg’s latest
 missive about performance tracing, this time for <a href="http://www.brendangregg.com/blog/2016-10-04/linux-bcc-mysqld-qslower.html">Linux MySQL Slow Query Tracing with bcc/BPF</a>.</p>
 
+<p></p>
        <a href="2016/10/04/installing-bcc-to-evaluate-bpf-and-postgres/">Read more…</a>
      </article>
      </li>
@@ -161,6 +196,7 @@ the <code>open-uri</code> module of the <a href="http://ruby-doc.org/stdlib-2.2.
 library</a>,
 one can link the two IO streams together fairly easily:</p>
 
+<p></p>
        <a href="2015/06/20/stream-a-remote-file-to-s3/">Read more…</a>
      </article>
      </li>
@@ -191,6 +227,7 @@ calls a minute to various services, this error can pop up fairly frequently and
 in very inconvenient places. The most common traceback seems to indicate a
 failure to resolve DNS:</p>
 
+<p></p>
        <a href="2015/02/22/dns-eglibc-and-resolv-replace-on-heroku/">Read more…</a>
      </article>
      </li>
@@ -218,6 +255,7 @@ buildpack</a>. By using nginx,
 you can redirect some or all http traffic to your app to the https verison of
 your site.</p>
 
+<p></p>
        <a href="2014/10/26/require-ssl-to-your-heroku-app/">Read more…</a>
      </article>
      </li>
@@ -240,6 +278,7 @@ your site.</p>
 has also given me a chance to redesign things and adopt another static site
 generator.</p>
 
+<p></p>
        <a href="2014/07/06/moving-site-to-middleman/">Read more…</a>
      </article>
      </li>
@@ -261,8 +300,9 @@ generator.</p>
          </div>
        </div>
        <p>Sometimes <a href="http://vagrantup.com" title="Vagrant - Virtualized development for
-the masses">Vagrant</a>’s provisioning error messages can be a little cryptic.</p>
+the masses">Vagrant</a>‘s provisioning error messages can be a little cryptic.</p>
 
+<p></p>
        <a href="2012/08/21/debugging-a-chef-cookbook-in-vagrant-with-shef/">Read more…</a>
      </article>
      </li>
@@ -283,34 +323,11 @@ the masses">Vagrant</a>’s provisioning error messages can be a little cryptic.
          </div>
        </div>
        <p>I’m a huge fan of <a href="http://vagrantup.com" title="Vagrant - Virtualized
-development for the masses">Vagrant</a>’s recent omnibus style installer. It makes it so
+development for the masses">Vagrant</a>‘s recent omnibus style installer. It makes it so
 much easier to recommend to others as they can be up and running with Vagrant
 extremely quickly, instead of wondering why their distro packaged ruby
 installation isn’t working...</p>
        <a href="2012/08/12/using-veewee-0-dot-2-with-vagrant-omnibus/">Read more…</a>
-     </article>
-     </li>
-      <li>
-     <article class="writing">
-       <h1><a href="2011/12/05/Rate-limiting-with-decorators/">Rate Limiting Function Calls in Python with a Decorator</a></h1>
-       <div class="article-details">
-         <div class="article-date">
-           <i class="fa fa-paper-plane-o"></i>
-           December 05, 2011
-           <div class="tags">
-             tags:
-             <a href="/tags/programming/">programming</a>,
-             <a href="/tags/python/">python</a>,
-             <a href="/tags/tech/">tech</a>
-           </div>
-         </div>
-       </div>
-       <p>source: <a href="http://stackoverflow.com/a/667706/586172">Stack Overflow “What’s a good rate limiting algorithm?”</a></p>
-
-<p>I making this into a post because I have found it so handy. Some web
-APIs have rate limits on requests per minute or you may want to play nice
-and not overwhelm the service. In Python...</p>
-       <a href="2011/12/05/Rate-limiting-with-decorators/">Read more…</a>
      </article>
      </li>
    </ul>
@@ -370,5 +387,6 @@ and not overwhelm the service. In Python...</p>
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

@@ -24,18 +24,17 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
-  <body class="x2011 x2011_11 x2011_11_11 x2011_11_11_export-aperture-to-flickr-with-GPS x2011_11_11_export-aperture-to-flickr-with-GPS_index">
+  <body class="x2011 x2011_11 x2011_11_11 x2011_11_11_export-aperture-to-flickr-with-gps x2011_11_11_export-aperture-to-flickr-with-gps_index">
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
@@ -77,9 +76,9 @@ Flickr from Aperture. The solution was these two check boxes that needed to be
 selected in order for the location info to be correctly exported: one in
 Advanced Options and another in Export Preferences.</p>
 
-<p><img src="/2011/11/11/export-aperture-to-flickr-with-GPS/advanced.jpg" alt="Aperture Advanced Options" /></p>
+<p><img src="/2011/11/11/export-aperture-to-flickr-with-gps/advanced.jpg" alt="Aperture Advanced Options" /></p>
 
-<p><img src="/2011/11/11/export-aperture-to-flickr-with-GPS/export.jpg" alt="Aperture Export Preferences" /></p>
+<p><img src="/2011/11/11/export-aperture-to-flickr-with-gps/export.jpg" alt="Aperture Export Preferences" /></p>
 
 <p>So in the end, if you make sure &ldquo;Include location information for published
 photos&rdquo; and &ldquo;Include location info in exported photos&rdquo; are both selected,
@@ -87,11 +86,11 @@ everything works beautifully.</p>
 
 <p>Aperture Places view</p>
 
-<p><img src="/2011/11/11/export-aperture-to-flickr-with-GPS/aperture.png" alt="Aperture Places" /></p>
+<p><img src="/2011/11/11/export-aperture-to-flickr-with-gps/aperture.png" alt="Aperture Places" /></p>
 
 <p>Flickr Map view</p>
 
-<p><img src="/2011/11/11/export-aperture-to-flickr-with-GPS/flickr.png" alt="Flickr Map" /></p>
+<p><img src="/2011/11/11/export-aperture-to-flickr-with-gps/flickr.png" alt="Flickr Map" /></p>
 
   </article>
 
@@ -143,5 +142,6 @@ everything works beautifully.</p>
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

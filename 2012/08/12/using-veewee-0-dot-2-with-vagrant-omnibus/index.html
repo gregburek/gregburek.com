@@ -24,16 +24,15 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body class="x2012 x2012_08 x2012_08_12 x2012_08_12_using-veewee-0-dot-2-with-vagrant-omnibus x2012_08_12_using-veewee-0-dot-2-with-vagrant-omnibus_index">
     <!--[if lt IE 7]>
@@ -66,7 +65,7 @@
       </div>
     </div>
     <p>I&rsquo;m a huge fan of <a href="http://vagrantup.com" title="Vagrant - Virtualized
-development for the masses">Vagrant</a>&rsquo;s recent omnibus style installer. It makes it so
+development for the masses">Vagrant</a>&lsquo;s recent omnibus style installer. It makes it so
 much easier to recommend to others as they can be up and running with Vagrant
 extremely quickly, instead of wondering why their distro packaged ruby
 installation isn&rsquo;t working. However, because Vagrant is using an embedded ruby
@@ -75,14 +74,14 @@ installation, other gems which add to vagrant are unable to find it. </p>
 <p>One such tool is <a href="http://github.com/jedi4ever/veewee/" title="Veewee on
 Github">veewee</a>, which makes it dead simple to automatically build VMs from
 kickstarter files and basic scripts. Version 0.2 also adds a great subcommand
-to Vagrant called &lsquo;basebox&rsquo; which lets you use veewee to build baseboxes that
+to Vagrant called &#39;basebox&rsquo; which lets you use veewee to build baseboxes that
 Vagrant may then use to launch new VMs. But with Vagrant being run from its own
 embedded ruby environment, veewee is not able to find the vagrant gem to add
 to, making it a little harder to use for ruby newbies. </p>
 
 <p>There is a way around this, though. If you were to run:</p>
-<pre class="highlight shell"><code>sudo /opt/vagrant/embedded/bin/gem install veewee --no-ri --no-rdoc
-</code></pre>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">sudo</span> /opt/vagrant/embedded/bin/gem install veewee <span class="nt">--no-ri</span> <span class="nt">--no-rdoc</span>
+</code></pre></div>
 <p>veewee is installed to the vagrant embedded environment and <code>vagrant basebox</code>
 is available and functions as expected. I&rsquo;ve done this on my OSX 10.8 box that
 uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. </p>
@@ -139,5 +138,6 @@ uses rbenv to manage ruby versions as well on a Ubuntu 12.04 box that uses rvm. 
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

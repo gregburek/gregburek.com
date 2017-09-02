@@ -24,16 +24,15 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body class="x2015 x2015_06 x2015_06_20 x2015_06_20_stream-a-remote-file-to-s3 x2015_06_20_stream-a-remote-file-to-s3_index">
     <!--[if lt IE 7]>
@@ -76,7 +75,7 @@ library</a>,
 one can link the two IO streams together fairly easily:</p>
 
 <p></p>
-<pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'aws-sdk'</span>
+<div class="highlight"><pre class="highlight ruby"><code><span class="nb">require</span> <span class="s1">'aws-sdk'</span>
 <span class="nb">require</span> <span class="s1">'open-uri'</span>
 <span class="nb">require</span> <span class="s1">'sequel'</span>
 <span class="nb">require</span> <span class="s1">'digest/md5'</span>
@@ -112,7 +111,7 @@ one can link the two IO streams together fairly easily:</p>
 <span class="no">RemoteFile</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s1">'https://i.imgur.com/DO3Hr4A.gif'</span><span class="p">)</span>
   <span class="p">.</span><span class="nf">upload_to_s3</span><span class="p">(</span><span class="ss">bucket_name: </span><span class="s1">'mah_gifs'</span><span class="p">)</span>
 
-</code></pre>
+</code></pre></div>
 <p>This code snippet assumes you have <code>ENV[&#39;AWS_ACCESS_KEY_ID&#39;]</code> and
 <code>ENV[&#39;AWS_SECRET_ACCESS_KEY&#39;]</code> set.</p>
 
@@ -166,5 +165,6 @@ one can link the two IO streams together fairly easily:</p>
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

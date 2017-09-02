@@ -24,16 +24,15 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body class="page page_2 page_2_index">
     <!--[if lt IE 7]>
@@ -54,7 +53,30 @@
   <ul>
       <li>
      <article class="writing">
-       <h1><a href="../../2011/11/11/export-aperture-to-flickr-with-GPS/">Exporting from Aperture 3.2 to Flickr with location information metadata</a></h1>
+       <h1><a href="../../2011/12/05/rate-limiting-with-decorators/">Rate Limiting Function Calls in Python with a Decorator</a></h1>
+       <div class="article-details">
+         <div class="article-date">
+           <i class="fa fa-paper-plane-o"></i>
+           December 05, 2011
+           <div class="tags">
+             tags:
+             <a href="/tags/programming/">programming</a>,
+             <a href="/tags/python/">python</a>,
+             <a href="/tags/tech/">tech</a>
+           </div>
+         </div>
+       </div>
+       <p>source: <a href="http://stackoverflow.com/a/667706/586172">Stack Overflow “What’s a good rate limiting algorithm?”</a></p>
+
+<p>I making this into a post because I have found it so handy. Some web
+APIs have rate limits on requests per minute or you may want to play nice
+and not overwhelm the service. In Python...</p>
+       <a href="../../2011/12/05/rate-limiting-with-decorators/">Read more…</a>
+     </article>
+     </li>
+      <li>
+     <article class="writing">
+       <h1><a href="../../2011/11/11/export-aperture-to-flickr-with-gps/">Exporting from Aperture 3.2 to Flickr with location information metadata</a></h1>
        <div class="article-details">
          <div class="article-date">
            <i class="fa fa-paper-plane-o"></i>
@@ -76,12 +98,12 @@ That trip deserves its own post, but until then,
 
 <p>However, I ran into a little snag while editing and publishing everything. The
 problem...</p>
-       <a href="../../2011/11/11/export-aperture-to-flickr-with-GPS/">Read more…</a>
+       <a href="../../2011/11/11/export-aperture-to-flickr-with-gps/">Read more…</a>
      </article>
      </li>
       <li>
      <article class="writing">
-       <h1><a href="../../2011/11/09/Lid-open-display-off/">Lid Open, Display Off</a></h1>
+       <h1><a href="../../2011/11/09/lid-open-display-off/">Lid Open, Display Off</a></h1>
        <div class="article-details">
          <div class="article-date">
            <i class="fa fa-paper-plane-o"></i>
@@ -99,7 +121,7 @@ post</a> and that
 computer has been retired. However, I still find it useful to run my new
 MacBook Air attached to an external monitor and with its internal display
 disabled. A few days ago, I found a better and...</p>
-       <a href="../../2011/11/09/Lid-open-display-off/">Read more…</a>
+       <a href="../../2011/11/09/lid-open-display-off/">Read more…</a>
      </article>
      </li>
       <li>
@@ -128,7 +150,7 @@ concerned about the heat...</p>
      </li>
       <li>
      <article class="writing">
-       <h1><a href="../../2010/06/20/iTunes-over-SSH-tunnel/">iTunes library at home accessible over SSH tunneled AFP</a></h1>
+       <h1><a href="../../2010/06/20/itunes-over-ssh-tunnel/">iTunes library at home accessible over SSH tunneled AFP</a></h1>
        <div class="article-details">
          <div class="article-date">
            <i class="fa fa-paper-plane-o"></i>
@@ -146,12 +168,12 @@ that sits below my TV, at home, behind two firewalls.</p>
 
 <p>First, I <a href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt" title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS">hardened SSH</a> on the mini and setup my laptop to log in without a
 password, but I didn’t go through the SSHFS...</p>
-       <a href="../../2010/06/20/iTunes-over-SSH-tunnel/">Read more…</a>
+       <a href="../../2010/06/20/itunes-over-ssh-tunnel/">Read more…</a>
      </article>
      </li>
       <li>
      <article class="writing">
-       <h1><a href="../../2010/03/12/Auto-uploading-Google-Docs-from-OSX/">Automatically upload new files to Google Documents from OSX</a></h1>
+       <h1><a href="../../2010/03/12/auto-uploading-google-docs-from-osx/">Automatically upload new files to Google Documents from OSX</a></h1>
        <div class="article-details">
          <div class="article-date">
            <i class="fa fa-paper-plane-o"></i>
@@ -171,7 +193,7 @@ password, but I didn’t go through the SSHFS...</p>
 to me over email. I usually View them through Google Docs or Download them and
 let the files launch in their proper programs. There are some times, however,
 when I wish I...</p>
-       <a href="../../2010/03/12/Auto-uploading-Google-Docs-from-OSX/">Read more…</a>
+       <a href="../../2010/03/12/auto-uploading-google-docs-from-osx/">Read more…</a>
      </article>
      </li>
    </ul>
@@ -231,5 +253,6 @@ when I wish I...</p>
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

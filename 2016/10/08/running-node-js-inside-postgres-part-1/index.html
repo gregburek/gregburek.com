@@ -24,16 +24,15 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body class="x2016 x2016_10 x2016_10_08 x2016_10_08_running-node-js-inside-postgres-part-1 x2016_10_08_running-node-js-inside-postgres-part-1_index">
     <!--[if lt IE 7]>
@@ -112,6 +111,8 @@ own convenience. I&rsquo;ll attempt to use
 <a href="https://github.com/BoyCook/TwitterJSClient">twitter-node-client</a> for this
 purpose.</p>
 
+<p>EDIT: <a href="/2017/09/01/running-node-js-inside-postgres-part-mea-culpa/">This goal is not currently possible.</a></p>
+
 <h1 id="first-thing-to-attempt">First thing to attempt</h1>
 
 <p>A google search for <code>node plv8</code> led me to the
@@ -124,7 +125,7 @@ allows importing of npm modules into the db. I&rsquo;ll start here.</p>
 packages</a> for my system.</p>
 
 <h2 id="create-a-heroku-app-and-postgres-db">Create a Heroku app and Postgres DB</h2>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code
 &gt; mkdir pg-twitter
 
 gburek@gburek-ltm2:~/code
@@ -148,9 +149,9 @@ The database should be available in 3-5 minutes.
      ! data from another database with pg:copy.
 Use `heroku pg:wait` to track status
 Use heroku addons:docs heroku-postgresql to view documentation
-</code></pre>
+</code></pre></div>
 <p>After a few minutes, our new db is available and has plv8 available for use:</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
 &gt; heroku pg:wait
 Waiting for database postgresql-triangular-47265... available
 
@@ -166,13 +167,13 @@ Type "help" for help.
 =&gt; CREATE EXTENSION plv8;
 CREATE EXTENSION
 Time: 1109.898 ms
-</code></pre>
+</code></pre></div>
 <p>Now, on to working with plv8x.</p>
 
 <h2 id="plv8x">plv8x</h2>
 
 <p>First, I&rsquo;m going to create a new npm project:</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
 &gt; npm init --yes
 Wrote to /Users/gburek/code/pg-twitter/package.json:
 
@@ -188,17 +189,19 @@ Wrote to /Users/gburek/code/pg-twitter/package.json:
   "author": "",
   "license": "ISC"
 }
-</code></pre>
+</code></pre></div>
 <p>Now, to install plv8x. Surely, <code>npm install plv8x --save</code> will work.</p>
 
-<p><details>
-<summary>Click here to see 400+ lines of woe, errors and false starts. </summary></p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
-&gt; npm install plv8x --save
+<details>
+<summary>Click here to see 400+ lines of woe, errors and false starts. </summary>
+
+&ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+> npm install plv8x &ndash;save
 npm WARN prefer global LiveScript@1.2.0 should be installed with -g
 
-&gt; libpq@1.8.5 install /Users/gburek/code/pg-twitter/node_modules/libpq
-&gt; node-gyp rebuild
+> libpq@1.8.5 install /Users/gburek/code/pg-twitter/node_modules/libpq
+> node-gyp rebuild
 
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
@@ -270,69 +273,78 @@ pg-twitter@1.0.0 /Users/gburek/code/pg-twitter
 
 npm WARN pg-twitter@1.0.0 No description
 npm WARN pg-twitter@1.0.0 No repository field.
-</code></pre>
-<p>ok, now to try and run it against my new db:</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
-&gt; export PLV8XDB=$(h config:get DATABASE_URL)
+&rdquo;`
+
+ok, now to try and run it against my new db:
+
+&ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+> export PLV8XDB=$(h config:get DATABASE_URL)
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&gt; find . -name plv8x
+> find . -name plv8x
 ./node_modules/.bin/plv8x
 ./node_modules/plv8x
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&gt; ./node_modules/.bin/plv8x -l
+> ./node_modules/.bin/plv8x -l
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module 'boxcars'
+Error: Cannot find module &lsquo;boxcars&rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&lt;anonymous&gt; (/Users/gburek/code/pg-twitter/node_modules/one/lib/templating/coll.js:1:77)
+    at Object.<anonymous> (/Users/gburek/code/pg-twitter/node_modules/one/lib/templating/coll.js:1:77)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
 
-</code></pre>
-<p>welp, this sucks. Maybe I have to install it globally? The README seems to
-suggest that.</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
-&gt; npm install plv8x -g
-/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -&gt; /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/cmd.js
-...
+&rdquo;`
+
+welp, this sucks. Maybe I have to install it globally? The README seems to
+suggest that.
+
+&ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+> npm install plv8x -g
+/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -> /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/cmd.js
+&hellip;
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&gt; plv8x -l
-&gt;
+> plv8x -l
+>
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module 'boxcars'
+Error: Cannot find module &lsquo;boxcars&rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&lt;anonymous&gt;
+    at Object.<anonymous>
 (/Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/node_modules/one/lib/templating/coll.js:1:77)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
-</code></pre>
-<p>Uh ok. Maybe I need to install from github?</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
-&gt; npm uninstall plv8x -g
-...
+&rdquo;`
+
+Uh ok. Maybe I need to install from github?
+
+&ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+> npm uninstall plv8x -g
+&hellip;
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&gt; npm install https://github.com/clkao/plv8x --save
+> npm install https://github.com/clkao/plv8x &ndash;save
 npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
 - boxcars@2.0.0 node_modules/boxcars
 - flatten-array@1.0.0 node_modules/flatten-array
@@ -345,44 +357,47 @@ npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher
 - path-is-absolute@1.0.1 node_modules/path-is-absolute
 pg-twitter@1.0.0 /Users/gburek/code/pg-twitter
 └─┬ plv8x@0.7.0  (git+https://github.com/clkao/plv8x.git#3c19d57adfa5050c27715699d2369d2c441c817d)
-...
+&hellip;
 
 npm WARN pg-twitter@1.0.0 No description
 npm WARN pg-twitter@1.0.0 No repository field.
-npm install https://github.com/clkao/plv8x --save  10.96s user 2.93s system 85% cpu 16.253 total
+npm install https://github.com/clkao/plv8x &ndash;save  10.96s user 2.93s system 85% cpu 16.253 total
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&gt; find . -name plv8x
+> find . -name plv8x
 ./node_modules/.bin/plv8x
 ./node_modules/plv8x
 ./node_modules/plv8x/bin/plv8x
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&gt; ./node_modules/plv8x/bin/plv8x -l
+> ./node_modules/plv8x/bin/plv8x -l
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module '../lib/cli.js'
+Error: Cannot find module &lsquo;../lib/cli.js&rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&lt;anonymous&gt; (/Users/gburek/code/pg-twitter/node_modules/plv8x/bin/plv8x:2:1)
+    at Object.<anonymous> (/Users/gburek/code/pg-twitter/node_modules/plv8x/bin/plv8x:2:1)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
-</code></pre>
-<p>Ok. Different error. Progress! Try again, globally, from github.</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
-&gt; npm install https://github.com/clkao/plv8x -g
-npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
-/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -&gt; /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x
+&rdquo;`
 
-&gt; libpq@1.8.5 install /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/node_modules/libpq
-&gt; node-gyp rebuild
+Ok. Different error. Progress! Try again, globally, from github.
+
+&ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+> npm install https://github.com/clkao/plv8x -g
+npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
+/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -> /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x
+
+> libpq@1.8.5 install /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/node_modules/libpq
+> node-gyp rebuild
 
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
@@ -394,89 +409,95 @@ gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in nod
 clang: warning: libstdc++ is deprecated; move to libc++ with a minimum deployment target of OS X 10.9
 /Users/gburek/.nvm/versions/node/v6.7.0/lib
 └─┬ plv8x@0.7.0  (git+https://github.com/clkao/plv8x.git#3c19d57adfa5050c27715699d2369d2c441c817d)
-...
+&hellip;
 
 npm install https://github.com/clkao/plv8x -g  13.35s user 5.16s system 90% cpu 20.531 total
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&gt; plv8x -l
+> plv8x -l
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module '../lib/cli.js'
+Error: Cannot find module &lsquo;../lib/cli.js&rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&lt;anonymous&gt; (/Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x:2:1)
+    at Object.<anonymous> (/Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x:2:1)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
-</code></pre>
-<p>What am I doing with my life?</p>
+&rdquo;`
 
-<p>OK So let&rsquo;s actually follow the <a href="https://github.com/clkao/plv8x#install-plv8x">README on github</a></p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code
-&gt; git clone git://github.com/clkao/plv8x.git; cd plv8x
-Cloning into 'plv8x'...
+What am I doing with my life?
+
+OK So let&rsquo;s actually follow the [README on github](https://github.com/clkao/plv8x#install-plv8x)
+
+&ldquo;`
+gburek@gburek-ltm2:~/code
+> git clone git://github.com/clkao/plv8x.git; cd plv8x
+Cloning into &lsquo;plv8x&rsquo;&hellip;
 remote: Counting objects: 1091, done.
 remote: Total 1091 (delta 0), reused 0 (delta 0), pack-reused 1091
 Receiving objects: 100% (1091/1091), 188.83 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (564/564), done.
-Checking connectivity... done.
+Checking connectivity&hellip; done.
 
 gburek@gburek-ltm2:~/code/plv8x
-&gt; npm i -g .
+> npm i -g .
 
-&gt; plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
-&gt; env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;&amp;
-env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src
+> plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
+> env PATH=&rdquo;./node_modules/.bin:$PATH&quot; lsc -cj package.ls &&
+env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -bc -o lib src
 
 env: lsc: No such file or directory
 
 npm ERR! addLocal Could not install /Users/gburek/code/plv8x
 npm ERR! Darwin 15.6.0
-npm ERR! argv "/Users/gburek/.nvm/versions/node/v6.7.0/bin/node" "/Users/gburek/.nvm/versions/node/v6.7.0/bin/npm" "i" "-g" "."
+npm ERR! argv &ldquo;/Users/gburek/.nvm/versions/node/v6.7.0/bin/node&rdquo; &ldquo;/Users/gburek/.nvm/versions/node/v6.7.0/bin/npm&rdquo; &ldquo;i&rdquo; &ldquo;-g&rdquo; &ldquo;.&rdquo;
 npm ERR! node v6.7.0
 npm ERR! npm  v3.10.3
 npm ERR! file sh
 npm ERR! code ELIFECYCLE
 npm ERR! errno ENOENT
 npm ERR! syscall spawn
-npm ERR! plv8x@0.7.0 prepublish: `env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;&amp;
-npm ERR! env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src`
+npm ERR! plv8x@0.7.0 prepublish: `env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -cj package.ls &&
+npm ERR! env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -bc -o lib src`
 npm ERR! spawn ENOENT
 npm ERR!
-npm ERR! Failed at the plv8x@0.7.0 prepublish script 'env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;&amp;
-npm ERR! env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src'.
+npm ERR! Failed at the plv8x@0.7.0 prepublish script &lsquo;env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -cj package.ls &&
+npm ERR! env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -bc -o lib src&rsquo;.
 npm ERR! Make sure you have the latest version of node.js and npm installed.
 npm ERR! If you do, this is most likely a problem with the plv8x package,
 npm ERR! not with npm itself.
 npm ERR! Tell the author that this fails on your system:
-npm ERR!     env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;&amp;
-npm ERR! env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src
+npm ERR!     env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -cj package.ls &&
+npm ERR! env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -bc -o lib src
 npm ERR! You can get information on how to open an issue for this project with:
 npm ERR!     npm bugs plv8x
-npm ERR! Or if that isn't available, you can get their info via:
+npm ERR! Or if that isn&rsquo;t available, you can get their info via:
 npm ERR!     npm owner ls plv8x
 npm ERR! There is likely additional logging output above.
 
 npm ERR! Please include the following file with any support request:
 npm ERR!     /Users/gburek/code/plv8x/npm-debug.log
-</code></pre>
-<p>Welp. Maybe it needs to be installed locally?</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
-&gt; npm install
+&ldquo;`
+
+Welp. Maybe it needs to be installed locally?
+
+&rdquo;`
+gburek@gburek-ltm2:~/code/plv8x
+> npm install
 npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
 npm WARN deprecated to-iso-string@0.0.2: to-iso-string has been deprecated, use @segment/to-iso-string instead.
 npm WARN deprecated jade@0.26.3: Jade has been renamed to pug, please install the latest version of pug instead of jade
 npm WARN deprecated minimatch@0.3.0: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
 
-&gt; libpq@1.8.5 install /Users/gburek/code/plv8x/node_modules/libpq
-&gt; node-gyp rebuild
+> libpq@1.8.5 install /Users/gburek/code/plv8x/node_modules/libpq
+> node-gyp rebuild
 
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
@@ -487,27 +508,28 @@ gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in nod
   SOLINK_MODULE(target) Release/addon.node
 clang: warning: libstdc++ is deprecated; move to libc++ with a minimum deployment target of OS X 10.9
 
-&gt; plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
-&gt; env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;&amp;
-env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src
+> plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
+> env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -cj package.ls &&
+env PATH=&ldquo;./node_modules/.bin:$PATH&rdquo; lsc -bc -o lib src
 
 plv8x@0.7.0 /Users/gburek/code/plv8x
-...
+&hellip;
 gburek@gburek-ltm2:~/code/plv8x
-&gt; find . -name plv8x
+> find . -name plv8x
 ./bin/plv8x
-</code></pre>
-<p></details></p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
+&ldquo;`
+
+</details>
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
 &gt; ./bin/plv8x -l
 plv8x: 392.33 kB
-</code></pre>
+</code></pre></div>
 <p>YES IT WORKS. Who would have guessed this npm module was only usable when
 executed directly in its source tree and installed both locally and globally?</p>
 
 <p>Let&rsquo;s see what is happening on the db (Heroku per line logging preamble
 omitted):</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/pg-twitter
 &gt; heroku logs -t
 [15-1] LOG:  statement:
 [15-2]  SET client_min_messages TO WARNING;
@@ -610,7 +632,7 @@ omitted):</p>
 [25-1] NOTICE:  operator |&gt; does not exist, skipping
 [26-1] NOTICE:  operator ~&gt; does not exist, skipping
 [27-1] NOTICE:  operator ~&gt; does not exist, skipping
-</code></pre>
+</code></pre></div>
 <p>This is not great. It seems that <code>plv8x</code> wants to create custom operators that
 are similar to ones in Livescript (<code>|&gt;</code> pipeline operator) and CoffeeScript
 (<code>-&gt;</code> thin arrows which are translated as <code>~&gt;</code>).</p>
@@ -622,7 +644,7 @@ postmaster, so many Postgres providers do not support them.</del></p>
 we may continue.</del></p>
 
 <h3 id="update-only-custom-default-operators-seem-to-not-work-after-altering-the-search_path-of-the-db-these-appear-to-be-created-properly"><em>UPDATE:</em> Only custom <em>default</em> operators seem to not work. After altering the search_path of the db, these appear to be created properly.</h3>
-<pre class="highlight plaintext"><code>&gt; select * from pg_operator where oprcode::text ilike 'plv8%';
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; select * from pg_operator where oprcode::text ilike 'plv8%';
  oprname | oprnamespace | oprowner | oprkind | oprcanmerge | oprcanhash | oprleft | oprright | oprresult | oprcom | oprnegate |      oprcode       | oprrest | oprjoin
 ---------+--------------+----------+---------+-------------+------------+---------+----------+-----------+--------+-----------+--------------------+---------+---------
  |&gt;      |        17017 |    16384 | l       | f           | f          |       0 |       25 |     17027 |      0 |         0 | plv8x.json_eval    | -       | -
@@ -632,11 +654,11 @@ we may continue.</del></p>
  ~&gt;      |        17017 |    16384 | b       | f           | f          |   17027 |       25 |     17027 |  17320 |         0 | plv8x.json_eval_ls | -       | -
  &lt;~      |        17017 |    16384 | b       | f           | f          |      25 |    17027 |     17027 |  17321 |         0 | plv8x.json_eval_ls | -       | -
 (6 rows)
-</code></pre>
+</code></pre></div>
 <h2 id="how-does-this-work">How does this work?</h2>
 
 <p>Let&rsquo;s take a look at the db:</p>
-<pre class="highlight plaintext"><code>&gt; \dn
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; \dn
      List of schemas
   Name  |     Owner
 --------+----------------
@@ -671,9 +693,9 @@ primary key, btree, for table "plv8x.code"
  updated  | timestamp without time zone |
 Indexes:
     "code_pkey" PRIMARY KEY, btree (name)
-</code></pre>
+</code></pre></div>
 <p>Wow, ok so node modules are rows in this table?</p>
-<pre class="highlight plaintext"><code>&gt; select name, substring(code from 1 for 1300), load_seq, updated from plv8x.code;
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; select name, substring(code from 1 for 1300), load_seq, updated from plv8x.code;
 -[ RECORD 1 ]----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 name      | plv8x
 substring | !function(e){if("object"==typeof exports&amp;&amp;"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&amp;&amp;define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&amp;&amp;(f=self),f.plv8x=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&amp;&amp;require;if(!u&amp;&amp;a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&amp;&amp;require;for(var o=0;o&lt;r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){+
@@ -685,13 +707,13 @@ substring | !function(e){if("object"==typeof exports&amp;&amp;"undefined"!=typeo
 load_seq  |
 updated   | 2016-10-08 16:27:59
 
-</code></pre>
+</code></pre></div>
 <p>Not even minified. Cool.</p>
 
 <h2 id="install-a-node-package-into-the-db">Install a node package into the db</h2>
 
 <p>Let&rsquo;s install something.</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
 &gt; ./bin/plv8x -i twitter-node-client
 
 gburek@gburek-ltm2:~/code/plv8x
@@ -705,9 +727,9 @@ twitter-node-client: 685.9 kB
  plv8x               |       392331 |          | 2016-10-08 16:27:59
  twitter-node-client |       685900 |          | 2016-10-11 17:20:21
 (2 rows)
-</code></pre>
+</code></pre></div>
 <p>Cool. What about running something simple?</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
 &gt; ./bin/plv8x -e 'require("qs").parse("foo=bar&amp;baz=1")'
 WARNING:  failed to load module buffer:
 WARNING:  failed to load module qs: Error: no window object present
@@ -726,9 +748,9 @@ DETAIL:  undefined() LINE 0: ((function(){return require("qs").parse("foo=bar&am
     at Client._read (/Users/gburek/code/plv8x/node_modules/pg-native/index.js:121:19)
     at emitNone (events.js:86:13)
     at PQ.emit (events.js:185:7)
-</code></pre>
+</code></pre></div>
 <p>This isn&rsquo;t good. What about defining a function?</p>
-<pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
+<div class="highlight"><pre class="highlight plaintext"><code>gburek@gburek-ltm2:~/code/plv8x
 &gt; ./bin/plv8x -f 'plv8x.json parse_qs(text)=qs:parse'
 ok plv8x.json parse_qs(text)
 
@@ -745,14 +767,14 @@ LOCATION:  plv8_Elog, plv8_func.cc:327
 ERROR:  XX000: TypeError: Cannot read property 'parse' of undefined
 DETAIL:  parse_qs() LINE 4:   return plv8x.require('qs').parse.apply(this, arguments);
 LOCATION:  rethrow, plv8.cc:1649
-</code></pre>
+</code></pre></div>
 <p>It looks like the lack of custom operators is preventing this code from
 running.</p>
 
 <h1 id="failure">Failure?</h1>
 
 <h3 id="update-it-seems-that-the-search-path-of-the-db-was-not-wide-enough-and-including-all-possible-schemas-allows-operator-creation-and-for-modules-to-be-loaded-and-run">UPDATE: It seems that the search path of the db was not wide enough, and including all possible schemas, allows operator creation and for modules to be loaded and run:</h3>
-<pre class="highlight plaintext"><code>&gt; alter database df5f7ilg16vje set search_path to "$user", public, plv8, plv8x;
+<div class="highlight"><pre class="highlight plaintext"><code>&gt; alter database df5f7ilg16vje set search_path to "$user", public, plv8, plv8x;
 ALTER DATABASE
 Time: 79.494 ms
 &gt; SELECT |&gt;'(require("moment")()).format()';
@@ -762,7 +784,7 @@ Time: 79.494 ms
 (1 row)
 
 Time: 76.703 ms
-</code></pre>
+</code></pre></div>
 <p>Part 2 will continue down this path to running node/npm in Postgres and will
 show how the above was found.</p>
 
@@ -825,5 +847,6 @@ alternatives. I&rsquo;ll try those next!</del></p>
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

@@ -9,7 +9,7 @@
     <!-- Use title if it's in the page YAML frontmatter -->
     <title>
       Greg Burek - 
-      iTunes library at home accessible over SSH tunneled AFP
+      Running Node.js inside Postgres, Part Mea Culpa
       
     </title>
     <meta name="description" content="">
@@ -24,18 +24,17 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
-  <body class="x2010 x2010_06 x2010_06_20 x2010_06_20_iTunes-over-SSH-tunnel x2010_06_20_iTunes-over-SSH-tunnel_index">
+  <body class="x2017 x2017_09 x2017_09_01 x2017_09_01_running-node-js-inside-postgres-part-mea-culpa x2017_09_01_running-node-js-inside-postgres-part-mea-culpa_index">
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
     <![endif]-->
@@ -51,53 +50,48 @@
 
     <div class="container">
         <article class="writing">
-    <h1>iTunes library at home accessible over SSH tunneled AFP</h1>
+    <h1>Running Node.js inside Postgres, Part Mea Culpa</h1>
     <div class="article-details">
       <div class="article-date">
         <i class="fa fa-paper-plane-o"></i>
-        June 20, 2010
+        September 01, 2017
         <div class="tags">
           tags:
-            <a href="/tags/diy/">diy</a>,
-            <a href="/tags/hacks/">hacks</a>,
-            <a href="/tags/itunes/">itunes</a>
+            <a href="/tags/discovery/">discovery</a>,
+            <a href="/tags/mea-culpa/">mea culpa</a>,
+            <a href="/tags/node/">node</a>,
+            <a href="/tags/nodejs/">nodejs</a>,
+            <a href="/tags/npm/">npm</a>,
+            <a href="/tags/plv8/">plv8</a>,
+            <a href="/tags/plv8x/">plv8x</a>,
+            <a href="/tags/postgres/">postgres</a>
         </div>
       </div>
     </div>
-    <p>Today I freed 150GB of space from my Macbook by moving my music to my Mac Mini
-that sits below my TV, at home, behind two firewalls.</p>
+    <p><a href="/2016/10/08/running-node-js-inside-postgres-part-1">Previously</a>, I wrote about
+trying to run node.js code in PLV8 in Postgres. Unfortunately, that effort
+sputtered out once I
+<a href="https://stackoverflow.com/questions/12666148/does-plv8-support-making-http-calls-to-other-servers">found</a>
+<a href="https://github.com/plv8/plv8/issues/190">out</a>
+that PLV8 is a &lsquo;trusted&rsquo; languagefor postgres. As documented for
+<a href="https://www.postgresql.org/docs/current/static/plperl-trusted.html">PL/Perl</a>:</p>
 
-<p>First, I <a href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt" title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS">hardened SSH</a> on the mini and setup my laptop to log in without a
-password, but I didn&rsquo;t go through the SSHFS stuff, as I like AFP better (for
-the moment).  Now, I can access my Mini by running:</p>
-<pre class="highlight shell"><code><span class="gp">LAPTOP$ </span>ssh -f -N -p PORT USER@OUTSIDEIP -L 1202:localhost:5900 -L 1203:localhost:548
-</code></pre>
-<p>Where PORT is the random port I choose when <a href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt" title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS">hardening SSH</a>, USER is the
-username on my mini and OUTSIDEIP is the external IP of my cable modem.  Then,
-I can exit from Terminal on my laptop, press command-K and run:</p>
-<pre class="highlight shell"><code>afp://localhost:1203
-</code></pre>
-<p>and get the list of shared folders.  Or I can run:</p>
-<pre class="highlight shell"><code>vnc://localhost:1202
-</code></pre>
-<p>and get Screen Sharing with the Mini behind all those firewalls.</p>
+<blockquote>
+<p>Normally, PL/Perl is installed as a &ldquo;trusted&rdquo; programming language named
+plperl. In this setup, certain Perl operations are disabled to preserve
+security. In general, the operations that are restricted are those that
+interact with the environment. This includes file handle operations, require,
+and use (for external modules). There is no way to access internals of the
+database server process or to gain OS-level access with the permissions of
+the server process, as a C function can do. Thus, any unprivileged database
+user can be permitted to use this language.</p>
+</blockquote>
 
-<p>Finally, I <a href="http://lifehacker.com/5261172/move-your-itunes-library-to-an-external-hard-drive" title="Move Your iTunes Library to an External Hard Drive">moved my iTunes Library to an external harddrive</a> and hooked up
-that beast to the Mini.  By SSHing into my Mini and then running the AFP
-command, I can now access my very large iTunes library from anywhere with an
-internet connection.</p>
+<p>So, no filesystem access means no unix socket access, which means no network
+access. <code>¯\_(ツ)_/¯</code></p>
 
-<p>If I would like to end the SSH tunnel, I run:</p>
-<pre class="highlight shell"><code>ps auxww | grep -i ssh
-</code></pre>
-<p>After finding the ID of the process I do:</p>
-<pre class="highlight shell"><code><span class="nb">kill</span> -9 SSH_PID
-</code></pre>
-<p>with the SSH ID.</p>
-
-<p>I will use some applescript to make this &ldquo;connect, mount, launch iTunes&rdquo; dance
-a little bit more simple, but I think this is progress, as it has breathed new
-life into my 2.5 year-old laptop.</p>
+<p>If <a href="https://github.com/plv8/plv8/issues/222">plv8u</a> lands, I can revisit my
+previous goal, but until then&hellip;</p>
 
   </article>
 
@@ -149,5 +143,6 @@ life into my 2.5 year-old laptop.</p>
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

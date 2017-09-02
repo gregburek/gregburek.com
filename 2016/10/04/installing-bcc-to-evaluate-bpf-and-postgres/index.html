@@ -24,16 +24,15 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body class="x2016 x2016_10 x2016_10_04 x2016_10_04_installing-bcc-to-evaluate-bpf-and-postgres x2016_10_04_installing-bcc-to-evaluate-bpf-and-postgres_index">
     <!--[if lt IE 7]>
@@ -74,7 +73,7 @@ missive about performance tracing, this time for <a href="http://www.brendangreg
 
 <p><a href="https://github.com/iovisor/bcc">bcc</a> stands for &lsquo;BPF Compiler Collection&rsquo; and
 <a href="https://en.wikipedia.org/wiki/Berkeley_Packet_Filter">BPF</a> stands for
-&#39;Berkeley Packet Filter&rsquo;. From the bcc
+&lsquo;Berkeley Packet Filter&rsquo;. From the bcc
 <a href="https://github.com/iovisor/bcc/blob/60393ea5dd966d33ff24929f6981df09473cbb1b/README.md">README</a>:</p>
 
 <blockquote>
@@ -106,18 +105,18 @@ instructions</a>.</p>
 
 <p>New Postgres databases get Ubuntu Trusty instances with
 <code>linux-generic-lts-xenial</code> kernels of the 4.4 series:</p>
-<pre class="highlight plaintext"><code>=&gt; select version();
+<div class="highlight"><pre class="highlight plaintext"><code>=&gt; select version();
                                              version
 -------------------------------------------------------------------------------------------------
  PostgreSQL 9.5.4 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2, 64-bit
 (1 row)
-</code></pre><pre class="highlight plaintext"><code>~$ uname -a
+</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>~$ uname -a
 Linux ip-10-0-10-230 4.4.0-38-generic #57~14.04.1-Ubuntu SMP Tue Sep 6 17:20:43 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
-</code></pre>
+</code></pre></div>
 <p>This seems to satisfy the <code>Linux kernel version 4.1 or newer</code> requirement.</p>
 
 <p>Next thing to check is if the kernel has been compiled properly:</p>
-<pre class="highlight plaintext"><code>~$ cat /boot/config-4.4.0-38-generic | grep BPF
+<div class="highlight"><pre class="highlight plaintext"><code>~$ cat /boot/config-4.4.0-38-generic | grep BPF
 CONFIG_BPF=y
 CONFIG_BPF_SYSCALL=y
 CONFIG_NETFILTER_XT_MATCH_BPF=m
@@ -127,9 +126,9 @@ CONFIG_BPF_JIT=y
 CONFIG_HAVE_BPF_JIT=y
 CONFIG_BPF_EVENTS=y
 CONFIG_TEST_BPF=m
-</code></pre>
+</code></pre></div>
 <p>This looks ok! Next up is to install the repo and tools:</p>
-<pre class="highlight plaintext"><code>~$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D4284CDD
+<div class="highlight"><pre class="highlight plaintext"><code>~$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D4284CDD
 ...
 gpg: requesting key D4284CDD from hkp server keyserver.ubuntu.com
 gpg: key D4284CDD: public key "Brenden Blanco &lt;bblanco@plumgrid.com&gt;" imported
@@ -157,26 +156,26 @@ After this operation, 36.6 MB of additional disk space will be used.
 Do you want to continue? [Y/n] y
 ...
 ~$
-</code></pre>
+</code></pre></div>
 <p>Now to test this out:</p>
-<pre class="highlight plaintext"><code># /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
+<div class="highlight"><pre class="highlight plaintext"><code># /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
 Traceback (most recent call last):
   File "/usr/share/bcc/tools/tplist", line 16, in &lt;module&gt;
     from bcc import USDTReader
 ImportError: cannot import name USDTReader
-</code></pre>
+</code></pre></div>
 <p>Welp. Looking at the source of <a href="https://github.com/iovisor/bcc/blob/6e60fbc8a672d8f29cab688ddc0df6d43a96c300/tools/tplist.py">tplist on current master</a>,
 the <a href="https://github.com/iovisor/bcc/commit/69e361ac66fbf3baadb1f7cf21762df61ad7a5a9#diff-8189c35f15538919a795b3f18ad0db66L16">most recent commit</a>
 removes <code>USDTReader</code>. Time to try the nightly builds:</p>
-<pre class="highlight plaintext"><code>~$ echo "deb [trusted=yes] https://repo.iovisor.org/apt/trusty trusty-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list
+<div class="highlight"><pre class="highlight plaintext"><code>~$ echo "deb [trusted=yes] https://repo.iovisor.org/apt/trusty trusty-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list
 ~$ sudo apt-get update
 ~$ sudo apt-get install bcc-tools
 ~$ sudo /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
 'USDT' object has no attribute 'enumerate_probes'
-</code></pre>
+</code></pre></div>
 <p>Welp. <code>enumerate_probes</code> was added in another part of the <a href="https://github.com/iovisor/bcc/commit/69e361ac66fbf3baadb1f7cf21762df61ad7a5a9#diff-4cf0bde404ce4b67b2961b61419fa23fR58">above patch</a>, so I think other things
 need to be updated, as well.</p>
-<pre class="highlight plaintext"><code>~$ sudo apt-get install binutils bcc bcc-tools libbcc-examples python-bcc
+<div class="highlight"><pre class="highlight plaintext"><code>~$ sudo apt-get install binutils bcc bcc-tools libbcc-examples python-bcc
 Reading package lists... Done
 Building dependency tree
 Reading state information... Done
@@ -213,9 +212,9 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/ctypes/__init__.py", line 383, in __getitem__
     func = self._FuncPtr((name_or_ordinal, self))
 AttributeError: /usr/lib/x86_64-linux-gnu/libbcc.so.0: undefined symbol: bcc_usdt_get_probe_argctype
-</code></pre>
+</code></pre></div>
 <p>One more error. This time in <code>libbcc</code>. Seems like another package to pull from nightly.</p>
-<pre class="highlight plaintext"><code>~$ sudo apt-get install libbcc
+<div class="highlight"><pre class="highlight plaintext"><code>~$ sudo apt-get install libbcc
 Reading package lists... Done
 Building dependency tree
 Reading state information... Done
@@ -233,11 +232,11 @@ Setting up libbcc (0.2.0-22.git.12a09dc) ...
 Processing triggers for libc-bin (2.19-0ubuntu6.9) ...
 ~$ sudo /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
 ~$
-</code></pre>
+</code></pre></div>
 <p>OK! No errors. This is good, as it answers my questions as to if this postgres
 package was compiled with the <code>--enable-dtrace</code>. I can further confirm with
 <code>readelf -n</code></p>
-<pre class="highlight plaintext"><code>~$ readelf -n /usr/lib/postgresql/9.5/bin/postgres
+<div class="highlight"><pre class="highlight plaintext"><code>~$ readelf -n /usr/lib/postgresql/9.5/bin/postgres
 
 Displaying notes found at file offset 0x00000254 with length 0x00000020:
   Owner                 Data size       Description
@@ -248,7 +247,7 @@ Displaying notes found at file offset 0x00000274 with length 0x00000024:
   Owner                 Data size       Description
   GNU                  0x00000014       NT_GNU_BUILD_ID (unique build ID bitstring)
     Build ID: 6990037682e6668adc87ae7a6b82e4640959cf52
-</code></pre>
+</code></pre></div>
 <p>There are no USDT or bpf traces found here, so next step is to recompile
 postgres with <code>--enable-dtrace</code> and see what probes are available to use with
 BPF (spoiler: <a href="https://www.postgresql.org/docs/current/static/dynamic-trace.html">there are a lot of them</a>).</p>
@@ -303,5 +302,6 @@ BPF (spoiler: <a href="https://www.postgresql.org/docs/current/static/dynamic-tr
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

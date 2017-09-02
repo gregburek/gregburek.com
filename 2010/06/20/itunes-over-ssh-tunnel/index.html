@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>
+      Greg Burek - 
+      iTunes library at home accessible over SSH tunneled AFP
+      
+    </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="x-B-7Gh5W7YevI09T48-S4on8MkU9MjG-6XD7aurE7Y" />
+    <meta name="google-site-verification" content="hzWlqDEbM4CUsiEb8YrcUdovSZSNx6jySbQkjRXyCCk" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <link href="/stylesheets/all.css" rel="stylesheet" />
+    <script type="text/javascript" src="//use.typekit.net/rtf4ikk.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body class="x2010 x2010_06 x2010_06_20 x2010_06_20_itunes-over-ssh-tunnel x2010_06_20_itunes-over-ssh-tunnel_index">
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <header>
+  <div class="container">
+    <h1>
+      <a href="../../../../">Greg Burek</a>
+    </h1>
+  </div>
+</header>
+
+
+    <div class="container">
+        <article class="writing">
+    <h1>iTunes library at home accessible over SSH tunneled AFP</h1>
+    <div class="article-details">
+      <div class="article-date">
+        <i class="fa fa-paper-plane-o"></i>
+        June 20, 2010
+        <div class="tags">
+          tags:
+            <a href="/tags/diy/">diy</a>,
+            <a href="/tags/hacks/">hacks</a>,
+            <a href="/tags/itunes/">itunes</a>
+        </div>
+      </div>
+    </div>
+    <p>Today I freed 150GB of space from my Macbook by moving my music to my Mac Mini
+that sits below my TV, at home, behind two firewalls.</p>
+
+<p>First, I <a href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt" title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS">hardened SSH</a> on the mini and setup my laptop to log in without a
+password, but I didn&rsquo;t go through the SSHFS stuff, as I like AFP better (for
+the moment).  Now, I can access my Mini by running:</p>
+<div class="highlight"><pre class="highlight shell"><code>LAPTOP<span class="nv">$ </span>ssh <span class="nt">-f</span> <span class="nt">-N</span> <span class="nt">-p</span> PORT USER@OUTSIDEIP <span class="nt">-L</span> 1202:localhost:5900 <span class="nt">-L</span> 1203:localhost:548
+</code></pre></div>
+<p>Where PORT is the random port I choose when <a href="http://tinyapps.org/docs/ssh_osx_and_sshfs.txt" title="Hardening SSH and Mounting Remote Filesystem in OS X Finder via SSHFS">hardening SSH</a>, USER is the
+username on my mini and OUTSIDEIP is the external IP of my cable modem.  Then,
+I can exit from Terminal on my laptop, press command-K and run:</p>
+<div class="highlight"><pre class="highlight shell"><code>afp://localhost:1203
+</code></pre></div>
+<p>and get the list of shared folders.  Or I can run:</p>
+<div class="highlight"><pre class="highlight shell"><code>vnc://localhost:1202
+</code></pre></div>
+<p>and get Screen Sharing with the Mini behind all those firewalls.</p>
+
+<p>Finally, I <a href="http://lifehacker.com/5261172/move-your-itunes-library-to-an-external-hard-drive" title="Move Your iTunes Library to an External Hard Drive">moved my iTunes Library to an external harddrive</a> and hooked up
+that beast to the Mini.  By SSHing into my Mini and then running the AFP
+command, I can now access my very large iTunes library from anywhere with an
+internet connection.</p>
+
+<p>If I would like to end the SSH tunnel, I run:</p>
+<div class="highlight"><pre class="highlight shell"><code>ps auxww | <span class="nb">grep</span> <span class="nt">-i</span> ssh
+</code></pre></div>
+<p>After finding the ID of the process I do:</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">kill</span> <span class="nt">-9</span> SSH_PID
+</code></pre></div>
+<p>with the SSH ID.</p>
+
+<p>I will use some applescript to make this &ldquo;connect, mount, launch iTunes&rdquo; dance
+a little bit more simple, but I think this is progress, as it has breathed new
+life into my 2.5 year-old laptop.</p>
+
+  </article>
+
+    </div>
+
+    <footer>
+  <div class="container">
+    <ul class="social-nav">
+      <li>
+        <a href="https://twitter.com/gregburek">
+          <i class="fa fa-twitter-square"></i>
+        </a>
+      </li>
+       <li>
+        <a href="https://github.com/gregburek">
+          <i class="fa fa fa-github-square"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://lanyrd.com/profile/gregburek/">
+          <i class="fa fa fa-map-marker"></i>
+        </a>
+      </li>
+      <li>
+        <a href="http://www.linkedin.com/in/gregburek">
+          <i class="fa fa fa-linkedin-square"></i>
+        </a>
+      </li>
+      <li>
+      <a href="http://www.flickr.com/photos/gregburek/">
+          <i class="fa fa fa-flickr"></i>
+        </a>
+      </li>
+     <li>
+        <a href="../../../../feed.xml"><i class="fa fa-rss-square"></i></a>
+      </li>
+    </ul>
+    <nav>
+      <ul>
+        <li>
+        <a href="../../../../about/">About</a>
+        </li>
+        <li>
+        <a href="/tags/">Tags</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
+  </body>
+</html>

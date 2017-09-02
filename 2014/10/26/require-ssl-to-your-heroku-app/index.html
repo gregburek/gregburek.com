@@ -24,16 +24,15 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <script src="/js/vendor/modernizr-2.6.1.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(["_setAccount", "UA-22983311-2"]);
-  _gaq.push(["_trackPageview"]);
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-22983311-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
   <body class="x2014 x2014_10 x2014_10_26 x2014_10_26_require-ssl-to-your-heroku-app x2014_10_26_require-ssl-to-your-heroku-app_index">
     <!--[if lt IE 7]>
@@ -76,10 +75,10 @@ your site.</p>
 <p></p>
 
 <p>By adding:</p>
-<pre class="highlight plaintext"><code>if ($http_x_forwarded_proto != 'https') {
+<div class="highlight"><pre class="highlight plaintext"><code>if ($http_x_forwarded_proto != 'https') {
   rewrite ^ https://$host$request_uri? permanent;
 }
-</code></pre>
+</code></pre></div>
 <p>to the <code>location</code> section of your app&rsquo;s nginx config file template, any access
 to that location will be met with a <code>301 Moved Permanently</code> redirect to the
 <code>https</code> version of that site and path.</p>
@@ -152,5 +151,6 @@ and deployed to your Heroku account here:
 </footer>
 
     <script src="/js/plugins.js"></script>
+    <script src="/js/ga.js"></script>
   </body>
 </html>

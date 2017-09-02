@@ -5,16 +5,51 @@
   <id>http://blog.gregburek.com/</id>
   <link href="http://blog.gregburek.com/"/>
   <link href="http://blog.gregburek.com/feed.xml" rel="self"/>
-  <updated>2016-10-08T15:09:00-07:00</updated>
+  <updated>2017-09-02T05:06:00+00:00</updated>
   <author>
     <name>Greg Burek</name>
   </author>
   <entry>
+    <title>Running Node.js inside Postgres, Part Mea Culpa</title>
+    <link rel="alternate" href="/2017/09/01/running-node-js-inside-postgres-part-mea-culpa/"/>
+    <id>/2017/09/01/running-node-js-inside-postgres-part-mea-culpa/</id>
+    <published>2017-09-02T05:06:00+00:00</published>
+    <updated>2017-09-02T05:06:00+00:00</updated>
+    <author>
+      <name>Greg Burek</name>
+    </author>
+    <content type="html">&lt;p&gt;&lt;a href="/2016/10/08/running-node-js-inside-postgres-part-1"&gt;Previously&lt;/a&gt;, I wrote about
+trying to run node.js code in PLV8 in Postgres. Unfortunately, that effort
+sputtered out once I
+&lt;a href="https://stackoverflow.com/questions/12666148/does-plv8-support-making-http-calls-to-other-servers"&gt;found&lt;/a&gt;
+&lt;a href="https://github.com/plv8/plv8/issues/190"&gt;out&lt;/a&gt;
+that PLV8 is a &amp;lsquo;trusted&amp;rsquo; languagefor postgres. As documented for
+&lt;a href="https://www.postgresql.org/docs/current/static/plperl-trusted.html"&gt;PL/Perl&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Normally, PL/Perl is installed as a &amp;ldquo;trusted&amp;rdquo; programming language named
+plperl. In this setup, certain Perl operations are disabled to preserve
+security. In general, the operations that are restricted are those that
+interact with the environment. This includes file handle operations, require,
+and use (for external modules). There is no way to access internals of the
+database server process or to gain OS-level access with the permissions of
+the server process, as a C function can do. Thus, any unprivileged database
+user can be permitted to use this language.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So, no filesystem access means no unix socket access, which means no network
+access. &lt;code&gt;¯\_(ツ)_/¯&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If &lt;a href="https://github.com/plv8/plv8/issues/222"&gt;plv8u&lt;/a&gt; lands, I can revisit my
+previous goal, but until then&amp;hellip;&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
     <title>Running Node.js inside Postgres, Part 1</title>
     <link rel="alternate" href="/2016/10/08/running-node-js-inside-postgres-part-1/"/>
     <id>/2016/10/08/running-node-js-inside-postgres-part-1/</id>
-    <published>2016-10-08T15:09:00-07:00</published>
-    <updated>2016-10-08T15:09:00-07:00</updated>
+    <published>2016-10-08T22:09:00+00:00</published>
+    <updated>2016-10-08T22:09:00+00:00</updated>
     <author>
       <name>Greg Burek</name>
     </author>
@@ -62,6 +97,8 @@ own convenience. I&amp;rsquo;ll attempt to use
 &lt;a href="https://github.com/BoyCook/TwitterJSClient"&gt;twitter-node-client&lt;/a&gt; for this
 purpose.&lt;/p&gt;
 
+&lt;p&gt;EDIT: &lt;a href="/2017/09/01/running-node-js-inside-postgres-part-mea-culpa/"&gt;This goal is not currently possible.&lt;/a&gt;&lt;/p&gt;
+
 &lt;h1 id="first-thing-to-attempt"&gt;First thing to attempt&lt;/h1&gt;
 
 &lt;p&gt;A google search for &lt;code&gt;node plv8&lt;/code&gt; led me to the
@@ -74,7 +111,7 @@ allows importing of npm modules into the db. I&amp;rsquo;ll start here.&lt;/p&gt
 packages&lt;/a&gt; for my system.&lt;/p&gt;
 
 &lt;h2 id="create-a-heroku-app-and-postgres-db"&gt;Create a Heroku app and Postgres DB&lt;/h2&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code
 &amp;gt; mkdir pg-twitter
 
 gburek@gburek-ltm2:~/code
@@ -98,9 +135,9 @@ The database should be available in 3-5 minutes.
      ! data from another database with pg:copy.
 Use `heroku pg:wait` to track status
 Use heroku addons:docs heroku-postgresql to view documentation
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;After a few minutes, our new db is available and has plv8 available for use:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
 &amp;gt; heroku pg:wait
 Waiting for database postgresql-triangular-47265... available
 
@@ -116,13 +153,13 @@ Type "help" for help.
 =&amp;gt; CREATE EXTENSION plv8;
 CREATE EXTENSION
 Time: 1109.898 ms
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now, on to working with plv8x.&lt;/p&gt;
 
 &lt;h2 id="plv8x"&gt;plv8x&lt;/h2&gt;
 
 &lt;p&gt;First, I&amp;rsquo;m going to create a new npm project:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
 &amp;gt; npm init --yes
 Wrote to /Users/gburek/code/pg-twitter/package.json:
 
@@ -138,17 +175,19 @@ Wrote to /Users/gburek/code/pg-twitter/package.json:
   "author": "",
   "license": "ISC"
 }
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now, to install plv8x. Surely, &lt;code&gt;npm install plv8x --save&lt;/code&gt; will work.&lt;/p&gt;
 
-&lt;p&gt;&lt;details&gt;
-&lt;summary&gt;Click here to see 400+ lines of woe, errors and false starts. &lt;/summary&gt;&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; npm install plv8x --save
+&lt;details&gt;
+&lt;summary&gt;Click here to see 400+ lines of woe, errors and false starts. &lt;/summary&gt;
+
+&amp;ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+&gt; npm install plv8x &amp;ndash;save
 npm WARN prefer global LiveScript@1.2.0 should be installed with -g
 
-&amp;gt; libpq@1.8.5 install /Users/gburek/code/pg-twitter/node_modules/libpq
-&amp;gt; node-gyp rebuild
+&gt; libpq@1.8.5 install /Users/gburek/code/pg-twitter/node_modules/libpq
+&gt; node-gyp rebuild
 
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
@@ -220,69 +259,78 @@ pg-twitter@1.0.0 /Users/gburek/code/pg-twitter
 
 npm WARN pg-twitter@1.0.0 No description
 npm WARN pg-twitter@1.0.0 No repository field.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;ok, now to try and run it against my new db:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; export PLV8XDB=$(h config:get DATABASE_URL)
+&amp;rdquo;`
+
+ok, now to try and run it against my new db:
+
+&amp;ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+&gt; export PLV8XDB=$(h config:get DATABASE_URL)
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; find . -name plv8x
+&gt; find . -name plv8x
 ./node_modules/.bin/plv8x
 ./node_modules/plv8x
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; ./node_modules/.bin/plv8x -l
+&gt; ./node_modules/.bin/plv8x -l
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module 'boxcars'
+Error: Cannot find module &amp;lsquo;boxcars&amp;rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&amp;lt;anonymous&amp;gt; (/Users/gburek/code/pg-twitter/node_modules/one/lib/templating/coll.js:1:77)
+    at Object.&lt;anonymous&gt; (/Users/gburek/code/pg-twitter/node_modules/one/lib/templating/coll.js:1:77)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;welp, this sucks. Maybe I have to install it globally? The README seems to
-suggest that.&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; npm install plv8x -g
-/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -&amp;gt; /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/cmd.js
-...
+&amp;rdquo;`
+
+welp, this sucks. Maybe I have to install it globally? The README seems to
+suggest that.
+
+&amp;ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+&gt; npm install plv8x -g
+/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -&gt; /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/cmd.js
+&amp;hellip;
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; plv8x -l
-&amp;gt;
+&gt; plv8x -l
+&gt;
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module 'boxcars'
+Error: Cannot find module &amp;lsquo;boxcars&amp;rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&amp;lt;anonymous&amp;gt;
+    at Object.&lt;anonymous&gt;
 (/Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/node_modules/one/lib/templating/coll.js:1:77)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Uh ok. Maybe I need to install from github?&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; npm uninstall plv8x -g
-...
+&amp;rdquo;`
+
+Uh ok. Maybe I need to install from github?
+
+&amp;ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+&gt; npm uninstall plv8x -g
+&amp;hellip;
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; npm install https://github.com/clkao/plv8x --save
+&gt; npm install https://github.com/clkao/plv8x &amp;ndash;save
 npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
 - boxcars@2.0.0 node_modules/boxcars
 - flatten-array@1.0.0 node_modules/flatten-array
@@ -295,44 +343,47 @@ npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher
 - path-is-absolute@1.0.1 node_modules/path-is-absolute
 pg-twitter@1.0.0 /Users/gburek/code/pg-twitter
 └─┬ plv8x@0.7.0  (git+https://github.com/clkao/plv8x.git#3c19d57adfa5050c27715699d2369d2c441c817d)
-...
+&amp;hellip;
 
 npm WARN pg-twitter@1.0.0 No description
 npm WARN pg-twitter@1.0.0 No repository field.
-npm install https://github.com/clkao/plv8x --save  10.96s user 2.93s system 85% cpu 16.253 total
+npm install https://github.com/clkao/plv8x &amp;ndash;save  10.96s user 2.93s system 85% cpu 16.253 total
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; find . -name plv8x
+&gt; find . -name plv8x
 ./node_modules/.bin/plv8x
 ./node_modules/plv8x
 ./node_modules/plv8x/bin/plv8x
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; ./node_modules/plv8x/bin/plv8x -l
+&gt; ./node_modules/plv8x/bin/plv8x -l
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module '../lib/cli.js'
+Error: Cannot find module &amp;lsquo;../lib/cli.js&amp;rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&amp;lt;anonymous&amp;gt; (/Users/gburek/code/pg-twitter/node_modules/plv8x/bin/plv8x:2:1)
+    at Object.&lt;anonymous&gt; (/Users/gburek/code/pg-twitter/node_modules/plv8x/bin/plv8x:2:1)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Ok. Different error. Progress! Try again, globally, from github.&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; npm install https://github.com/clkao/plv8x -g
-npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
-/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -&amp;gt; /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x
+&amp;rdquo;`
 
-&amp;gt; libpq@1.8.5 install /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/node_modules/libpq
-&amp;gt; node-gyp rebuild
+Ok. Different error. Progress! Try again, globally, from github.
+
+&amp;ldquo;`
+gburek@gburek-ltm2:~/code/pg-twitter
+&gt; npm install https://github.com/clkao/plv8x -g
+npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
+/Users/gburek/.nvm/versions/node/v6.7.0/bin/plv8x -&gt; /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x
+
+&gt; libpq@1.8.5 install /Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/node_modules/libpq
+&gt; node-gyp rebuild
 
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
@@ -344,89 +395,95 @@ gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in nod
 clang: warning: libstdc++ is deprecated; move to libc++ with a minimum deployment target of OS X 10.9
 /Users/gburek/.nvm/versions/node/v6.7.0/lib
 └─┬ plv8x@0.7.0  (git+https://github.com/clkao/plv8x.git#3c19d57adfa5050c27715699d2369d2c441c817d)
-...
+&amp;hellip;
 
 npm install https://github.com/clkao/plv8x -g  13.35s user 5.16s system 90% cpu 20.531 total
 
 gburek@gburek-ltm2:~/code/pg-twitter
-&amp;gt; plv8x -l
+&gt; plv8x -l
 module.js:457
     throw err;
     ^
 
-Error: Cannot find module '../lib/cli.js'
+Error: Cannot find module &amp;lsquo;../lib/cli.js&amp;rsquo;
     at Function.Module._resolveFilename (module.js:455:15)
     at Function.Module._load (module.js:403:25)
     at Module.require (module.js:483:17)
     at require (internal/module.js:20:19)
-    at Object.&amp;lt;anonymous&amp;gt; (/Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x:2:1)
+    at Object.&lt;anonymous&gt; (/Users/gburek/.nvm/versions/node/v6.7.0/lib/node_modules/plv8x/bin/plv8x:2:1)
     at Module._compile (module.js:556:32)
     at Object.Module._extensions..js (module.js:565:10)
     at Module.load (module.js:473:32)
     at tryModuleLoad (module.js:432:12)
     at Function.Module._load (module.js:424:3)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What am I doing with my life?&lt;/p&gt;
+&amp;rdquo;`
 
-&lt;p&gt;OK So let&amp;rsquo;s actually follow the &lt;a href="https://github.com/clkao/plv8x#install-plv8x"&gt;README on github&lt;/a&gt;&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code
-&amp;gt; git clone git://github.com/clkao/plv8x.git; cd plv8x
-Cloning into 'plv8x'...
+What am I doing with my life?
+
+OK So let&amp;rsquo;s actually follow the [README on github](https://github.com/clkao/plv8x#install-plv8x)
+
+&amp;ldquo;`
+gburek@gburek-ltm2:~/code
+&gt; git clone git://github.com/clkao/plv8x.git; cd plv8x
+Cloning into &amp;lsquo;plv8x&amp;rsquo;&amp;hellip;
 remote: Counting objects: 1091, done.
 remote: Total 1091 (delta 0), reused 0 (delta 0), pack-reused 1091
 Receiving objects: 100% (1091/1091), 188.83 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (564/564), done.
-Checking connectivity... done.
+Checking connectivity&amp;hellip; done.
 
 gburek@gburek-ltm2:~/code/plv8x
-&amp;gt; npm i -g .
+&gt; npm i -g .
 
-&amp;gt; plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
-&amp;gt; env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;amp;&amp;amp;
-env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src
+&gt; plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
+&gt; env PATH=&amp;rdquo;./node_modules/.bin:$PATH&amp;quot; lsc -cj package.ls &amp;&amp;
+env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -bc -o lib src
 
 env: lsc: No such file or directory
 
 npm ERR! addLocal Could not install /Users/gburek/code/plv8x
 npm ERR! Darwin 15.6.0
-npm ERR! argv "/Users/gburek/.nvm/versions/node/v6.7.0/bin/node" "/Users/gburek/.nvm/versions/node/v6.7.0/bin/npm" "i" "-g" "."
+npm ERR! argv &amp;ldquo;/Users/gburek/.nvm/versions/node/v6.7.0/bin/node&amp;rdquo; &amp;ldquo;/Users/gburek/.nvm/versions/node/v6.7.0/bin/npm&amp;rdquo; &amp;ldquo;i&amp;rdquo; &amp;ldquo;-g&amp;rdquo; &amp;ldquo;.&amp;rdquo;
 npm ERR! node v6.7.0
 npm ERR! npm  v3.10.3
 npm ERR! file sh
 npm ERR! code ELIFECYCLE
 npm ERR! errno ENOENT
 npm ERR! syscall spawn
-npm ERR! plv8x@0.7.0 prepublish: `env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;amp;&amp;amp;
-npm ERR! env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src`
+npm ERR! plv8x@0.7.0 prepublish: `env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -cj package.ls &amp;&amp;
+npm ERR! env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -bc -o lib src`
 npm ERR! spawn ENOENT
 npm ERR!
-npm ERR! Failed at the plv8x@0.7.0 prepublish script 'env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;amp;&amp;amp;
-npm ERR! env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src'.
+npm ERR! Failed at the plv8x@0.7.0 prepublish script &amp;lsquo;env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -cj package.ls &amp;&amp;
+npm ERR! env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -bc -o lib src&amp;rsquo;.
 npm ERR! Make sure you have the latest version of node.js and npm installed.
 npm ERR! If you do, this is most likely a problem with the plv8x package,
 npm ERR! not with npm itself.
 npm ERR! Tell the author that this fails on your system:
-npm ERR!     env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;amp;&amp;amp;
-npm ERR! env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src
+npm ERR!     env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -cj package.ls &amp;&amp;
+npm ERR! env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -bc -o lib src
 npm ERR! You can get information on how to open an issue for this project with:
 npm ERR!     npm bugs plv8x
-npm ERR! Or if that isn't available, you can get their info via:
+npm ERR! Or if that isn&amp;rsquo;t available, you can get their info via:
 npm ERR!     npm owner ls plv8x
 npm ERR! There is likely additional logging output above.
 
 npm ERR! Please include the following file with any support request:
 npm ERR!     /Users/gburek/code/plv8x/npm-debug.log
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Welp. Maybe it needs to be installed locally?&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
-&amp;gt; npm install
+&amp;ldquo;`
+
+Welp. Maybe it needs to be installed locally?
+
+&amp;rdquo;`
+gburek@gburek-ltm2:~/code/plv8x
+&gt; npm install
 npm WARN deprecated minimatch@2.0.10: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
 npm WARN deprecated to-iso-string@0.0.2: to-iso-string has been deprecated, use @segment/to-iso-string instead.
 npm WARN deprecated jade@0.26.3: Jade has been renamed to pug, please install the latest version of pug instead of jade
 npm WARN deprecated minimatch@0.3.0: Please update to minimatch 3.0.2 or higher to avoid a RegExp DoS issue
 
-&amp;gt; libpq@1.8.5 install /Users/gburek/code/plv8x/node_modules/libpq
-&amp;gt; node-gyp rebuild
+&gt; libpq@1.8.5 install /Users/gburek/code/plv8x/node_modules/libpq
+&gt; node-gyp rebuild
 
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
 gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in node-gyp v4, please use NODEJS_ORG_MIRROR
@@ -437,27 +494,28 @@ gyp WARN download NVM_NODEJS_ORG_MIRROR is deprecated and will be removed in nod
   SOLINK_MODULE(target) Release/addon.node
 clang: warning: libstdc++ is deprecated; move to libc++ with a minimum deployment target of OS X 10.9
 
-&amp;gt; plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
-&amp;gt; env PATH="./node_modules/.bin:$PATH" lsc -cj package.ls &amp;amp;&amp;amp;
-env PATH="./node_modules/.bin:$PATH" lsc -bc -o lib src
+&gt; plv8x@0.7.0 prepublish /Users/gburek/code/plv8x
+&gt; env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -cj package.ls &amp;&amp;
+env PATH=&amp;ldquo;./node_modules/.bin:$PATH&amp;rdquo; lsc -bc -o lib src
 
 plv8x@0.7.0 /Users/gburek/code/plv8x
-...
+&amp;hellip;
 gburek@gburek-ltm2:~/code/plv8x
-&amp;gt; find . -name plv8x
+&gt; find . -name plv8x
 ./bin/plv8x
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;/details&gt;&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
+&amp;ldquo;`
+
+&lt;/details&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
 &amp;gt; ./bin/plv8x -l
 plv8x: 392.33 kB
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;YES IT WORKS. Who would have guessed this npm module was only usable when
 executed directly in its source tree and installed both locally and globally?&lt;/p&gt;
 
 &lt;p&gt;Let&amp;rsquo;s see what is happening on the db (Heroku per line logging preamble
 omitted):&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/pg-twitter
 &amp;gt; heroku logs -t
 [15-1] LOG:  statement:
 [15-2]  SET client_min_messages TO WARNING;
@@ -560,7 +618,7 @@ omitted):&lt;/p&gt;
 [25-1] NOTICE:  operator |&amp;gt; does not exist, skipping
 [26-1] NOTICE:  operator ~&amp;gt; does not exist, skipping
 [27-1] NOTICE:  operator ~&amp;gt; does not exist, skipping
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This is not great. It seems that &lt;code&gt;plv8x&lt;/code&gt; wants to create custom operators that
 are similar to ones in Livescript (&lt;code&gt;|&amp;gt;&lt;/code&gt; pipeline operator) and CoffeeScript
 (&lt;code&gt;-&amp;gt;&lt;/code&gt; thin arrows which are translated as &lt;code&gt;~&amp;gt;&lt;/code&gt;).&lt;/p&gt;
@@ -572,7 +630,7 @@ postmaster, so many Postgres providers do not support them.&lt;/del&gt;&lt;/p&gt
 we may continue.&lt;/del&gt;&lt;/p&gt;
 
 &lt;h3 id="update-only-custom-default-operators-seem-to-not-work-after-altering-the-search_path-of-the-db-these-appear-to-be-created-properly"&gt;&lt;em&gt;UPDATE:&lt;/em&gt; Only custom &lt;em&gt;default&lt;/em&gt; operators seem to not work. After altering the search_path of the db, these appear to be created properly.&lt;/h3&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; select * from pg_operator where oprcode::text ilike 'plv8%';
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; select * from pg_operator where oprcode::text ilike 'plv8%';
  oprname | oprnamespace | oprowner | oprkind | oprcanmerge | oprcanhash | oprleft | oprright | oprresult | oprcom | oprnegate |      oprcode       | oprrest | oprjoin
 ---------+--------------+----------+---------+-------------+------------+---------+----------+-----------+--------+-----------+--------------------+---------+---------
  |&amp;gt;      |        17017 |    16384 | l       | f           | f          |       0 |       25 |     17027 |      0 |         0 | plv8x.json_eval    | -       | -
@@ -582,11 +640,11 @@ we may continue.&lt;/del&gt;&lt;/p&gt;
  ~&amp;gt;      |        17017 |    16384 | b       | f           | f          |   17027 |       25 |     17027 |  17320 |         0 | plv8x.json_eval_ls | -       | -
  &amp;lt;~      |        17017 |    16384 | b       | f           | f          |      25 |    17027 |     17027 |  17321 |         0 | plv8x.json_eval_ls | -       | -
 (6 rows)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h2 id="how-does-this-work"&gt;How does this work?&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s take a look at the db:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; \dn
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; \dn
      List of schemas
   Name  |     Owner
 --------+----------------
@@ -621,9 +679,9 @@ primary key, btree, for table "plv8x.code"
  updated  | timestamp without time zone |
 Indexes:
     "code_pkey" PRIMARY KEY, btree (name)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Wow, ok so node modules are rows in this table?&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; select name, substring(code from 1 for 1300), load_seq, updated from plv8x.code;
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; select name, substring(code from 1 for 1300), load_seq, updated from plv8x.code;
 -[ RECORD 1 ]----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 name      | plv8x
 substring | !function(e){if("object"==typeof exports&amp;amp;&amp;amp;"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&amp;amp;&amp;amp;define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&amp;amp;&amp;amp;(f=self),f.plv8x=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&amp;amp;&amp;amp;require;if(!u&amp;amp;&amp;amp;a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&amp;amp;&amp;amp;require;for(var o=0;o&amp;lt;r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){+
@@ -635,13 +693,13 @@ substring | !function(e){if("object"==typeof exports&amp;amp;&amp;amp;"undefined
 load_seq  |
 updated   | 2016-10-08 16:27:59
 
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Not even minified. Cool.&lt;/p&gt;
 
 &lt;h2 id="install-a-node-package-into-the-db"&gt;Install a node package into the db&lt;/h2&gt;
 
 &lt;p&gt;Let&amp;rsquo;s install something.&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
 &amp;gt; ./bin/plv8x -i twitter-node-client
 
 gburek@gburek-ltm2:~/code/plv8x
@@ -655,9 +713,9 @@ twitter-node-client: 685.9 kB
  plv8x               |       392331 |          | 2016-10-08 16:27:59
  twitter-node-client |       685900 |          | 2016-10-11 17:20:21
 (2 rows)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Cool. What about running something simple?&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
 &amp;gt; ./bin/plv8x -e 'require("qs").parse("foo=bar&amp;amp;baz=1")'
 WARNING:  failed to load module buffer:
 WARNING:  failed to load module qs: Error: no window object present
@@ -676,9 +734,9 @@ DETAIL:  undefined() LINE 0: ((function(){return require("qs").parse("foo=bar&am
     at Client._read (/Users/gburek/code/plv8x/node_modules/pg-native/index.js:121:19)
     at emitNone (events.js:86:13)
     at PQ.emit (events.js:185:7)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This isn&amp;rsquo;t good. What about defining a function?&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;gburek@gburek-ltm2:~/code/plv8x
 &amp;gt; ./bin/plv8x -f 'plv8x.json parse_qs(text)=qs:parse'
 ok plv8x.json parse_qs(text)
 
@@ -695,14 +753,14 @@ LOCATION:  plv8_Elog, plv8_func.cc:327
 ERROR:  XX000: TypeError: Cannot read property 'parse' of undefined
 DETAIL:  parse_qs() LINE 4:   return plv8x.require('qs').parse.apply(this, arguments);
 LOCATION:  rethrow, plv8.cc:1649
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;It looks like the lack of custom operators is preventing this code from
 running.&lt;/p&gt;
 
 &lt;h1 id="failure"&gt;Failure?&lt;/h1&gt;
 
 &lt;h3 id="update-it-seems-that-the-search-path-of-the-db-was-not-wide-enough-and-including-all-possible-schemas-allows-operator-creation-and-for-modules-to-be-loaded-and-run"&gt;UPDATE: It seems that the search path of the db was not wide enough, and including all possible schemas, allows operator creation and for modules to be loaded and run:&lt;/h3&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; alter database df5f7ilg16vje set search_path to "$user", public, plv8, plv8x;
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;&amp;gt; alter database df5f7ilg16vje set search_path to "$user", public, plv8, plv8x;
 ALTER DATABASE
 Time: 79.494 ms
 &amp;gt; SELECT |&amp;gt;'(require("moment")()).format()';
@@ -712,7 +770,7 @@ Time: 79.494 ms
 (1 row)
 
 Time: 76.703 ms
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Part 2 will continue down this path to running node/npm in Postgres and will
 show how the above was found.&lt;/p&gt;
 
@@ -730,8 +788,8 @@ alternatives. I&amp;rsquo;ll try those next!&lt;/del&gt;&lt;/p&gt;
     <title>Lessons from Automatic Incident Resolution for a Million Databases - SREcon16 EU</title>
     <link rel="alternate" href="/2016/10/06/lessons-from-automatic-incident-resolution-for-a-million-databases-srecon16-eu/"/>
     <id>/2016/10/06/lessons-from-automatic-incident-resolution-for-a-million-databases-srecon16-eu/</id>
-    <published>2016-10-06T15:08:00-07:00</published>
-    <updated>2016-10-06T15:08:00-07:00</updated>
+    <published>2016-10-06T22:08:00+00:00</published>
+    <updated>2016-10-06T22:08:00+00:00</updated>
     <author>
       <name>Greg Burek</name>
     </author>
@@ -756,8 +814,8 @@ on the &lt;a href="https://www.usenix.org/conference/srecon16europe/program/pres
     <title>Installing bcc to evaluate BPF and Postgres</title>
     <link rel="alternate" href="/2016/10/04/installing-bcc-to-evaluate-bpf-and-postgres/"/>
     <id>/2016/10/04/installing-bcc-to-evaluate-bpf-and-postgres/</id>
-    <published>2016-10-04T14:51:00-07:00</published>
-    <updated>2016-10-04T14:51:00-07:00</updated>
+    <published>2016-10-04T21:51:00+00:00</published>
+    <updated>2016-10-04T21:51:00+00:00</updated>
     <author>
       <name>Greg Burek</name>
     </author>
@@ -768,7 +826,7 @@ missive about performance tracing, this time for &lt;a href="http://www.brendang
 
 &lt;p&gt;&lt;a href="https://github.com/iovisor/bcc"&gt;bcc&lt;/a&gt; stands for &amp;lsquo;BPF Compiler Collection&amp;rsquo; and
 &lt;a href="https://en.wikipedia.org/wiki/Berkeley_Packet_Filter"&gt;BPF&lt;/a&gt; stands for
-&amp;#39;Berkeley Packet Filter&amp;rsquo;. From the bcc
+&amp;lsquo;Berkeley Packet Filter&amp;rsquo;. From the bcc
 &lt;a href="https://github.com/iovisor/bcc/blob/60393ea5dd966d33ff24929f6981df09473cbb1b/README.md"&gt;README&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
@@ -800,18 +858,18 @@ instructions&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;New Postgres databases get Ubuntu Trusty instances with
 &lt;code&gt;linux-generic-lts-xenial&lt;/code&gt; kernels of the 4.4 series:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;=&amp;gt; select version();
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;=&amp;gt; select version();
                                              version
 -------------------------------------------------------------------------------------------------
  PostgreSQL 9.5.4 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2, 64-bit
 (1 row)
-&lt;/code&gt;&lt;/pre&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ uname -a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ uname -a
 Linux ip-10-0-10-230 4.4.0-38-generic #57~14.04.1-Ubuntu SMP Tue Sep 6 17:20:43 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This seems to satisfy the &lt;code&gt;Linux kernel version 4.1 or newer&lt;/code&gt; requirement.&lt;/p&gt;
 
 &lt;p&gt;Next thing to check is if the kernel has been compiled properly:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ cat /boot/config-4.4.0-38-generic | grep BPF
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ cat /boot/config-4.4.0-38-generic | grep BPF
 CONFIG_BPF=y
 CONFIG_BPF_SYSCALL=y
 CONFIG_NETFILTER_XT_MATCH_BPF=m
@@ -821,9 +879,9 @@ CONFIG_BPF_JIT=y
 CONFIG_HAVE_BPF_JIT=y
 CONFIG_BPF_EVENTS=y
 CONFIG_TEST_BPF=m
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This looks ok! Next up is to install the repo and tools:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D4284CDD
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D4284CDD
 ...
 gpg: requesting key D4284CDD from hkp server keyserver.ubuntu.com
 gpg: key D4284CDD: public key "Brenden Blanco &amp;lt;bblanco@plumgrid.com&amp;gt;" imported
@@ -851,26 +909,26 @@ After this operation, 36.6 MB of additional disk space will be used.
 Do you want to continue? [Y/n] y
 ...
 ~$
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now to test this out:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;# /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;# /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
 Traceback (most recent call last):
   File "/usr/share/bcc/tools/tplist", line 16, in &amp;lt;module&amp;gt;
     from bcc import USDTReader
 ImportError: cannot import name USDTReader
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Welp. Looking at the source of &lt;a href="https://github.com/iovisor/bcc/blob/6e60fbc8a672d8f29cab688ddc0df6d43a96c300/tools/tplist.py"&gt;tplist on current master&lt;/a&gt;,
 the &lt;a href="https://github.com/iovisor/bcc/commit/69e361ac66fbf3baadb1f7cf21762df61ad7a5a9#diff-8189c35f15538919a795b3f18ad0db66L16"&gt;most recent commit&lt;/a&gt;
 removes &lt;code&gt;USDTReader&lt;/code&gt;. Time to try the nightly builds:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ echo "deb [trusted=yes] https://repo.iovisor.org/apt/trusty trusty-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ echo "deb [trusted=yes] https://repo.iovisor.org/apt/trusty trusty-nightly main" | sudo tee /etc/apt/sources.list.d/iovisor.list
 ~$ sudo apt-get update
 ~$ sudo apt-get install bcc-tools
 ~$ sudo /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
 'USDT' object has no attribute 'enumerate_probes'
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Welp. &lt;code&gt;enumerate_probes&lt;/code&gt; was added in another part of the &lt;a href="https://github.com/iovisor/bcc/commit/69e361ac66fbf3baadb1f7cf21762df61ad7a5a9#diff-4cf0bde404ce4b67b2961b61419fa23fR58"&gt;above patch&lt;/a&gt;, so I think other things
 need to be updated, as well.&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ sudo apt-get install binutils bcc bcc-tools libbcc-examples python-bcc
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ sudo apt-get install binutils bcc bcc-tools libbcc-examples python-bcc
 Reading package lists... Done
 Building dependency tree
 Reading state information... Done
@@ -907,9 +965,9 @@ Traceback (most recent call last):
   File "/usr/lib/python2.7/ctypes/__init__.py", line 383, in __getitem__
     func = self._FuncPtr((name_or_ordinal, self))
 AttributeError: /usr/lib/x86_64-linux-gnu/libbcc.so.0: undefined symbol: bcc_usdt_get_probe_argctype
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;One more error. This time in &lt;code&gt;libbcc&lt;/code&gt;. Seems like another package to pull from nightly.&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ sudo apt-get install libbcc
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ sudo apt-get install libbcc
 Reading package lists... Done
 Building dependency tree
 Reading state information... Done
@@ -927,11 +985,11 @@ Setting up libbcc (0.2.0-22.git.12a09dc) ...
 Processing triggers for libc-bin (2.19-0ubuntu6.9) ...
 ~$ sudo /usr/share/bcc/tools/tplist -l /usr/lib/postgresql/9.5/bin/postgres
 ~$
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;OK! No errors. This is good, as it answers my questions as to if this postgres
 package was compiled with the &lt;code&gt;--enable-dtrace&lt;/code&gt;. I can further confirm with
 &lt;code&gt;readelf -n&lt;/code&gt;&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ readelf -n /usr/lib/postgresql/9.5/bin/postgres
+&lt;div class="highlight"&gt;&lt;pre class="highlight plaintext"&gt;&lt;code&gt;~$ readelf -n /usr/lib/postgresql/9.5/bin/postgres
 
 Displaying notes found at file offset 0x00000254 with length 0x00000020:
   Owner                 Data size       Description
@@ -942,7 +1000,7 @@ Displaying notes found at file offset 0x00000274 with length 0x00000024:
   Owner                 Data size       Description
   GNU                  0x00000014       NT_GNU_BUILD_ID (unique build ID bitstring)
     Build ID: 6990037682e6668adc87ae7a6b82e4640959cf52
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;There are no USDT or bpf traces found here, so next step is to recompile
 postgres with &lt;code&gt;--enable-dtrace&lt;/code&gt; and see what probes are available to use with
 BPF (spoiler: &lt;a href="https://www.postgresql.org/docs/current/static/dynamic-trace.html"&gt;there are a lot of them&lt;/a&gt;).&lt;/p&gt;
@@ -952,8 +1010,8 @@ BPF (spoiler: &lt;a href="https://www.postgresql.org/docs/current/static/dynamic
     <title>Stream a remote file to S3</title>
     <link rel="alternate" href="/2015/06/20/stream-a-remote-file-to-s3/"/>
     <id>/2015/06/20/stream-a-remote-file-to-s3/</id>
-    <published>2015-06-20T17:07:00-07:00</published>
-    <updated>2015-06-20T17:07:00-07:00</updated>
+    <published>2015-06-21T00:07:00+00:00</published>
+    <updated>2015-06-21T00:07:00+00:00</updated>
     <author>
       <name>Greg Burek</name>
     </author>
@@ -967,7 +1025,7 @@ library&lt;/a&gt;,
 one can link the two IO streams together fairly easily:&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'aws-sdk'&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'aws-sdk'&lt;/span&gt;
 &lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'open-uri'&lt;/span&gt;
 &lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'sequel'&lt;/span&gt;
 &lt;span class="nb"&gt;require&lt;/span&gt; &lt;span class="s1"&gt;'digest/md5'&lt;/span&gt;
@@ -1003,7 +1061,7 @@ one can link the two IO streams together fairly easily:&lt;/p&gt;
 &lt;span class="no"&gt;RemoteFile&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'https://i.imgur.com/DO3Hr4A.gif'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;upload_to_s3&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ss"&gt;bucket_name: &lt;/span&gt;&lt;span class="s1"&gt;'mah_gifs'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;This code snippet assumes you have &lt;code&gt;ENV[&amp;#39;AWS_ACCESS_KEY_ID&amp;#39;]&lt;/code&gt; and
 &lt;code&gt;ENV[&amp;#39;AWS_SECRET_ACCESS_KEY&amp;#39;]&lt;/code&gt; set.&lt;/p&gt;
 </content>
@@ -1012,8 +1070,8 @@ one can link the two IO streams together fairly easily:&lt;/p&gt;
     <title>DNS, eglibc and resolv-replace on Heroku</title>
     <link rel="alternate" href="/2015/02/22/dns-eglibc-and-resolv-replace-on-heroku/"/>
     <id>/2015/02/22/dns-eglibc-and-resolv-replace-on-heroku/</id>
-    <published>2015-02-22T15:33:00-08:00</published>
-    <updated>2015-02-22T15:33:00-08:00</updated>
+    <published>2015-02-22T23:33:00+00:00</published>
+    <updated>2015-02-22T23:33:00+00:00</updated>
     <author>
       <name>Greg Burek</name>
     </author>
@@ -1028,12 +1086,12 @@ in very inconvenient places. The most common traceback seems to indicate a
 failure to resolve DNS:&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;
-&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="c1"&gt;#&amp;lt;SocketError: getaddrinfo: Name or service not known&amp;gt;&lt;/span&gt;
-&lt;span class="sr"&gt;/app/&lt;/span&gt;&lt;span class="n"&gt;vendor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;rb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;879&lt;/span&gt;&lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="s1"&gt;'initialize'&lt;/span&gt;
-&lt;span class="sr"&gt;/app/&lt;/span&gt;&lt;span class="n"&gt;vendor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;rb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;879&lt;/span&gt;&lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="s1"&gt;'open'&lt;/span&gt;
-&lt;span class="sr"&gt;/app/&lt;/span&gt;&lt;span class="n"&gt;vendor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;rb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;879&lt;/span&gt;&lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="s1"&gt;'block in connect'&lt;/span&gt;
-&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;.&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class="highlight"&gt;&lt;pre class="highlight ruby"&gt;&lt;code&gt;&lt;span class="c1"&gt;#&amp;lt;SocketError: getaddrinfo: Name or service not known&amp;gt;&lt;/span&gt;
+&lt;span class="sr"&gt;/app/&lt;/span&gt;&lt;span class="n"&gt;vendor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;rb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;879&lt;/span&gt;&lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="s1"&gt;'initialize'&lt;/span&gt;
+&lt;span class="sr"&gt;/app/&lt;/span&gt;&lt;span class="n"&gt;vendor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;rb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;879&lt;/span&gt;&lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="s1"&gt;'open'&lt;/span&gt;
+&lt;span class="sr"&gt;/app/&lt;/span&gt;&lt;span class="n"&gt;vendor&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;2.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ruby&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;2.1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;rb&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;879&lt;/span&gt;&lt;span class="ss"&gt;:in&lt;/span&gt; &lt;span class="s1"&gt;'block in connect'&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;a href="http://lmgtfy.com/?q=SocketError%3A+getaddrinfo%3A+Name+or+service+not+known+heroku"&gt;Google&lt;/a&gt; led me to a &lt;a href="http://www.subelsky.com/2014/05/fixing-socketerror-getaddrinfo-name-or.html"&gt;pertinent blog post&lt;/a&gt; that recommended using ruby&amp;rsquo;s
 &lt;a href="http://apidock.com/ruby/Resolv"&gt;Resolv&lt;/a&gt; library for all DNS requests via a script called &lt;a href="https://github.com/ruby/ruby/blob/trunk/lib/resolv-replace.rb"&gt;resolv-replace&lt;/a&gt;.
 Adding a single line to our initializers, &lt;code&gt;require resolv-replace&lt;/code&gt;, caused errors
@@ -1070,52 +1128,6 @@ requesting backporting&lt;/a&gt; to supported versions of Ubuntu.&lt;/s&gt;&lt;/
 
 &lt;p&gt;Thanks to Ed Muller, Michael Hale, Keiko Oda, Steve Conklin, Terence Lee and
 Richard Schneeman for help in figuring this out.&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Require HTTPS to your Heroku app</title>
-    <link rel="alternate" href="/2014/10/26/require-ssl-to-your-heroku-app/"/>
-    <id>/2014/10/26/require-ssl-to-your-heroku-app/</id>
-    <published>2014-10-26T15:29:00-07:00</published>
-    <updated>2014-10-26T15:29:00-07:00</updated>
-    <author>
-      <name>Greg Burek</name>
-    </author>
-    <content type="html">&lt;p&gt;Configuring your Heroku app so that it will redirect insecure HTTP traffic to an
-HTTPS endpoint can be finicky and is language/framework specific. I was able to
-figure out a general and language independent method thanks to the &lt;a href="https://github.com/ryandotsmith/nginx-buildpack"&gt;nginx
-buildpack&lt;/a&gt;. By using nginx,
-you can redirect some or all http traffic to your app to the https verison of
-your site.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
-
-&lt;p&gt;By adding:&lt;/p&gt;
-&lt;pre class="highlight plaintext"&gt;&lt;code&gt;if ($http_x_forwarded_proto != 'https') {
-  rewrite ^ https://$host$request_uri? permanent;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;to the &lt;code&gt;location&lt;/code&gt; section of your app&amp;rsquo;s nginx config file template, any access
-to that location will be met with a &lt;code&gt;301 Moved Permanently&lt;/code&gt; redirect to the
-&lt;code&gt;https&lt;/code&gt; version of that site and path.&lt;/p&gt;
-
-&lt;p&gt;EDIT: @jacobian &lt;a href="https://twitter.com/jacobian/status/526538110201368576"&gt;pointed
-out&lt;/a&gt; on twitter that
-using &lt;a href="http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security"&gt;HTTP Strict Transport Security
-(HSTS)&lt;/a&gt; headers
-will make modern clients prefer HTTPS, even for the &lt;code&gt;/insecure&lt;/code&gt; path that lacks
-the redirect snippet.&lt;/p&gt;
-
-&lt;p&gt;As all apps are accessible at &lt;code&gt;https://&amp;lt;app-name&amp;gt;.herokuapp.com/&lt;/code&gt; by using
-Heroku&amp;rsquo;s &lt;code&gt;herokuapp.com&lt;/code&gt; SSL cert, this provides a free and easy way to secure
-your apps. Custom domain names require custom SSL certs, which are available
-from traditional SSL vendors or from Heroku addon &lt;a href="https://www.expeditedssl.com/"&gt;Expedited
-SSL&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;A sample app can be found at
-&lt;a href="https://github.com/gregburek/heroku-force-ssl-sample"&gt;https://github.com/gregburek/heroku-force-ssl-sample&lt;/a&gt;
-and deployed to your Heroku account here: 
-&lt;a href="https://heroku.com/deploy?template=https://github.com/gregburek/heroku-force-ssl-sample"&gt;&lt;img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy" /&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
   </entry>
 </feed>
