@@ -37,7 +37,7 @@ posts will be about that as much as anything.
 
 Why not?
 
-![Why not Postgres?](http://i.imgur.com/S0YQYR4.jpg)
+![Why not Postgres?](https://i.imgur.com/S0YQYR4.jpg)
 
 # Goal
 

@@ -21,6 +21,6 @@ point. Well, I found it and the picture is below.  Things look pretty frosty so
 far, let's hope this extends the life of my 3 year old laptop a bit more.  
 
 [![MacBook with lid-closed magnet
-applied](http://farm5.static.flickr.com/4111/5103718702_6c0ef9e619.jpg)](http://www.flickr.com/photos/gregburek/5103718702/
+applied](https://farm5.static.flickr.com/4111/5103718702_6c0ef9e619.jpg)](http://www.flickr.com/photos/gregburek/5103718702/
 "Macbook with lid trick magnet attached by greg.burek, on Flickr")
 
