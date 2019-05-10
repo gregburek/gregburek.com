@@ -122,12 +122,12 @@ header {
 
   h1 {
     background: image-url($logo-img) no-repeat;
-    background-size: image-width($logo-img) image-height($logo-img);
+    background-size: 100px 100px;
     font-size: 60px;
-    height: image-height($logo-img) + 10px;
+    height: 100px;
     line-height: 1.6em;
     margin: 0 auto;
-    padding-left: image-width($logo-img) + 10px;
+    padding-left: 110px;
 
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
       background-image: image-url($logo-img-2x);
