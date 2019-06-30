@@ -3,6 +3,8 @@ languageCode: en-us
 title: Greg Burek
 theme: hugo-flex
 enableRobotsTXT: true
+pygmentsCodeFences: true
+pygmentsCodeFencesGuessSyntax: true
 params:
   color: '#FF3366'
   social:
