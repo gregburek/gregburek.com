@@ -31,8 +31,7 @@ posts will be about that as much as anything.
 
 # Why?
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Why use node when you can use Postgres as your JavaScript runtime?</p>&mdash; Damaged Guids (@t_crayford) <a href="https://twitter.com/t_crayford/status/784529763603976192">October 7, 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+{{< tweet 784529763603976192 >}}
 
 Why not?
 
