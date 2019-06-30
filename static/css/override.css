@@ -1,0 +1,17 @@
+.Banner {
+    list-style: none;
+    display: flex;
+    flex-flow: row-reverse wrap-reverse;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    align-items: center; /* align vertical */
+  }
+
+.Banner-item img {
+    padding: 0rem 1rem 0rem;
+    width: 3em;
+    max-width: 100%;
+    height: auto;
+    vertical-align: bottom;
+}
