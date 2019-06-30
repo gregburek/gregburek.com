@@ -1,0 +1,11 @@
+<footer class="Footer">
+  <div class="u-background">
+    <div class="u-wrapper">
+      <div class="u-padding">
+          {{- range $index, $key := .Site.Params.Social -}}
+          <a class="Banner-link u-clickable" href="{{ $key.url }}" title="{{ $key.name }}"><i data-feather="{{ $key.icon }}"></i></a>
+          {{- end -}}
+      </div>
+    </div>
+  </div>
+</footer>
