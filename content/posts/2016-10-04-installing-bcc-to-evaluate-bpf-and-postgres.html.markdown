@@ -7,8 +7,6 @@ tags: [ bpf, postgres, linux, performance, ubuntu, discovery ]
 [@t_crayford](https://twitter.com/t_crayford) sent me Brendan Gregg's latest
 missive about performance tracing, this time for [Linux MySQL Slow Query Tracing with bcc/BPF](http://www.brendangregg.com/blog/2016-10-04/linux-bcc-mysqld-qslower.html).
 
-READMORE
-
 [bcc](https://github.com/iovisor/bcc) stands for 'BPF Compiler Collection' and
 [BPF](https://en.wikipedia.org/wiki/Berkeley_Packet_Filter) stands for
 'Berkeley Packet Filter'. From the bcc

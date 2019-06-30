@@ -7,8 +7,6 @@ tags: [ vagrant, debugging, shef, chef, testing ]
 Sometimes [Vagrant](http://vagrantup.com "Vagrant - Virtualized development for
 the masses")'s provisioning error messages can be a little cryptic.
 
-READMORE
-
 When troubleshooting a failing chef-solo run, tweaking a `run_list` or
 debugging a new recipe, I've found it very handy to log into the partially
 provisioned VM with `vagrant ssh` and then run: [Vagrant](http://vagrantup.com

@@ -13,8 +13,6 @@ the `open-uri` module of the [ruby standard
 library](http://ruby-doc.org/stdlib-2.2.2/libdoc/open-uri/rdoc/OpenURI.html),
 one can link the two IO streams together fairly easily:
 
-READMORE
-
 ```ruby
 require 'aws-sdk'
 require 'open-uri'

@@ -8,8 +8,6 @@ This is me attempting to resurrect my blog after several years of silence. This
 has also given me a chance to redesign things and adopt another static site
 generator.
 
-READMORE
-
 Octopress served me well, but I felt like it was difficult to grasp the
 fundamentals and hard to pick up after a while away. I went looking for new site
 framework and found [Middleman](http://middlemanapp.com/). I liked that it was
