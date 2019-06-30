@@ -1,4 +1,4 @@
-baseURL: 'http://www.gregburek.com/'
+baseURL: 'https://www.gregburek.com/'
 languageCode: en-us
 title: Greg Burek
 theme: hugo-flex
