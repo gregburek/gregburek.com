@@ -2,6 +2,7 @@ baseURL: 'http://www.gregburek.com/'
 languageCode: en-us
 title: Greg Burek
 theme: hugo-flex
+enableRobotsTXT: true
 params:
   color: '#FF3366'
   social:
