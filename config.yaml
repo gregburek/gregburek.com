@@ -7,16 +7,7 @@ pygmentsCodeFences: true
 pygmentsCodeFencesGuessSyntax: true
 params:
   color: '#FF3366'
-  social:
-    - name: Github
-      icon: github
-      url: 'https://github.com/gregburek'
-    - name: Twitter
-      icon: twitter
-      url: 'https://twitter.com/gregburek'
-    - name: LinkedIn
-      icon: linkedin
-      url: 'https://www.linkedin.com/in/gregburek/'
+  footer: ""
 permalinks:
   posts: '/:year/:month/:day/:title/'
 menu:
