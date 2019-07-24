@@ -35,6 +35,19 @@ great](https://www.blink.sh/)), a linux workstation and several laptops,
 seeding them correctly, managing passphrases and configuring clients to use
 the right ones is complicated.
 
+There already is an open feature request for ed25519 keys in the [Unifi
+UI](https://community.ui.com/questions/UCK-Firmware-GUI-SSH-Key-Minor-Feature-Request-/b888e182-a029-460d-941d-91de3812829c#answer/1910a856-123d-4a57-91ea-286d98740959)
+and an unreviewed PR for [Dropbear](https://github.com/mkj/dropbear/pull/75),
+but we build systems with what we have, not what is on the roadmap.
+
+If you are looking at ed25519 keys for your infra, they are fine and good,
+except for the unifi and Dropbear edge cases. You could probably work around
+them by deploying a
+[config.gateway.json](https://help.ubnt.com/hc/en-us/articles/215458888-UniFi-USG-Advanced-Configuration)
+and applying [Dropbear patch](https://github.com/mkj/dropbear/pull/75) manually,
+but that sounds as exhausting as juggling RSA and ed25519 keys, so what do you
+gain?
+
 So, for now, I'm following [Github's
 docs](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 and using 4096 bit keys, as well as Github's public key "feature"
