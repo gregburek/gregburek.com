@@ -1,5 +1,5 @@
 ---
-title: "Ed25519 SSH Keys Are Great But Barriers Remain"
+title: "Ed25519 SSH Keys Are Great, But Barriers Remain"
 date: 2019-07-23T16:23:17-07:00
 ---
 
