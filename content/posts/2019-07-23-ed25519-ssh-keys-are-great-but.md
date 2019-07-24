@@ -14,9 +14,9 @@ a few key systems:
 
 1. Unifi network devices allow you to [provide SSH keys in the CloudKey
    UI](https://help.ubnt.com/hc/en-us/articles/235247068-UniFi-Adding-SSH-Keys-to-UniFi-Devices)
-   to distribute to your network devices, but the UI only accepts some types of
-   keys. At the moment, Unifi CloudKeys, APs, and USG all support ed25519 keys
-   on the hardware, but the [CloudKey UI rejects
+   to be distributed to your network devices, but the UI only accepts some types
+   of keys. At the moment, [Unifi CloudKey, AP, and USG all support ed25519
+   keys on the hardware, but the CloudKey UI rejects
    them](https://community.ui.com/questions/UCK-Firmware-GUI-SSH-Key-Minor-Feature-Request-/b888e182-a029-460d-941d-91de3812829c#answer/1910a856-123d-4a57-91ea-286d98740959).
 2. [Dropbear](https://matt.ucc.asn.au/dropbear/dropbear.html), which you can run
    inside of [initramfs](https://packages.debian.org/buster/dropbear-initramfs)
@@ -29,11 +29,11 @@ a few key systems:
    the [changelog](https://matt.ucc.asn.au/dropbear/CHANGES).
 
 Admittedly, these issues are not total show stoppers and I could use ed25519
-keys for system access with RSA for these two specific use cases. It's just that
-juggling ed25519 and RSA ssh keys for all my iOS devices ([Blink is
-great](https://www.blink.sh/)), a linux workstation and several laptops, loading
-them selectively, managing passphrases and configuring clients to use the right
-ones is complicated.
+keys for system access and RSA keys for these two specific use cases. It's just
+that juggling ed25519 and RSA keys for all my iOS devices ([Blink is
+great](https://www.blink.sh/)), a linux workstation and several laptops,
+seeding them correctly, managing passphrases and configuring clients to use
+the right ones is complicated.
 
 So, for now, I'm following [Github's
 docs](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
