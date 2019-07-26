@@ -29,11 +29,11 @@ a few key systems:
    the [changelog](https://matt.ucc.asn.au/dropbear/CHANGES).
 
 Admittedly, these issues are not total show stoppers and I could use ed25519
-keys for system access and RSA keys for these two specific use cases. It's just
-that juggling ed25519 and RSA keys for all my iOS devices ([Blink is
-great](https://www.blink.sh/)), a linux workstation and several laptops,
-seeding them correctly, managing passphrases and configuring clients to use
-the right ones is complicated.
+keys for normal access and RSA keys for network device access and when my linux
+box reboots. It's just that juggling ed25519 and RSA keys for all my iOS devices
+([Blink is great](https://www.blink.sh/)), a linux workstation, raspberry pis
+and several laptops, seeding them correctly, managing passphrases and
+configuring clients to use the right ones is complicated.
 
 There already is an open feature request for ed25519 keys in the [Unifi
 UI](https://community.ui.com/questions/UCK-Firmware-GUI-SSH-Key-Minor-Feature-Request-/b888e182-a029-460d-941d-91de3812829c#answer/1910a856-123d-4a57-91ea-286d98740959)
@@ -50,8 +50,22 @@ have a cure which becomes an ailment.
 
 So, for now, I'm following [Github's
 docs](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
-and using 4096 bit keys, as well as Github's public key "feature"
-(https://github.com/username.keys) to set [authorized_keys in
-Ansible](https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html).
+and using 4096 bit RSA keys, as well as Github's public key "feature"
+(https://github.com/username.keys) to seed [authorized_keys from
+Ansible](https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html)
+through out my infra.
 
 It's fine.
+
+### Postscript
+
+[Screens for iOS](https://edovia.com/en/screens-ios/) can connect to VNC via a
+[secure
+connection](https://help.edovia.com/hc/en-us/articles/115011943907-Configuring-a-Secure-Connection-in-Screens) which appears to use an SSH tunnel.
+While you can use [SSH
+keys](https://help.edovia.com/hc/en-us/articles/115005876368-SSH-Keys) for
+authentication, ed25519 keys not supported and one can only use
+["...RSA keys of 2048-bits or less; 4096-bits or greater are
+unsupported"](https://help.edovia.com/hc/en-us/articles/115005876368-SSH-Keys).
+This is less than ideal and I'll revisit Screens, if I get a desktop on linux
+that is worth using VNC for.
