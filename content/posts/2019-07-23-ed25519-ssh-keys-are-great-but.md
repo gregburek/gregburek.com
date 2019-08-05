@@ -61,7 +61,8 @@ It's fine.
 
 [Screens for iOS](https://edovia.com/en/screens-ios/) can connect to VNC via a
 [secure
-connection](https://help.edovia.com/hc/en-us/articles/115011943907-Configuring-a-Secure-Connection-in-Screens) which appears to use an SSH tunnel.
+connection](https://help.edovia.com/hc/en-us/articles/115011943907-Configuring-a-Secure-Connection-in-Screens)
+which appears to use an SSH tunnel.
 While you can use [SSH
 keys](https://help.edovia.com/hc/en-us/articles/115005876368-SSH-Keys) for
 authentication, ed25519 keys not supported and one can only use
@@ -69,3 +70,17 @@ authentication, ed25519 keys not supported and one can only use
 unsupported"](https://help.edovia.com/hc/en-us/articles/115005876368-SSH-Keys).
 This is less than ideal and I'll revisit Screens, if I get a desktop on linux
 that is worth using VNC for.
+
+### Post-postscript (August 5, 2019)
+
+[Linux VMs in
+Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/mac-create-ssh-keys)
+also do not support ed25519 keys.
+
+> Azure currently supports SSH protocol 2 (SSH-2) RSA public-private key pairs
+> with a minimum length of 2048 bits. Other key formats such as ED25519 and
+> ECDSA are not supported.
+
+[A friend alleges](https://twitter.com/danfarina/status/1154855746628009984)
+that Azure Devops also does not support ed25519 keys, but the product name gives
+me heartburn and makes it difficult to find docs that confirm this.
